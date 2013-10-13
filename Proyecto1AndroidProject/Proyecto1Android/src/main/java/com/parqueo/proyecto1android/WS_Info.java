@@ -35,7 +35,7 @@ public class WS_Info {
 
         public static final String WSDL_TARGET_NAMESPACE = "http://proyecto.org/";
 
-        public static final String SOAP_ADDRESS = "http://192.168.1.119/ProyectoWebService/WebServiceProyecto.asmx";
+        public static final String SOAP_ADDRESS = "http://192.168.1.11/ProyectoWebService/WebServiceProyecto.asmx";
         //public static final String SOAP_ADDRESS = "http://10.0.0.11/ProyectoWebService/WebServiceProyecto.asmx";
 
         static final String KEY_LOCAL = "Local"; // parent node
@@ -53,12 +53,6 @@ public class WS_Info {
 
         public static ArrayList<Local> ParsearLocales(String XML){
             ArrayList<Local> Locales = new ArrayList<Local>();
-
-            int x = 0;
-            if (x == 5)
-            {
-
-            }
 
             XMLParser parser = new XMLParser();
                 Document doc = parser.getDomElement(XML); // getting DOM element

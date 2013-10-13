@@ -2,89 +2,89 @@
 <merger>
 
     <dataSet config="main" >
-        <source path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res" >
+        <source path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res" >
             <file
                 name="ic_launcher"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-hdpi\ic_launcher.png"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-hdpi\ic_launcher.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="ic_launcher_app"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-hdpi\ic_launcher_app.png"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-hdpi\ic_launcher_app.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-mdpi\ic_launcher.png"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-mdpi\ic_launcher.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="ic_launcher_app"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-mdpi\ic_launcher_app.png"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-mdpi\ic_launcher_app.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-xhdpi\ic_launcher.png"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-xhdpi\ic_launcher.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="ic_launcher_app"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-xhdpi\ic_launcher_app.png"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-xhdpi\ic_launcher_app.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-xxhdpi\ic_launcher.png"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-xxhdpi\ic_launcher.png"
                 qualifiers="xxhdpi"
                 type="drawable" />
             <file
                 name="ic_launcher_app"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-xxhdpi\ic_launcher_app.png"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\drawable-xxhdpi\ic_launcher_app.png"
                 qualifiers="xxhdpi"
                 type="drawable" />
             <file
                 name="activity_check"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\layout\activity_check.xml"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\layout\activity_check.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="activity_inicio"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\layout\activity_inicio.xml"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\layout\activity_inicio.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="activity_main"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\layout\activity_main.xml"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\layout\activity_main.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="android_xmlparsing"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\menu\android_xmlparsing.xml"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\menu\android_xmlparsing.xml"
                 qualifiers=""
                 type="menu" />
             <file
                 name="check"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\menu\check.xml"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\menu\check.xml"
                 qualifiers=""
                 type="menu" />
             <file
                 name="inicio"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\menu\inicio.xml"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\menu\inicio.xml"
                 qualifiers=""
                 type="menu" />
             <file
                 name="main"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\menu\main.xml"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\menu\main.xml"
                 qualifiers=""
                 type="menu" />
             <file
                 name="prueba"
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\menu\prueba.xml"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\menu\prueba.xml"
                 qualifiers=""
                 type="menu" />
             <file
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\values\dimens.xml"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\values\dimens.xml"
                 qualifiers="" >
                 <dimen name="activity_horizontal_margin" >16dp
                 </dimen>
@@ -92,7 +92,7 @@
                 </dimen>
             </file>
             <file
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\values\strings.xml"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\values\strings.xml"
                 qualifiers="" >
                 <string name="title_section1" >Section 1
                 </string>
@@ -116,7 +116,7 @@
                 </string>
             </file>
             <file
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\values\styles.xml"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\values\styles.xml"
                 qualifiers="" >
 
                 <style
@@ -150,13 +150,13 @@ match_parent
                 </style>
             </file>
             <file
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\values-sw720dp-land\dimens.xml"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\values-sw720dp-land\dimens.xml"
                 qualifiers="sw720dp-land" >
                 <dimen name="activity_horizontal_margin" >128dp
                 </dimen>
             </file>
             <file
-                path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\main\res\values-v11\styles.xml"
+                path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\main\res\values-v11\styles.xml"
                 qualifiers="v11" >
 
                 <style
@@ -167,10 +167,10 @@ match_parent
                 </style>
             </file>
         </source>
-        <source path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\res\rs\debug" />
+        <source path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\res\rs\debug" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\src\debug\res" />
+        <source path="D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\src\debug\res" />
     </dataSet>
 
 </merger>

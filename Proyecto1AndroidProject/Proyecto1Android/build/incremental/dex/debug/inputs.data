@@ -1,42 +1,42 @@
 # incremental data. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
-1381614626342 4841 79e5eef04befbabf960516ddf64068adcdcfe4a3 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\WS_Info$GlobalParameters.class
-1381033409403 777 32361d376e649bb9cf2f6f6fbc7c561d799e1986 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R.class
-1381033409342 549 08abca7264a1f722d3d128db41cd25c6f069c8dd C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$menu.class
-1381033409339 510 75259300a676883e32f344172d5b39c7c9d42d8e C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$layout.class
-1381033409117 1267 cf1d576f2945322b67f5ec69649954f9e5377ab4 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$1.class
-1381018786396 3924 1b2fc4cba780a50ef270d86d583ed63efa14fed5 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\XMLParser.class
-1381614626294 3533 5db2f32cf679e90605d93f49c0d9b1db88eb386f C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$buscarParqueoMasCercano.class
-1381614626139 3183 0a867f45705312d0d28dda0b52cad54d6ff406ae C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\InicioActivity$checkParqueado.class
-1381018785989 1347 293ce4bd953b50229a664524ea0164037cca6b12 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\CheckActivity$1.class
-1381614344289 2973 ecf527b5f5a7aebaf700ef786ada6783b3414aaa C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$MyAdapterParqueos.class
-1381033409335 1050 bc36cfe8da5cc65fc9f3257e44a2005f9b3dec06 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$id.class
-1381614344280 2857 e65caf2523af59ee29f89fc58873baff0a854120 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$MyAdapterLocales.class
-1381033409366 492 3944c9e35414d3202a4a6a668e8fcb985715af7b C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$style.class
-1381614626299 2762 8f7b817fbb0c5ba656462b017d652a4fa3be34d1 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$buscarParqueoAleatorio.class
+1381630702477 510 75259300a676883e32f344172d5b39c7c9d42d8e D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$layout.class
+1381630702362 2051 39113451b281088ddbb31aad408737af4edc8b4f D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$5$2.class
+1381630702247 4577 8344de7d7101112fc7e280932c22cda313f9fe8e D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\InicioActivity.class
+1381630702357 2021 2028462d630aa2c31e2f8d320d4fdcccd3fc7536 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$4.class
+1381630702483 777 32361d376e649bb9cf2f6f6fbc7c561d799e1986 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R.class
+1381630702476 1050 bc36cfe8da5cc65fc9f3257e44a2005f9b3dec06 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$id.class
+1381630702354 935 2187cd5af96559b19b5ddaf81a49e72f7a45857d D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$4$1.class
+1381630702380 2973 ecf527b5f5a7aebaf700ef786ada6783b3414aaa D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$MyAdapterParqueos.class
+1381630702397 8902 3b92f9806e3ad3af5a0ac4a292a827ac138247fe D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity.class
+1381630702466 3924 1b2fc4cba780a50ef270d86d583ed63efa14fed5 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\XMLParser.class
+1381630702473 370 aaf5e4c95cbb84b76f2b6282d43ba5b4e462696e D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$attr.class
+1381630702249 395 6a730fe882f7b57292af048b950a9d7ff01d6f88 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\Local.class
+1381630702390 2761 c8373595ff42670303d8f2d02fa58b7838f300da D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$buscarParqueoAleatorio.class
+1381630702481 492 3944c9e35414d3202a4a6a668e8fcb985715af7b D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$style.class
+1381630702431 417 cbbae340fdb5179aa747d1dee6ec1289d48472d8 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\WS_Info.class
+1381630702195 411 2179b5c32208704450433af5fa968ba23744d15b D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\Parqueo.class
 1374738118099 490914 3fe75433da602500cc71fcc1c46e5550291dd45d C:\Users\Jorge Luis\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\13.0.0\support-v4-13.0.0.jar
-1381614626070 3576 b8f5dd89071a9606733eb7e4fe9e4ec011471ffc C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\CheckActivity$buscarParqueoAsignado.class
-1381614344311 8902 3b92f9806e3ad3af5a0ac4a292a827ac138247fe C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity.class
-1373855777834 141158 e8796346a9191a019e936210a2dc50662c57594b C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\libs\ksoap2-24.jar
-1381033409204 2377 ba54b683fdb18a53ce3b7a1116ca6bffb2eebbcf C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$5.class
-1381033409123 1512 94bc23d58a95e46a70cf1ac1ad2345d15e40d0c0 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$3.class
-1381614626269 3787 2dcc3618d9c029d6ecc1fc63a3e463bb41541e91 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$buscarlocales.class
-1381033409126 935 2187cd5af96559b19b5ddaf81a49e72f7a45857d C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$4$1.class
-1381018786010 411 2179b5c32208704450433af5fa968ba23744d15b C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\Parqueo.class
-1381033409133 2021 2028462d630aa2c31e2f8d320d4fdcccd3fc7536 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$4.class
-1381018786436 486 cc97a339681a6d71e5328f1f04e15982cb790a79 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\BuildConfig.class
-1381033409156 2051 39113451b281088ddbb31aad408737af4edc8b4f C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$5$2.class
-1381018786405 370 aaf5e4c95cbb84b76f2b6282d43ba5b4e462696e C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$attr.class
-1381030241009 4577 8344de7d7101112fc7e280932c22cda313f9fe8e C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\InicioActivity.class
-1381033409152 935 7f4e1d0b0c217ecb89cd308cd50563d205cd7df5 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$5$1.class
-1381018786081 395 6a730fe882f7b57292af048b950a9d7ff01d6f88 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\Local.class
-1381018786331 417 cbbae340fdb5179aa747d1dee6ec1289d48472d8 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\WS_Info.class
-1381614626288 3912 b7c89b4fba262ad462aeabf91e060b66c5815887 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$asignarParqueo.class
-1381018786408 491 f8f31ff0bdff8d083bffe291902f13e9295b8972 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$dimen.class
-1381033409362 807 a92860ac3b5e9e672cc6889c5a2ea68546e75688 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$string.class
-1381018786411 476 40ce9f33f563161fd513f8d4c93dcf9ceed5e8cf C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$drawable.class
-1381033409120 2026 06d39681bff4956701fc623af165288234ee1d02 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$2.class
-1381033409130 2350 90253262b92045e13da196ae8935b8793f088f59 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$4$2.class
-1381018786007 4749 9e0c32a8c73a4834d104ba93af6d162a6f76c521 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\CheckActivity.class
-1381614626278 3644 3304160d50e3eedf5852f4eed7ddac8462a5ce74 C:\Users\Jorge Luis\Desktop\Proyecto 1\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$buscarParqueosPorPiso.class
+1381630702429 4801 2800182b2ae59ea6f30b6c5ea2bddeaf0dbdf13d D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\WS_Info$GlobalParameters.class
+1381630702194 4749 9e0c32a8c73a4834d104ba93af6d162a6f76c521 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\CheckActivity.class
+1381630702188 3575 2a62c3561a60fae6858b3c9efa755f1597f07ede D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\CheckActivity$buscarParqueoAsignado.class
+1381111604432 141158 e8796346a9191a019e936210a2dc50662c57594b D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\libs\ksoap2-24.jar
+1381630702480 807 a92860ac3b5e9e672cc6889c5a2ea68546e75688 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$string.class
+1381630702479 549 08abca7264a1f722d3d128db41cd25c6f069c8dd D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$menu.class
+1381630702369 3786 2ff4f24a73337702e30d8ccc47082a363595c158 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$buscarlocales.class
+1381630702350 1267 cf1d576f2945322b67f5ec69649954f9e5377ab4 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$1.class
+1381630702383 3911 cfd6d31b980528402c0aba2a15ea9ea047c210a1 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$asignarParqueo.class
+1381630702377 3643 43b94b8015ea2896906d0f6336f8a1eea75d96f9 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$buscarParqueosPorPiso.class
+1381630702385 3532 c980b8994870c4ba6a58c858f9663e623f67dc8e D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$buscarParqueoMasCercano.class
+1381630702475 476 40ce9f33f563161fd513f8d4c93dcf9ceed5e8cf D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$drawable.class
+1381630702353 1512 94bc23d58a95e46a70cf1ac1ad2345d15e40d0c0 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$3.class
+1381630702360 935 7f4e1d0b0c217ecb89cd308cd50563d205cd7df5 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$5$1.class
+1381630702372 2857 e65caf2523af59ee29f89fc58873baff0a854120 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$MyAdapterLocales.class
+1381630702474 491 f8f31ff0bdff8d083bffe291902f13e9295b8972 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\R$dimen.class
+1381630702243 3182 a5ea3c1104989a23709591520c3a6e6bc3d45e72 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\InicioActivity$checkParqueado.class
+1381630702485 486 cc97a339681a6d71e5328f1f04e15982cb790a79 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\BuildConfig.class
+1381630702364 2377 ba54b683fdb18a53ce3b7a1116ca6bffb2eebbcf D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$5.class
+1381630702351 2026 06d39681bff4956701fc623af165288234ee1d02 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$2.class
+1381630702178 1347 293ce4bd953b50229a664524ea0164037cca6b12 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\CheckActivity$1.class
+1381630702356 2350 90253262b92045e13da196ae8935b8793f088f59 D:\Proyecto\secunet\Proyecto1AndroidProject\Proyecto1Android\build\classes\debug\com\parqueo\proyecto1android\MainActivity$4$2.class
