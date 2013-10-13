@@ -11,8 +11,8 @@ public final class R {
     public static final class attr {
     }
     public static final class dimen {
-        /**  From: file:/C:/Users/Jorge%20Luis/Desktop/Proyecto%201/Proyecto1AndroidProject/Proyecto1Android/src/main/res/values/dimens.xml 
- From: file:/C:/Users/Jorge%20Luis/Desktop/Proyecto%201/Proyecto1AndroidProject/Proyecto1Android/src/main/res/values-sw720dp-land/dimens.xml 
+        /**  From: file:/D:/Proyecto/secunet/Proyecto1AndroidProject/Proyecto1Android/src/main/res/values/dimens.xml 
+ From: file:/D:/Proyecto/secunet/Proyecto1AndroidProject/Proyecto1Android/src/main/res/values-sw720dp-land/dimens.xml 
          */
         public static final int activity_horizontal_margin=0x7f040000;
         public static final int activity_vertical_margin=0x7f040001;
@@ -55,7 +55,7 @@ public final class R {
         public static final int prueba=0x7f070004;
     }
     public static final class string {
-        /**  From: file:/C:/Users/Jorge%20Luis/Desktop/Proyecto%201/Proyecto1AndroidProject/Proyecto1Android/src/main/res/values/strings.xml 
+        /**  From: file:/D:/Proyecto/secunet/Proyecto1AndroidProject/Proyecto1Android/src/main/res/values/strings.xml 
          */
         public static final int action_settings=0x7f050000;
         public static final int app_name=0x7f050001;
@@ -69,13 +69,13 @@ public final class R {
         public static final int title_section3=0x7f050009;
     }
     public static final class style {
-        /**  From: file:/C:/Users/Jorge%20Luis/Desktop/Proyecto%201/Proyecto1AndroidProject/Proyecto1Android/src/main/res/values/styles.xml 
+        /**  From: file:/D:/Proyecto/secunet/Proyecto1AndroidProject/Proyecto1Android/src/main/res/values/styles.xml 
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         
- From: file:/C:/Users/Jorge%20Luis/Desktop/Proyecto%201/Proyecto1AndroidProject/Proyecto1Android/src/main/res/values-v11/styles.xml 
+ From: file:/D:/Proyecto/secunet/Proyecto1AndroidProject/Proyecto1Android/src/main/res/values-v11/styles.xml 
  API 11 theme customizations can go here. 
          */
         public static final int AppBaseTheme=0x7f060000;
