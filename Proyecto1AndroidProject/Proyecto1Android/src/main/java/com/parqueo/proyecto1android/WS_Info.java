@@ -58,7 +58,7 @@ public class WS_Info {
                 Document doc = parser.getDomElement(XML); // getting DOM element
             NodeList nl = doc.getElementsByTagName(KEY_LOCAL);
 
-            int e = 0;
+            int z = 0;
             // looping through all item nodes <item>
             for(int i = 0; i < nl.getLength(); i++) {
                 Element e = (Element) nl.item(i);
