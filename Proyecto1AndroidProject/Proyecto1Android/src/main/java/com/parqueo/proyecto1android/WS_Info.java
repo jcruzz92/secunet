@@ -54,16 +54,11 @@ public class WS_Info {
         public static ArrayList<Local> ParsearLocales(String XML){
             ArrayList<Local> Locales = new ArrayList<Local>();
 
-            int x = 0;
-            if (x == 5)
-            {
-
-            }
-
             XMLParser parser = new XMLParser();
                 Document doc = parser.getDomElement(XML); // getting DOM element
             NodeList nl = doc.getElementsByTagName(KEY_LOCAL);
 
+            int e = 0;
             // looping through all item nodes <item>
             for(int i = 0; i < nl.getLength(); i++) {
                 Element e = (Element) nl.item(i);
