@@ -39,8 +39,6 @@ import com.parse.PushService;
 import java.util.ArrayList;
 import java.util.Locale;
 
-//Esta es una prueba de commits para Jorge
-
 public class MainActivity extends Activity  implements View.OnClickListener, TextToSpeech.OnInitListener{
 
     private Spinner ListadoLocales;
