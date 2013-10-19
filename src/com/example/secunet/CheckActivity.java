@@ -50,9 +50,6 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         MiParqueo = new Parqueo();
         MacAddress = getMacAddress();
         new buscarParqueoAsignado().execute();
-
-
-
     }
 
     @Override

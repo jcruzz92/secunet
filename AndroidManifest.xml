@@ -30,15 +30,18 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.secunet.MainActivity"
-            android:label="MENU DE SELECCION" >
+            android:label="Secunet" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.example.secunet.CheckActivity"
-            android:label="PARQUEO ASIGNADO" >
+            android:label="Secunet" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.example.secunet.InicioActivity"
-            android:label="SECUNET" >
+            android:label="Secunet" 
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -24,6 +24,7 @@ public class WS_Info {
         public static final String SOAP_ACTION_PARQUEOMASCERCANO = "http://proyecto.org/ParqueoMasCercano";
         public static final String SOAP_ACTION_SETPARQUEO = "http://proyecto.org/AsignarParqueo";
         public static final String SOAP_ACTION_BYMAC = "http://proyecto.org/ParqueoPorMAC";
+        public static final String SOAP_ACTION_LIBERARPARQUEO = "http://proyecto.org/LiberarParqueo";
 
         public static final String OPERATION_NAME_CHECKPARQUEADO = "VerificarSiEstaParqueado";
         public static final String OPERATION_NAME_PARQUEOALEATORIO = "CualquierParqueo";
@@ -32,11 +33,12 @@ public class WS_Info {
         public static final String OPERATION_NAME_LOCALES = "Locales";
         public static final String OPERATION_NAME_SETPARQUEO = "AsignarParqueo";
         public static final String OPERATION_NAME_BYMAC = "ParqueoPorMAC";
+        public static final String OPERATION_NAME_LIBERARPARQUEO = "LiberarParqueo";
 
         public static final String WSDL_TARGET_NAMESPACE = "http://proyecto.org/";
 
-        public static final String SOAP_ADDRESS = "http://192.168.1.125/ProyectoWebService/WebServiceProyecto.asmx";
-        //public static final String SOAP_ADDRESS = "http://10.0.0.11/ProyectoWebService/WebServiceProyecto.asmx";
+        //public static final String SOAP_ADDRESS = "http://192.168.1.125/ProyectoWebService/WebServiceProyecto.asmx";
+        public static final String SOAP_ADDRESS = "http://10.0.0.6/ProyectoWebService/WebServiceProyecto.asmx";
 
         static final String KEY_LOCAL = "Local"; // parent node
         static final String KEY_NOMRBEPISO = "NombrePiso";
@@ -53,12 +55,6 @@ public class WS_Info {
 
         public static ArrayList<Local> ParsearLocales(String XML){
             ArrayList<Local> Locales = new ArrayList<Local>();
-
-            int x = 0;
-            if (x == 5)
-            {
-
-            }
 
             XMLParser parser = new XMLParser();
                 Document doc = parser.getDomElement(XML); // getting DOM element

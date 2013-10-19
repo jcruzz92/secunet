@@ -341,9 +341,8 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView v = new TextView(getApplicationContext());
-            v.setTextColor(Color.WHITE);
+            v.setTextColor(Color.BLACK);
             v.setText(data.get(position).Nombre);
-            v.setTextSize(20);
             v.setTag(Integer.parseInt(data.get(position).Nivel));
             return v;
         }
@@ -468,9 +467,8 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView v = new TextView(getApplicationContext());
-            v.setTextColor(Color.WHITE);
+            v.setTextColor(Color.BLACK);
             v.setText(data.get(position).Piso + " - " + data.get(position).IdParqueo + " - " + data.get(position).Estado);
-            v.setTextSize(20);
             v.setTag(data.get(position));
             return v;
         }

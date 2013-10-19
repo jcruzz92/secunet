@@ -83,10 +83,12 @@
             android:textStyle="bold" />
 
         <Spinner
+            android:id="@+id/spLocales"
+            style="android:spinnerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spLocales"
             android:layout_gravity="center" />
+
     </LinearLayout>
 
     <LinearLayout
