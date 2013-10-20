@@ -11,6 +11,10 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     
+    <!-- Near field communications permissions -->
+	<uses-permission android:name="android.permission.NFC" />
+	<uses-feature android:name="android.hardware.nfc" android:required="true" />
+    
 	<instrumentation
 	    android:name="android.test.InstrumentationTestRunner"
 	    android:targetPackage="com.example.secunet" />
@@ -20,7 +24,7 @@
 	    android:targetPackage="com.example.secunet" />
 	
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="16"
         android:targetSdkVersion="18" />
 
     <application
