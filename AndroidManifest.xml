@@ -34,6 +34,11 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name="com.example.secunet.ParqueoLibreActivity"
+            android:label="Secunet" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name="com.example.secunet.CheckActivity"
             android:label="Secunet" 
             android:screenOrientation="portrait">

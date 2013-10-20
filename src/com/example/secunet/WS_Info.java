@@ -38,7 +38,7 @@ public class WS_Info {
         public static final String WSDL_TARGET_NAMESPACE = "http://proyecto.org/";
 
         //public static final String SOAP_ADDRESS = "http://192.168.1.125/ProyectoWebService/WebServiceProyecto.asmx";
-        public static final String SOAP_ADDRESS = "http://10.0.0.6/ProyectoWebService/WebServiceProyecto.asmx";
+        public static final String SOAP_ADDRESS = "http://10.0.0.10/ProyectoWebService/WebServiceProyecto.asmx";
 
         static final String KEY_LOCAL = "Local"; // parent node
         static final String KEY_NOMRBEPISO = "NombrePiso";

@@ -58,7 +58,6 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
     private int IdPiso;
     private String MacAddress;
     private int IdEstado;
-    private boolean Parqueado;
 
     private int MY_DATA_CHECK_CODE = 0;
     private TextToSpeech myTTS;
@@ -392,11 +391,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
 
             SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_PARQUEOSLIBRES);
 
-            PropertyInfo property_idPiso = new PropertyInfo();
-            property_idPiso.type = PropertyInfo.INTEGER_CLASS;
-            property_idPiso.name = "idPiso";
-
-            request.addProperty(property_idPiso, IdPiso);
+            request.addProperty("idPiso", IdPiso);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                     SoapEnvelope.VER11);

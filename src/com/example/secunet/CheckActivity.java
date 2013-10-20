@@ -27,8 +27,10 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     private TextToSpeech myTTS;
     private TextView TextoMiParqueo;
     private String MacAddress;
-    Parqueo MiParqueo;
+    private Parqueo MiParqueo;
     private Button Repetir;
+    private Button Liberar;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -39,6 +41,8 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
         TextoMiParqueo = (TextView) findViewById(R.id.lbMiParqueo);
         Repetir = (Button) findViewById(R.id.btRepetir);
+        Liberar = (Button) findViewById(R.id.btLiberarParqueo);
+        intent = new Intent(CheckActivity.this, ParqueoLibreActivity.class);
 
         Repetir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,13 +50,22 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
                 speakWords("Su parqueo asignado es el " + TextoMiParqueo.getText().toString());
             }
         });
+        
+        Liberar.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				CheckActivity.this.startActivity(intent);
+				finish();
+				new liberarParqueoAsignado().execute();
+			}
+		});
 
         MiParqueo = new Parqueo();
         MacAddress = getMacAddress();
         new buscarParqueoAsignado().execute();
     }
 
-    @Override
+    @Override 
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
        // getMenuInflater().inflate(R.menu.check, menu);
@@ -134,5 +147,37 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         }
     }
 
+    public class liberarParqueoAsignado extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids){
+            String response;
 
+            SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_LIBERARPARQUEO);
+
+            request.addProperty("idParqueo", MiParqueo.IdParqueo);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                    SoapEnvelope.VER11);
+            envelope.dotNet = true;
+
+            envelope.setOutputSoapObject(request);
+
+            HttpTransportSE httpTransport = new HttpTransportSE(WS_Info.GlobalParameters.SOAP_ADDRESS);
+
+            try {
+                httpTransport.debug = true;
+                httpTransport.call(WS_Info.GlobalParameters.SOAP_ACTION_LIBERARPARQUEO, envelope);
+                response = httpTransport.responseDump;
+
+            }  catch (Exception exception)   {
+                response = "";
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+        }
+    }
 }

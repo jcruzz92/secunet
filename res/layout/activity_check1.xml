@@ -16,6 +16,7 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
+        android:text="{Parqueo Asignado}"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
