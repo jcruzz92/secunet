@@ -36,6 +36,12 @@
             android:name="com.example.secunet.MainActivity"
             android:label="Secunet" 
             android:screenOrientation="portrait">
+            
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.example.secunet.ParqueoLibreActivity"
@@ -51,11 +57,14 @@
             android:name="com.example.secunet.InicioActivity"
             android:label="Secunet" 
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            
+        </activity>
+        
+         <activity
+            android:name="com.example.secunet.ParqueoInterfaceActivity"
+            android:label="Secunet" 
+            android:screenOrientation="portrait">
+            
         </activity>
     
     <service android:name="com.parse.PushService" />

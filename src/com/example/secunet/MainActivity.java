@@ -58,10 +58,11 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
     private int IdPiso;
     private String MacAddress;
     private int IdEstado;
-
+    
     private int MY_DATA_CHECK_CODE = 0;
     private TextToSpeech myTTS;
     Intent intent;
+    Intent intentInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -116,6 +117,8 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         SeccionManual.setVisibility(View.GONE);
         new buscarlocales().execute();
         new buscarParqueoAleatorio().execute();
+        
+        intentInterface = new Intent(MainActivity.this, ParqueoInterfaceActivity.class);
 
         SeleccionarParqueoManualmente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +126,8 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
             if(SeleccionarParqueoManualmente.isChecked()){
                 SeccionManual.setVisibility(View.VISIBLE);
                 SeccionAuto.setVisibility(View.GONE);
+                MainActivity.this.startActivity(intentInterface);
+               
             }
             else{
                 SeccionManual.setVisibility(View.GONE);
