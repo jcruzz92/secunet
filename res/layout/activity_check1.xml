@@ -9,27 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".CheckActivity" >
 
-    <TextView
-        android:id="@+id/lbMiParqueo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
-        android:text="{Parqueo Asignado}"
-        android:textAlignment="center"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
-        android:text="Tu parqueo asignado es:"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <Button
         android:id="@+id/btRepetir"
         android:layout_width="match_parent"
@@ -46,4 +25,44 @@
         android:layout_alignParentBottom="true"
         android:text="LIBERAR PARQUEO" />
 
-</RelativeLayout><!-- From: file:/D:/Proyecto/secunet/Proyecto1AndroidProject/Proyecto1Android/src/main/res/layout/activity_check.xml -->
+    <TextView
+        android:id="@+id/idTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/leido"
+        android:layout_centerHorizontal="true"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/leido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btRepetir"
+        android:layout_alignLeft="@+id/idTag"
+        android:layout_marginBottom="28dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btRepetir"
+        android:layout_alignParentTop="true"
+        android:text="Tu parqueo asignado es:"
+        android:textAllCaps="false"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="28sp" />
+
+    <TextView
+        android:id="@+id/lbMiParqueo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="8dp"
+        android:text="{Parqueo Asignado}"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout> <!-- From: file:/D:/Proyecto/secunet/Proyecto1AndroidProject/Proyecto1Android/src/main/res/layout/activity_check.xml -->

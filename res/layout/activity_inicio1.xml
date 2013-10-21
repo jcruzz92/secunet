@@ -11,37 +11,6 @@
     tools:context=".InicioActivity" >
 
     <TextView
-        android:id="@+id/leido"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="38dp"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/idTag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/leido"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="18dp"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/textView1"
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="Bienvenido a PUCMM"
-        android:textAllCaps="false"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,10 +22,23 @@
 
     <Button
         android:id="@+id/btBuscar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:text="BUSCAR PARQUEO" />
+
+    <TextView
+        android:id="@+id/textView1"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Bienvenido a PUCMM"
+        android:textAllCaps="false"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

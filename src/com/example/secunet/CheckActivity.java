@@ -1,12 +1,18 @@
 package com.example.secunet;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.nfc.NdefMessage;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.speech.tts.TextToSpeech;
 import android.view.Menu;
 import android.view.View;
@@ -19,10 +25,13 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import org.ndeftools.*;
+import org.ndeftools.externaltype.AndroidApplicationRecord;
+
+import java.util.List;
 import java.util.Locale;
 
 public class CheckActivity extends Activity implements  View.OnClickListener, TextToSpeech.OnInitListener{
-
     private int MY_DATA_CHECK_CODE = 0;
     private TextToSpeech myTTS;
     private TextView TextoMiParqueo;
@@ -30,48 +39,98 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     private Parqueo MiParqueo;
     private Button Repetir;
     private Button Liberar;
-    Intent intent;
+    Intent intentParqueoLibre;
+    NfcAdapter nfcAdapter;
+    PendingIntent nfcPendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check1);
+
+    	nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         Intent checkTTSIntent = new Intent();
         checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
         startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
         TextoMiParqueo = (TextView) findViewById(R.id.lbMiParqueo);
         Repetir = (Button) findViewById(R.id.btRepetir);
         Liberar = (Button) findViewById(R.id.btLiberarParqueo);
-        intent = new Intent(CheckActivity.this, ParqueoLibreActivity.class);
-
+        intentParqueoLibre = new Intent(CheckActivity.this, ParqueoLibreActivity.class);
+        MiParqueo = new Parqueo();
+        MacAddress = getMacAddress();
+        
         Repetir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 speakWords("Su parqueo asignado es el " + TextoMiParqueo.getText().toString());
             }
         });
-        
+
         Liberar.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				CheckActivity.this.startActivity(intent);
+			public void onClick(View v){
+				CheckActivity.this.startActivity(intentParqueoLibre);
 				finish();
 				new liberarParqueoAsignado().execute();
 			}
 		});
 
-        MiParqueo = new Parqueo();
-        MacAddress = getMacAddress();
         new buscarParqueoAsignado().execute();
     }
 
-    @Override 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
        // getMenuInflater().inflate(R.menu.check, menu);
         return true;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        disableForegroundMode();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        enableForegroundMode();
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {   
+            Toast.makeText(this, "Tag Encontrado", Toast.LENGTH_SHORT).show();
+        	
+            Parcelable[] messages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+            Tag elTag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+            TextView textView = (TextView) findViewById(R.id.leido);
+            textView.setText(bytesToHexString(elTag.getId()));
+            
+            if (messages != null) { 
+                // parse to records
+                for (int i = 0; i < messages.length; i++) {
+                    try {
+                        List<Record> records = new Message((NdefMessage)messages[i]);
+
+                        for(int k = 0; k < records.size(); k++) {
+                            Record record = records.get(k);
+                            if(record instanceof AndroidApplicationRecord) {
+                                AndroidApplicationRecord aar = (AndroidApplicationRecord) record;
+                                TextView textView1 = (TextView) findViewById(R.id.idTag);
+                                textView1.setText( "El Paquete es " + aar.getPackageName());
+                            }
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(this, "Problema parseando el mensaje", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }    
+    }
+    
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == MY_DATA_CHECK_CODE) {
             if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
@@ -85,6 +144,34 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         }
     }
 
+    private String bytesToHexString(byte[] src) {
+        StringBuilder stringBuilder = new StringBuilder("0x");
+        if (src == null || src.length <= 0) {
+            return null;
+        }
+
+        char[] buffer = new char[2];
+        for (int i = 0; i < src.length; i++) {
+            buffer[0] = Character.forDigit((src[i] >>> 4) & 0x0F, 16);  
+            buffer[1] = Character.forDigit(src[i] & 0x0F, 16);  
+            System.out.println(buffer);
+            stringBuilder.append(buffer);
+        }
+
+        return stringBuilder.toString();
+    }
+    
+    public void enableForegroundMode() {
+        // foreground mode gives the current active application priority for reading scanned tags
+        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED); // filter for tags
+        IntentFilter[] writeTagFilters = new IntentFilter[] {tagDetected};
+        nfcAdapter.enableForegroundDispatch(this, nfcPendingIntent, writeTagFilters, null);
+    }
+
+	public void disableForegroundMode() {
+	    nfcAdapter.disableForegroundDispatch(this);
+	}
+    
     private void speakWords(String speech) {
         myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
     }

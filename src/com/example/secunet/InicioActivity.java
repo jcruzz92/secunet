@@ -36,13 +36,9 @@ import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
 
-import org.ndeftools.*;
-import org.ndeftools.externaltype.AndroidApplicationRecord;
-
 import java.util.List;
 
 public class InicioActivity extends Activity {
-
     private String MacAddress;
     Intent intentMain;
     Intent intentCheck;
@@ -50,32 +46,32 @@ public class InicioActivity extends Activity {
     Button Entrar;
     List<WifiConfiguration> listaWifi;
     ProgressDialog Cargando;
-    NfcAdapter nfcAdapter;
-    PendingIntent nfcPendingIntent;
+//    NfcAdapter nfcAdapter;
+//    PendingIntent nfcPendingIntent;
     AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
-    	nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+//    	nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+//      nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         
-    	Parse.initialize(this,"NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI","iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF");
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio1);
         Entrar = (Button) findViewById(R.id.btBuscar);
         PushService.setDefaultPushCallback(InicioActivity.this, InicioActivity.class);
         ParseInstallation.getCurrentInstallation().saveInBackground();
-        PushService.subscribe(InicioActivity.this,"global", MainActivity.class);
+        PushService.subscribe(InicioActivity.this, "global", InicioActivity.class);
         ParseInstallation.getCurrentInstallation().saveInBackground();
         wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-
+        Parse.initialize(this,"NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI","iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF");
+    	
         getMacAddress();
         intentMain = new Intent(InicioActivity.this, MainActivity.class);
         intentCheck = new Intent(InicioActivity.this, CheckActivity.class);
-        
+
         Entrar.setOnClickListener(new OnClickListener() {
         	@Override
-        	public void onClick(View v) {
+        	public void onClick(View v){
         	    InicioActivity.this.startActivity(intentMain);
                 finish();
         	}
@@ -87,6 +83,7 @@ public class InicioActivity extends Activity {
             	dialog.dismiss();
             }
         });
+        
         builder.setPositiveButton("Buscar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 InicioActivity.this.startActivity(intentMain);
@@ -103,88 +100,12 @@ public class InicioActivity extends Activity {
     }
     
     @Override
-    public void onPause() {
-        super.onPause();
-        disableForegroundMode();
-    }
-    
-    @Override
-    public void onResume(){
-        super.onResume();
-        enableForegroundMode();
-    }
-    
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
        // getMenuInflater().inflate(R.menu.inicio, menu);
         return true;
     }
 
-    @Override
-    public void onNewIntent(Intent intent) { // this method is called when an NFC tag is scanned
-
-        // check for NFC related actions
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {   
-        	dialog.dismiss();
-            Toast.makeText(this, "Tag Encontrado", Toast.LENGTH_SHORT).show();
-        	
-            Parcelable[] messages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-            Tag elTag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-
-            TextView textView = (TextView) findViewById(R.id.leido);
-            textView.setText(bytesToHexString(elTag.getId()));
-            
-            if (messages != null) { 
-                // parse to records
-                for (int i = 0; i < messages.length; i++) {
-                    try {
-                        List<Record> records = new Message((NdefMessage)messages[i]);
-
-                        for(int k = 0; k < records.size(); k++) {
-                            Record record = records.get(k);
-                            if(record instanceof AndroidApplicationRecord) {
-                                AndroidApplicationRecord aar = (AndroidApplicationRecord) record;
-                                TextView textView1 = (TextView) findViewById(R.id.idTag);
-                                textView1.setText( "El Paquete es " + aar.getPackageName());
-                            }
-                        }
-                    } catch (Exception e) {
-                        Toast.makeText(this, "Problema parseando el mensaje", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        }    
-    }
-    
-    private String bytesToHexString(byte[] src) {
-        StringBuilder stringBuilder = new StringBuilder("0x");
-        if (src == null || src.length <= 0) {
-            return null;
-        }
-
-        char[] buffer = new char[2];
-        for (int i = 0; i < src.length; i++) {
-            buffer[0] = Character.forDigit((src[i] >>> 4) & 0x0F, 16);  
-            buffer[1] = Character.forDigit(src[i] & 0x0F, 16);  
-            System.out.println(buffer);
-            stringBuilder.append(buffer);
-        }
-
-        return stringBuilder.toString();
-    }
-    
-    public void enableForegroundMode() {
-        // foreground mode gives the current active application priority for reading scanned tags
-        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED); // filter for tags
-        IntentFilter[] writeTagFilters = new IntentFilter[] {tagDetected};
-        nfcAdapter.enableForegroundDispatch(this, nfcPendingIntent, writeTagFilters, null);
-    }
-
-	public void disableForegroundMode() {
-	    nfcAdapter.disableForegroundDispatch(this);
-	}
-    
     public Boolean isConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
