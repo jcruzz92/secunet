@@ -92,8 +92,8 @@ ArrayList<Parqueo> ParqueosManual;
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int id){
-                                //ParqueoInterfaceActivity.this.startActivity(intent);
-                                //finish();
+                                ParqueoInterfaceActivity.this.startActivity(intent);
+                                finish();
                                 String words;
                                 new asignarParqueo().execute(false);
                                 
@@ -126,8 +126,8 @@ ArrayList<Parqueo> ParqueosManual;
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int id){
-                                //ParqueoInterfaceActivity.this.startActivity(intent);
-                                //finish();
+                                ParqueoInterfaceActivity.this.startActivity(intent);
+                                finish();
                                 String words;
                                 new asignarParqueo().execute(false);
                                 
@@ -151,15 +151,15 @@ ArrayList<Parqueo> ParqueosManual;
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				ParqueoManual = ParqueosManual.get(0);
+				ParqueoManual = ParqueosManual.get(2);
 				((ImageButton) v).setImageResource(R.drawable.occupied3);
 				builder.setMessage("Desea este parqueo?");
                 MacAddress = getMacAddress();
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int id){
-                                //ParqueoInterfaceActivity.this.startActivity(intent);
-                                //finish();
+                                ParqueoInterfaceActivity.this.startActivity(intent);
+                                finish();
                                 String words;
                                 new asignarParqueo().execute(false);
                                 
@@ -182,7 +182,7 @@ ArrayList<Parqueo> ParqueosManual;
 			
 			@Override
 			public void onClick(View v) {
-				ParqueoManual = ParqueosManual.get(0);
+				ParqueoManual = ParqueosManual.get(3);
 				// TODO Auto-generated method stub
 				((ImageButton) v).setImageResource(R.drawable.occupied4);
 				builder.setMessage("Desea este parqueo?");
@@ -190,8 +190,8 @@ ArrayList<Parqueo> ParqueosManual;
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int id){
-                                //ParqueoInterfaceActivity.this.startActivity(intent);
-                                //finish();
+                                ParqueoInterfaceActivity.this.startActivity(intent);
+                                finish();
                                 String words;
                                 new asignarParqueo().execute(false);
                                 
