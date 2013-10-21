@@ -7,8 +7,6 @@ public class Parqueo {
     public String Piso;
     public String IdParqueo;
     public String Estado;
-    public String Lado;
-    public String Peso;
 
     Parqueo(){
 

@@ -50,13 +50,4 @@
             android:src="@drawable/occupied3" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/relativeLayout1"
-        android:layout_alignLeft="@+id/relativeLayout1"
-        android:layout_marginBottom="47dp"
-        android:text="TextView" />
-
 </RelativeLayout>

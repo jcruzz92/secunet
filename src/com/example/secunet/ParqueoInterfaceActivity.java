@@ -69,7 +69,6 @@ ArrayList<Parqueo> ParqueosManual;
 		Parqueo2 = (ImageButton)findViewById(R.id.spot2);
 		Parqueo3 = (ImageButton)findViewById(R.id.spot3);
 		Parqueo4 = (ImageButton)findViewById(R.id.spot4);
-		txtImage = (TextView)findViewById(R.id.textView1);
 		ParqueosManual = new ArrayList<Parqueo>();
 		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		intent = new Intent(ParqueoInterfaceActivity.this, CheckActivity.class);
@@ -78,7 +77,6 @@ ArrayList<Parqueo> ParqueosManual;
 		//txtImage = (TextView)findViewById(R.id.txtImage);
 		//txtImage.setText(Parqueo1.getTag().toString());
 		new buscarParqueosPorPiso().execute();
-		
 		
 		Parqueo1.setOnClickListener(new OnClickListener() {
 			

@@ -17,7 +17,7 @@
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
         android:layout_marginTop="8dp"
-        android:text="Toca el botón para iniciar..."
+        android:text="Toca el botón de buscar para iniciar..."
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button

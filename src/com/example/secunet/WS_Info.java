@@ -38,7 +38,7 @@ public class WS_Info {
         public static final String WSDL_TARGET_NAMESPACE = "http://proyecto.org/";
 
         //public static final String SOAP_ADDRESS = "http://192.168.1.125/ProyectoWebService/WebServiceProyecto.asmx";
-        public static final String SOAP_ADDRESS = "http://10.0.0.10/ProyectoWebService/WebServiceProyecto.asmx";
+        public static final String SOAP_ADDRESS = "http://10.0.0.2/ProyectoWebService/WebServiceProyecto.asmx";
 
         static final String KEY_LOCAL = "Local"; // parent node
         static final String KEY_NOMRBEPISO = "NombrePiso";
@@ -50,8 +50,8 @@ public class WS_Info {
         static final String KEY_IDPARQUEO = "IdParqueo";
         static final String KEY_ESTADOPARQUEO = "Estado";
         static final String KEY_PISOPARQUEO = "Piso";
-        //static final String KEY_LADOPARQUEO = "Lado";
-        //static final String KEY_PESOPARQUEO = "Peso";
+//        static final String KEY_LADOPARQUEO = "Lado";
+//        static final String KEY_PESOPARQUEO = "Peso";
 
         public static ArrayList<Local> ParsearLocales(String XML){
             ArrayList<Local> Locales = new ArrayList<Local>();

@@ -81,24 +81,6 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         builderWiFi.setMessage("Debe conectarse a nuestra red Wi-Fi. ¿Conectar?");
         MacAddress = getMacAddress();
 
-        /*
-        try{
-        } catch (Exception exception){
-            builderWiFi .setCancelable(false)
-            .setPositiveButton("Si", new DialogInterface.OnClickListener(){
-                public void onClick(DialogInterface dialog, int id){
-                    //TODO: Activar Wi-Fi y Conectarse al AP
-                }
-            })
-            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-                }
-            });
-            final AlertDialog alertdialog = builder.create();
-            alertdialog.show();
-        }*/
-
         LabelParqueoMasCerca = (TextView) findViewById(R.id.lbAutoParqueo);
         ListadoLocales = (Spinner) findViewById(R.id.spLocales);
         ListadoParqueos = (Spinner) findViewById(R.id.spParqueos);
