@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp" >
+
+        <ImageButton
+            android:id="@+id/spot1"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/occupied1" />
+
+        <ImageButton
+            android:id="@+id/spot2"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_alignTop="@+id/spot1"
+            android:layout_toRightOf="@+id/spot1"
+            android:src="@drawable/occupied2" />
+
+        <ImageButton
+            android:id="@+id/spot4"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/spot3"
+            android:src="@drawable/occupied4" />
+
+        <ImageButton
+            android:id="@+id/spot3"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_alignTop="@+id/spot2"
+            android:layout_toLeftOf="@+id/spot4"
+            android:src="@drawable/occupied3" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/relativeLayout1"
+        android:layout_alignLeft="@+id/relativeLayout1"
+        android:layout_marginBottom="47dp"
+        android:text="TextView" />
+
+</RelativeLayout>
