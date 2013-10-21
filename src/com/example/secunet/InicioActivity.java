@@ -22,6 +22,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,7 +47,7 @@ public class InicioActivity extends Activity {
     Intent intentMain;
     Intent intentCheck;
     WifiManager wifiManager;
-    private Button entrar;
+    Button Entrar;
     List<WifiConfiguration> listaWifi;
     ProgressDialog Cargando;
     NfcAdapter nfcAdapter;
@@ -55,14 +56,13 @@ public class InicioActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
-    	entrar = (Button) findViewById(R.id.btBuscar);
-    	
     	nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         
     	Parse.initialize(this,"NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI","iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF");
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio1);
+        Entrar = (Button) findViewById(R.id.btBuscar);
         PushService.setDefaultPushCallback(InicioActivity.this, InicioActivity.class);
         ParseInstallation.getCurrentInstallation().saveInBackground();
         PushService.subscribe(InicioActivity.this,"global", MainActivity.class);
@@ -70,35 +70,35 @@ public class InicioActivity extends Activity {
         wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
 
         getMacAddress();
+        intentMain = new Intent(InicioActivity.this, MainActivity.class);
+        intentCheck = new Intent(InicioActivity.this, CheckActivity.class);
+        
+        Entrar.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        	    InicioActivity.this.startActivity(intentMain);
+                finish();
+        	}
+        });
         
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
             	dialog.dismiss();
             }
         });
-        builder.setPositiveButton("Iniciar", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Buscar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-//                InicioActivity.this.startActivity(intentMain);
-//                finish();
+                InicioActivity.this.startActivity(intentMain);
+                finish();
             }
         });
         
-        builder.setMessage("Toca el botón de buscar parqueos para iniciar!").setTitle("Hola!");
+        builder.setMessage("Toca el botón buscar para iniciar...").setTitle("Hola!");
         dialog = builder.create();
         
         Cargando = ProgressDialog.show(InicioActivity.this, "Cargando", "Espere por favor...");
-
-        intentMain = new Intent(InicioActivity.this, MainActivity.class);
-        intentCheck = new Intent(InicioActivity.this, CheckActivity.class);
         
-//        entrar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                InicioActivity.this.startActivity(intentMain);
-//                finish();
-//            }
-//        });
         new checkParqueado().execute();
     }
     
@@ -136,37 +136,25 @@ public class InicioActivity extends Activity {
             textView.setText(bytesToHexString(elTag.getId()));
             
             if (messages != null) { 
-                //Log.d(TAG, "Found " + messages.length + " NDEF messages");
-
-                //vibrate(); // signal found messages :-)
-
                 // parse to records
                 for (int i = 0; i < messages.length; i++) {
                     try {
                         List<Record> records = new Message((NdefMessage)messages[i]);
 
-                        //Log.d(TAG, "Found " + records.size() + " records in message " + i);
-
                         for(int k = 0; k < records.size(); k++) {
-                            //Log.d(TAG, " Record #" + k + " is of class " + records.get(k).getClass().getSimpleName());
-                            
                             Record record = records.get(k);
                             if(record instanceof AndroidApplicationRecord) {
                                 AndroidApplicationRecord aar = (AndroidApplicationRecord) record;
                                 TextView textView1 = (TextView) findViewById(R.id.idTag);
                                 textView1.setText( "El Paquete es " + aar.getPackageName());
-                                //Log.d(TAG, "Package is " + aar.getPackageName());
                             }
                         }
                     } catch (Exception e) {
-                        Toast.makeText(this, "Problema parseando el mensaje", Toast.LENGTH_SHORT).show(); //Log.e(TAG, "Problem parsing message", e);
-                        
+                        Toast.makeText(this, "Problema parseando el mensaje", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
-        } else {
-            // ignore
-        }        
+        }    
     }
     
     private String bytesToHexString(byte[] src) {
@@ -284,4 +272,6 @@ public class InicioActivity extends Activity {
             }
         }
     }
+
+
 }

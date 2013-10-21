@@ -50,8 +50,8 @@ public class WS_Info {
         static final String KEY_IDPARQUEO = "IdParqueo";
         static final String KEY_ESTADOPARQUEO = "Estado";
         static final String KEY_PISOPARQUEO = "Piso";
-        static final String KEY_LADOPARQUEO = "Lado";
-        static final String KEY_PESOPARQUEO = "Peso";
+        //static final String KEY_LADOPARQUEO = "Lado";
+        //static final String KEY_PESOPARQUEO = "Peso";
 
         public static ArrayList<Local> ParsearLocales(String XML){
             ArrayList<Local> Locales = new ArrayList<Local>();
@@ -91,8 +91,8 @@ public class WS_Info {
                 Parqueos.get(i).IdParqueo = parser.getValue(e, KEY_IDPARQUEO);
                 Parqueos.get(i).Estado = parser.getValue(e, KEY_ESTADOPARQUEO);
                 Parqueos.get(i).Piso = parser.getValue(e, KEY_PISOPARQUEO);
-                Parqueos.get(i).Lado = parser.getValue(e, KEY_LADOPARQUEO);
-                Parqueos.get(i).Peso = parser.getValue(e, KEY_PESOPARQUEO);
+                //Parqueos.get(i).Lado = parser.getValue(e, KEY_LADOPARQUEO);
+                //Parqueos.get(i).Peso = parser.getValue(e, KEY_PESOPARQUEO);
             }
             return Parqueos;
         }
@@ -108,8 +108,8 @@ public class WS_Info {
             ParqueoCercano.IdParqueo = parser.getValue(e, KEY_IDPARQUEO);
             ParqueoCercano.Estado = parser.getValue(e, KEY_ESTADOPARQUEO);
             ParqueoCercano.Piso = parser.getValue(e, KEY_PISOPARQUEO);
-            ParqueoCercano.Lado = parser.getValue(e, KEY_LADOPARQUEO);
-            ParqueoCercano.Peso = parser.getValue(e, KEY_PESOPARQUEO);
+            //ParqueoCercano.Lado = parser.getValue(e, KEY_LADOPARQUEO);
+            //ParqueoCercano.Peso = parser.getValue(e, KEY_PESOPARQUEO);
 
             return ParqueoCercano;
         }
