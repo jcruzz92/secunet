@@ -39,22 +39,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ParqueoInterfaceActivity extends Activity implements View.OnClickListener, TextToSpeech.OnInitListener{
-ImageButton Parqueo1;
-ImageButton Parqueo2;
-ImageButton Parqueo3;
-ImageButton Parqueo4;
-TextView txtImage;
-Intent intent;
-Parqueo ParqueoManual;
-private String MacAddress;
-Parqueo park;
-int numero;
-private int IdEstado;
-private TextToSpeech myTTS;
-private int MY_DATA_CHECK_CODE = 0;
-
-ArrayList<Parqueo> ParqueosManual;
-
+	
+	ImageButton Parqueo1;
+	ImageButton Parqueo2;
+	ImageButton Parqueo3;
+	ImageButton Parqueo4;
+	TextView txtImage;
+	Intent intent;
+	Parqueo ParqueoManual;
+	private String MacAddress;
+	Parqueo park;
+	int numero;
+	private int IdEstado;
+	private TextToSpeech myTTS;
+	private int MY_DATA_CHECK_CODE = 0;
+	
+	ArrayList<Parqueo> ParqueosManual;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,7 @@ ArrayList<Parqueo> ParqueosManual;
 		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		intent = new Intent(ParqueoInterfaceActivity.this, CheckActivity.class);
 		MacAddress = getMacAddress();
-		 ParqueoManual = new Parqueo();
+		ParqueoManual = new Parqueo();
 		//txtImage = (TextView)findViewById(R.id.txtImage);
 		//txtImage.setText(Parqueo1.getTag().toString());
 		new buscarParqueosPorPiso().execute();
@@ -92,12 +92,8 @@ ArrayList<Parqueo> ParqueosManual;
                             public void onClick(DialogInterface dialog, int id){
                                 ParqueoInterfaceActivity.this.startActivity(intent);
                                 finish();
-                                String words;
                                 new asignarParqueo().execute(false);
-                                
-                                    words = "Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
-                                
-                                speakWords(words);
+                                speakWords("Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString());
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -207,8 +203,8 @@ ArrayList<Parqueo> ParqueosManual;
                 alertdialog.show();
 			}
 		});
-		
 	}
+	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == MY_DATA_CHECK_CODE) {
             if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
@@ -221,20 +217,23 @@ ArrayList<Parqueo> ParqueosManual;
             }
         }
     }
+	
 	private void speakWords(String speech) {
         myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
     }
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	   public String getMacAddress() {
-	        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-	        WifiInfo info = manager.getConnectionInfo();
-	        return info.getMacAddress();
-	    }
+	   
+	public String getMacAddress() {
+        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        WifiInfo info = manager.getConnectionInfo();
+        return info.getMacAddress();
+    }
 	
 	public class buscarParqueosPorPiso extends AsyncTask<Void, Void, String> {
         @Override
@@ -289,7 +288,6 @@ ArrayList<Parqueo> ParqueosManual;
         }
     }
 	
-	
 	public class asignarParqueo extends AsyncTask<Boolean, Void, String> {
         @Override
         protected String doInBackground(Boolean... cualquiera) {
@@ -336,7 +334,6 @@ ArrayList<Parqueo> ParqueosManual;
         }
     }
 
-
 	@Override
 	public void onInit(int initStatus) {
 		// TODO Auto-generated method stub
@@ -344,9 +341,10 @@ ArrayList<Parqueo> ParqueosManual;
             myTTS.setLanguage(new Locale("spa", "ESP"));
         }
         else if (initStatus == TextToSpeech.ERROR){
-            Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error en el TTS...", Toast.LENGTH_SHORT).show();
         }
 	}
+	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
