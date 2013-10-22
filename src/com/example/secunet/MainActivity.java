@@ -105,17 +105,17 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         SeleccionarParqueoManualmente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            if(SeleccionarParqueoManualmente.isChecked()){
-                SeccionManual.setVisibility(View.VISIBLE);
-                SeccionAuto.setVisibility(View.GONE);
-                MainActivity.this.startActivity(intentInterface);
-               
+	            if(SeleccionarParqueoManualmente.isChecked()){
+	                SeccionManual.setVisibility(View.VISIBLE);
+	                SeccionAuto.setVisibility(View.GONE);
+	                MainActivity.this.startActivity(intentInterface);
+	               
+	            }
+	            else{
+	                SeccionManual.setVisibility(View.GONE);
+	                SeccionAuto.setVisibility(View.VISIBLE);
+	            }
             }
-            else{
-                SeccionManual.setVisibility(View.GONE);
-                SeccionAuto.setVisibility(View.VISIBLE);
-            }
-                }
         });
 
         ListadoLocales.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

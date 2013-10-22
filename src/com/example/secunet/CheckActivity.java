@@ -10,6 +10,7 @@ import android.net.wifi.WifiManager;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -35,6 +36,8 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     private int MY_DATA_CHECK_CODE = 0;
     private TextToSpeech myTTS;
     private TextView TextoMiParqueo;
+    private TextView LabelPark;
+    private TextView LabelIndicaciones;
     private String MacAddress;
     private Parqueo MiParqueo;
     private Button Repetir;
@@ -42,6 +45,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     Intent intentParqueoLibre;
     NfcAdapter nfcAdapter;
     PendingIntent nfcPendingIntent;
+    String CodigoTag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -54,6 +58,8 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
         startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
         TextoMiParqueo = (TextView) findViewById(R.id.lbMiParqueo);
+        LabelPark = (TextView) findViewById(R.id.labelPrk);
+        LabelIndicaciones = (TextView) findViewById(R.id.textView1);
         Repetir = (Button) findViewById(R.id.btRepetir);
         Liberar = (Button) findViewById(R.id.btLiberarParqueo);
         intentParqueoLibre = new Intent(CheckActivity.this, ParqueoLibreActivity.class);
@@ -101,13 +107,12 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     @Override
     public void onNewIntent(Intent intent) {
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {   
-            Toast.makeText(this, "Tag Encontrado", Toast.LENGTH_SHORT).show();
-        	
             Parcelable[] messages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
             Tag elTag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
-            TextView textView = (TextView) findViewById(R.id.leido);
-            textView.setText(bytesToHexString(elTag.getId()));
+            TextView idTag = (TextView) findViewById(R.id.leido);
+            CodigoTag = bytesToHexString(elTag.getId());
+            idTag.setText(bytesToHexString(elTag.getId()));
             
             if (messages != null) { 
                 // parse to records
@@ -128,6 +133,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
                     }
                 }
             }
+            new parquearse().execute();
         }    
     }
     
@@ -265,6 +271,48 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
+        }
+    }
+
+    public class parquearse extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... voids){
+            Boolean response;
+
+            SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_PARQUEARSE);
+
+            request.addProperty("idParqueo", MiParqueo.IdParqueo);
+            request.addProperty("idTag", CodigoTag);
+            request.addProperty("MacAddress", getMacAddress());
+            
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                    SoapEnvelope.VER11);
+            envelope.dotNet = true;
+
+            envelope.setOutputSoapObject(request);
+
+            HttpTransportSE httpTransport = new HttpTransportSE(WS_Info.GlobalParameters.SOAP_ADDRESS);
+
+            try {
+                httpTransport.debug = true;
+                httpTransport.call(WS_Info.GlobalParameters.SOAP_ACTION_PARQUEARSE, envelope);
+                response = Boolean.valueOf(envelope.getResponse().toString());
+            }  catch (Exception exception)   {
+                response = false;
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean s){
+            super.onPostExecute(s);
+            if (s) {
+            	LabelPark.setText("Esta parqueado en:");
+            	LabelIndicaciones.setVisibility(View.INVISIBLE);
+			}
+            else{
+            	///error
+            }
         }
     }
 }

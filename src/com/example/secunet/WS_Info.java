@@ -14,9 +14,6 @@ import java.util.ArrayList;
 public class WS_Info {
 
     public static class GlobalParameters extends ListActivity{
-
-        public static final String networkSSID = "\"" + "Billy Joe" + "\"";
-
         public static final String SOAP_ACTION_CHECKPARQUEADO = "http://proyecto.org/VerificarSiEstaParqueado";
         public static final String SOAP_ACTION_PARQUEOALEATORIO = "http://proyecto.org/CualquierParqueo";
         public static final String SOAP_ACTION_PARQUEOSLIBRES = "http://proyecto.org/ParqueosLibres";
@@ -25,6 +22,7 @@ public class WS_Info {
         public static final String SOAP_ACTION_SETPARQUEO = "http://proyecto.org/AsignarParqueo";
         public static final String SOAP_ACTION_BYMAC = "http://proyecto.org/ParqueoPorMAC";
         public static final String SOAP_ACTION_LIBERARPARQUEO = "http://proyecto.org/LiberarParqueo";
+        public static final String SOAP_ACTION_PARQUEARSE = "http://proyecto.org/VerificarParquear";
 
         public static final String OPERATION_NAME_CHECKPARQUEADO = "VerificarSiEstaParqueado";
         public static final String OPERATION_NAME_PARQUEOALEATORIO = "CualquierParqueo";
@@ -34,11 +32,12 @@ public class WS_Info {
         public static final String OPERATION_NAME_SETPARQUEO = "AsignarParqueo";
         public static final String OPERATION_NAME_BYMAC = "ParqueoPorMAC";
         public static final String OPERATION_NAME_LIBERARPARQUEO = "LiberarParqueo";
+        public static final String OPERATION_NAME_PARQUEARSE = "VerificarParquear";
 
         public static final String WSDL_TARGET_NAMESPACE = "http://proyecto.org/";
 
-        //public static final String SOAP_ADDRESS = "http://192.168.1.125/ProyectoWebService/WebServiceProyecto.asmx";
-        public static final String SOAP_ADDRESS = "http://10.0.0.2/ProyectoWebService/WebServiceProyecto.asmx";
+        public static final String SOAP_ADDRESS = "http://192.168.43.155/ProyectoWebService/WebServiceProyecto.asmx";
+        //public static final String SOAP_ADDRESS = "http://10.0.1.13/ProyectoWebService/WebServiceProyecto.asmx";
 
         static final String KEY_LOCAL = "Local"; // parent node
         static final String KEY_NOMRBEPISO = "NombrePiso";

@@ -44,7 +44,6 @@ public class ParqueoInterfaceActivity extends Activity implements View.OnClickLi
 	ImageButton Parqueo2;
 	ImageButton Parqueo3;
 	ImageButton Parqueo4;
-	TextView txtImage;
 	Intent intent;
 	Parqueo ParqueoManual;
 	private String MacAddress;
@@ -74,8 +73,6 @@ public class ParqueoInterfaceActivity extends Activity implements View.OnClickLi
 		intent = new Intent(ParqueoInterfaceActivity.this, CheckActivity.class);
 		MacAddress = getMacAddress();
 		ParqueoManual = new Parqueo();
-		//txtImage = (TextView)findViewById(R.id.txtImage);
-		//txtImage.setText(Parqueo1.getTag().toString());
 		new buscarParqueosPorPiso().execute();
 		
 		Parqueo1.setOnClickListener(new OnClickListener() {
@@ -268,7 +265,6 @@ public class ParqueoInterfaceActivity extends Activity implements View.OnClickLi
             super.onPostExecute(s);
             ParqueosManual = WS_Info.GlobalParameters.ParsearParqueos(s);
            
-          txtImage.setText("MADNESS");
             for (int i =0;i<ParqueosManual.size();i++)
     		{
     			if(Integer.parseInt((ParqueosManual.get(i).IdParqueo)) == 1){
