@@ -109,7 +109,6 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
 	                SeccionManual.setVisibility(View.VISIBLE);
 	                SeccionAuto.setVisibility(View.GONE);
 	                MainActivity.this.startActivity(intentInterface);
-	               
 	            }
 	            else{
 	                SeccionManual.setVisibility(View.GONE);
@@ -121,9 +120,11 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         ListadoLocales.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                IdPiso = Integer.valueOf(String.valueOf(view.getTag()));
-                new buscarParqueosPorPiso().execute();
-                new buscarParqueoMasCercano().execute();
+            	if (WS_Info.GlobalParameters.HayLocales) {
+					IdPiso = Integer.valueOf(String.valueOf(view.getTag()));
+	                new buscarParqueosPorPiso().execute();
+	                new buscarParqueoMasCercano().execute();
+				}
             }
 
             @Override
@@ -135,7 +136,9 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         ListadoParqueos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l){
-                ParqueoManual = (Parqueo)view.getTag();
+            	if (WS_Info.GlobalParameters.HayParqueos) {
+					ParqueoManual = (Parqueo)view.getTag();
+				}                
             }
 
             @Override
@@ -147,57 +150,80 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         AsignarParqueo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                builder.setMessage("Desea este parqueo?");
-                MacAddress = getMacAddress();
-                builder .setCancelable(false)
-                        .setPositiveButton("Si", new DialogInterface.OnClickListener(){
-                            public void onClick(DialogInterface dialog, int id){
-                                MainActivity.this.startActivity(intent);
-                                finish();
-                                String words;
-                                new asignarParqueo().execute(false);
-                                if(SeleccionarParqueoManualmente.isChecked()){
-                                    words = "Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
-                                }else{
-                                    words = "Dirijase al " + ParqueoAuto.Piso + ", parqueo " + ParqueoAuto.IdParqueo.toString() ;
+            	if (WS_Info.GlobalParameters.HayParqueos) {
+            		builder.setMessage("Desea este parqueo?");
+                    MacAddress = getMacAddress();
+                    builder .setCancelable(false)
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener(){
+                                public void onClick(DialogInterface dialog, int id){
+                                    MainActivity.this.startActivity(intent);
+                                    finish();
+                                    String words;
+                                    new asignarParqueo().execute(false);
+                                    if(SeleccionarParqueoManualmente.isChecked()){
+                                        words = "Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
+                                    }else{
+                                        words = "Dirijase al " + ParqueoAuto.Piso + ", parqueo " + ParqueoAuto.IdParqueo.toString() ;
+                                    }
+                                    speakWords(words);
                                 }
-                                speakWords(words);
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                final AlertDialog alertdialog = builder.create();
-                alertdialog.show();
-
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    final AlertDialog alertdialog = builder.create();
+                    alertdialog.show();
+				} else {
+					builder.setMessage("No hay parqueos disponibles...");
+                    builder .setCancelable(false)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                                public void onClick(DialogInterface dialog, int id){
+                                	dialog.cancel();
+                                }
+                            });
+                    final AlertDialog alertdialog = builder.create();
+                    alertdialog.show();
+				}
             }
         });
 
         AsignarCualquiera.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                builder.setMessage("Desea el parqueo " + ParqueoAleatorio.IdParqueo + ", " + ParqueoAleatorio.Piso + "?");
-                MacAddress = getMacAddress();
-                builder .setCancelable(false)
-                        .setPositiveButton("Si", new DialogInterface.OnClickListener(){
-                            public void onClick(DialogInterface dialog, int id){
-                                MainActivity.this.startActivity(intent);
-                                finish();
-                                String words;
-                                new asignarParqueo().execute(false);
-                                words = "Dirijase al " + ParqueoAleatorio.Piso + ", parqueo " + ParqueoAleatorio.IdParqueo.toString() ;
-                                speakWords(words);
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                final AlertDialog alertdialog = builder.create();
-                alertdialog.show();
+            	if (WS_Info.GlobalParameters.HayParqueoUnico) {
+            		builder.setMessage("Desea el parqueo " + ParqueoAleatorio.IdParqueo + ", " + ParqueoAleatorio.Piso + "?");
+                    MacAddress = getMacAddress();
+                    builder .setCancelable(false)
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener(){
+                                public void onClick(DialogInterface dialog, int id){
+                                    MainActivity.this.startActivity(intent);
+                                    finish();
+                                    String words;
+                                    new asignarParqueo().execute(false);
+                                    words = "Dirijase al " + ParqueoAleatorio.Piso + ", parqueo " + ParqueoAleatorio.IdParqueo.toString() ;
+                                    speakWords(words);
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    final AlertDialog alertdialog = builder.create();
+                    alertdialog.show();
+				} else {
+					builder.setMessage("No hay parqueos disponibles...");
+                    builder .setCancelable(false)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                                public void onClick(DialogInterface dialog, int id){
+                                	dialog.cancel();
+                                }
+                            });
+                    final AlertDialog alertdialog = builder.create();
+                    alertdialog.show();
+				}
             }
         });
     }
@@ -327,9 +353,14 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView v = new TextView(getApplicationContext());
-            v.setTextColor(Color.BLACK);
-            v.setText(data.get(position).Nombre);
-            v.setTag(Integer.parseInt(data.get(position).Nivel));
+            if (WS_Info.GlobalParameters.HayLocales) {
+				v.setTextColor(Color.BLACK);
+	            v.setText(data.get(position).Nombre);
+	            v.setTag(Integer.parseInt(data.get(position).Nivel));
+			} else {
+	            v.setText("No hay locales disponibles...");
+			}
+            
             return v;
         }
 
@@ -449,9 +480,13 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView v = new TextView(getApplicationContext());
-            v.setTextColor(Color.BLACK);
-            v.setText(data.get(position).Piso + " - " + data.get(position).IdParqueo + " - " + data.get(position).Estado);
-            v.setTag(data.get(position));
+            if (WS_Info.GlobalParameters.HayParqueos) {
+            	v.setTextColor(Color.BLACK);
+                v.setText(data.get(position).Piso + " - " + data.get(position).IdParqueo + " - " + data.get(position).Estado);
+                v.setTag(data.get(position));
+			}else {
+				v.setText("No hay parqueos dsponibles...");
+			}
             return v;
         }
 
