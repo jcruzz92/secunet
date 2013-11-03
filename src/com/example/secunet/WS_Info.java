@@ -1,13 +1,12 @@
 package com.example.secunet;
 
-import android.R.integer;
-import android.app.ListActivity;
+import java.util.ArrayList;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
+import android.app.ListActivity;
 
 /**
  * Created by Jorge Luis on 7/15/13.
