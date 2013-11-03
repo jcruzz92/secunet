@@ -1,5 +1,6 @@
 package com.example.secunet;
 
+import android.R.integer;
 import android.app.ListActivity;
 
 import org.w3c.dom.Document;
@@ -30,6 +31,7 @@ public class WS_Info {
         public static final String SOAP_ACTION_LIBERARPARQUEO = "http://proyecto.org/LiberarParqueo";
         public static final String SOAP_ACTION_PARQUEARSE = "http://proyecto.org/VerificarParquear";
         public static final String SOAP_ACTION_PARQUEOSPORPISO = "http://proyecto.org/ParqueosPorPiso";
+        public static final String SOAP_ACTION_DESOCUPARPARQUEO = "http://proyecto.org/DesocuparParqueo";
 
         public static final String OPERATION_NAME_CHECKPARQUEADO = "VerificarSiEstaParqueado";
         public static final String OPERATION_NAME_PARQUEOALEATORIO = "CualquierParqueo";
@@ -41,6 +43,7 @@ public class WS_Info {
         public static final String OPERATION_NAME_LIBERARPARQUEO = "LiberarParqueo";
         public static final String OPERATION_NAME_PARQUEARSE = "VerificarParquear";
         public static final String OPERATION_NAME_PARQUEOSPORPISO = "ParqueosPorPiso";
+        public static final String OPERATION_NAME_DESOCUPARPARQUEO = "DesocuparParqueo";
 
         public static final String WSDL_TARGET_NAMESPACE = "http://proyecto.org/";
 
@@ -57,6 +60,7 @@ public class WS_Info {
         static final String KEY_IDPARQUEO = "IdParqueo";
         static final String KEY_ESTADOPARQUEO = "Estado";
         static final String KEY_PISOPARQUEO = "Piso";
+        static final String KEY_IDESTADOPARQUEO = "idEstado";
 //        static final String KEY_LADOPARQUEO = "Lado";
 //        static final String KEY_PESOPARQUEO = "Peso";
 
@@ -103,7 +107,7 @@ public class WS_Info {
 	                Parqueos.get(i).IdParqueo = parser.getValue(e, KEY_IDPARQUEO);
 	                Parqueos.get(i).Estado = parser.getValue(e, KEY_ESTADOPARQUEO);
 	                Parqueos.get(i).Piso = parser.getValue(e, KEY_PISOPARQUEO);
-	                //Parqueos.get(i).Lado = parser.getValue(e, KEY_LADOPARQUEO);
+	                Parqueos.get(i).idEstado = Integer.parseInt(parser.getValue(e, KEY_IDESTADOPARQUEO));
 	                //Parqueos.get(i).Peso = parser.getValue(e, KEY_PESOPARQUEO);
 				}
 			}
@@ -127,6 +131,7 @@ public class WS_Info {
 	            ParqueoCercano.IdParqueo = parser.getValue(e, KEY_IDPARQUEO);
 	            ParqueoCercano.Estado = parser.getValue(e, KEY_ESTADOPARQUEO);
 	            ParqueoCercano.Piso = parser.getValue(e, KEY_PISOPARQUEO);
+	            ParqueoCercano.idEstado = Integer.parseInt(parser.getValue(e, KEY_IDESTADOPARQUEO));
 			}else {
 				HayParqueoUnico = false;
 			}
