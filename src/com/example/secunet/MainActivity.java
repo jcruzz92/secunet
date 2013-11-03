@@ -37,7 +37,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
 
     private Spinner ListadoLocales;
     private Spinner ListadoParqueos;
-    private Switch SeleccionarParqueoManualmente;
+    private Button SeleccionarParqueoManualmente;
     private Button AsignarParqueo;
     private Button AsignarCualquiera;
     private TextView LabelParqueoMasCerca;
@@ -82,7 +82,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         AsignarCualquiera = (Button)findViewById(R.id.btCualquiera);
         ParqueosManual = new ArrayList<Parqueo>();
 
-        SeleccionarParqueoManualmente = (Switch) findViewById(R.id.elegirMiParqueo);
+        SeleccionarParqueoManualmente = (Button) findViewById(R.id.btManual);
         SeccionManual = (LinearLayout) findViewById(R.id.PARQUEO_MANUAL);
         SeccionAuto = (LinearLayout) findViewById(R.id.PARQUEO_AUTO);
 
@@ -96,21 +96,14 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         new buscarParqueoAleatorio().execute();
         
         intentInterface = new Intent(MainActivity.this, ParqueoInterfaceActivity.class);
-
+        
         SeleccionarParqueoManualmente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-	            if(SeleccionarParqueoManualmente.isChecked()){
-//	                SeccionManual.setVisibility(View.VISIBLE);
-//	                SeccionAuto.setVisibility(View.GONE);
-	                MainActivity.this.startActivity(intentInterface);
-	            }
-	            else{
-//	                SeccionManual.setVisibility(View.GONE);
-//	                SeccionAuto.setVisibility(View.VISIBLE);
-	            }
-            }
-        });
+			
+			@Override
+			public void onClick(View v) {
+				MainActivity.this.startActivity(intentInterface);
+			}
+		});
 
         ListadoLocales.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -155,11 +148,9 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
                                     finish();
                                     String words;
                                     new asignarParqueo().execute(false);
-                                    if(SeleccionarParqueoManualmente.isChecked()){
-                                        words = "Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
-                                    }else{
+                                    
                                         words = "Dirijase al " + ParqueoAuto.Piso + ", parqueo " + ParqueoAuto.IdParqueo.toString() ;
-                                    }
+                                    
                                     speakWords(words);
                                 }
                             })
@@ -533,12 +524,9 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
                 request.addProperty("idParqueo", ParqueoAleatorio.IdParqueo);
             }
             else{
-                if(SeleccionarParqueoManualmente.isChecked()){
-                    request.addProperty("idParqueo", ParqueoManual.IdParqueo);
-                }
-                else{
+                
                     request.addProperty("idParqueo", ParqueoAuto.IdParqueo);
-                }
+                
             }
 
             request.addProperty("macAddress", MacAddress);

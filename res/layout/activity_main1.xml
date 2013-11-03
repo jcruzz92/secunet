@@ -36,29 +36,12 @@
         android:id="@+id/OPCIONES"
         android:layout_marginBottom="8dp">
 
-        <TextView
-            style="?android:attr/listSeparatorTextViewStyle"
+        <Button
+            android:id="@+id/btManual"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="opciones"
-            android:id="@+id/textView"
-            android:textAlignment="inherit"
-            android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/SelectorLocales"
-            android:textStyle="bold"
-            android:layout_gravity="left|center_vertical" />
+            android:text="SELECCIONAR MANUALMENTE" />
 
-        <Switch
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Seleccionar manualmente"
-            android:id="@+id/elegirMiParqueo"
-            android:layout_gravity="left|center_vertical"
-            android:checked="false"
-            android:paddingLeft="8dp"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp" />
     </LinearLayout>
 
     <LinearLayout
