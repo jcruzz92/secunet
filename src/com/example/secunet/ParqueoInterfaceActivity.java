@@ -9,10 +9,6 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 import org.w3c.dom.Text;
 
-import com.example.secunet.MainActivity.asignarParqueo;
-import com.example.secunet.MainActivity.buscarParqueoAleatorio;
-import com.example.secunet.MainActivity.buscarParqueoMasCercano;
-import com.example.secunet.MainActivity.buscarParqueosPorPiso;
 
 
 
@@ -39,21 +35,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ParqueoInterfaceActivity extends Activity implements View.OnClickListener, TextToSpeech.OnInitListener{
-	
-	ImageButton Parqueo1;
-	ImageButton Parqueo2;
-	ImageButton Parqueo3;
-	ImageButton Parqueo4;
-	Intent intent;
-	Parqueo ParqueoManual;
-	private String MacAddress;
-	Parqueo park;
-	int numero;
-	private int IdEstado;
-	private TextToSpeech myTTS;
-	private int MY_DATA_CHECK_CODE = 0;
-	
-	ArrayList<Parqueo> ParqueosManual;
+ImageButton Parqueo1;
+ImageButton Parqueo2;
+ImageButton Parqueo3;
+ImageButton Parqueo4;
+TextView txtImage;
+Intent intent;
+Parqueo ParqueoManual;
+public Parqueo ParqueoUno;
+public Parqueo ParqueoDos;
+public Parqueo ParqueoTres;
+public Parqueo ParqueoCuatro;
+private String MacAddress;
+Parqueo park;
+int numero;
+private int IdEstado;
+private TextToSpeech myTTS;
+private int MY_DATA_CHECK_CODE = 0;
+
+ArrayList<Parqueo> ParqueosManual;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,19 +69,23 @@ public class ParqueoInterfaceActivity extends Activity implements View.OnClickLi
 		Parqueo2 = (ImageButton)findViewById(R.id.spot2);
 		Parqueo3 = (ImageButton)findViewById(R.id.spot3);
 		Parqueo4 = (ImageButton)findViewById(R.id.spot4);
+		txtImage = (TextView)findViewById(R.id.textView1);
 		ParqueosManual = new ArrayList<Parqueo>();
 		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		intent = new Intent(ParqueoInterfaceActivity.this, CheckActivity.class);
 		MacAddress = getMacAddress();
-		ParqueoManual = new Parqueo();
+		 ParqueoManual = new Parqueo();
+		//txtImage = (TextView)findViewById(R.id.txtImage);
+		//txtImage.setText(Parqueo1.getTag().toString());
 		new buscarParqueosPorPiso().execute();
+		
 		
 		Parqueo1.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				ParqueoManual = ParqueosManual.get(0);
+				ParqueoManual = ParqueoUno;
 				((ImageButton) v).setImageResource(R.drawable.occupied1);
 				builder.setMessage("Desea este parqueo?");
                 MacAddress = getMacAddress();
@@ -89,8 +94,12 @@ public class ParqueoInterfaceActivity extends Activity implements View.OnClickLi
                             public void onClick(DialogInterface dialog, int id){
                                 ParqueoInterfaceActivity.this.startActivity(intent);
                                 finish();
+                                String words;
                                 new asignarParqueo().execute(false);
-                                speakWords("Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString());
+                                
+                                    words = "Dirijase al " + ParqueoUno.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
+                                
+                                speakWords(words);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -109,7 +118,7 @@ public class ParqueoInterfaceActivity extends Activity implements View.OnClickLi
 			@Override
 			
 			public void onClick(View v) {
-				ParqueoManual = ParqueosManual.get(1);
+				ParqueoManual = ParqueoDos;
 				// TODO Auto-generated method stub
 				((ImageButton) v).setImageResource(R.drawable.occupied2);
 				builder.setMessage("Desea este parqueo?");
@@ -142,7 +151,7 @@ public class ParqueoInterfaceActivity extends Activity implements View.OnClickLi
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				ParqueoManual = ParqueosManual.get(2);
+				ParqueoManual = ParqueoTres;
 				((ImageButton) v).setImageResource(R.drawable.occupied3);
 				builder.setMessage("Desea este parqueo?");
                 MacAddress = getMacAddress();
@@ -173,7 +182,7 @@ public class ParqueoInterfaceActivity extends Activity implements View.OnClickLi
 			
 			@Override
 			public void onClick(View v) {
-				ParqueoManual = ParqueosManual.get(3);
+				ParqueoManual = ParqueoCuatro;
 				// TODO Auto-generated method stub
 				((ImageButton) v).setImageResource(R.drawable.occupied4);
 				builder.setMessage("Desea este parqueo?");
@@ -200,8 +209,8 @@ public class ParqueoInterfaceActivity extends Activity implements View.OnClickLi
                 alertdialog.show();
 			}
 		});
+		
 	}
-	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == MY_DATA_CHECK_CODE) {
             if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
@@ -214,30 +223,29 @@ public class ParqueoInterfaceActivity extends Activity implements View.OnClickLi
             }
         }
     }
-	
 	private void speakWords(String speech) {
         myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
     }
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	   public String getMacAddress() {
+	        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+	        WifiInfo info = manager.getConnectionInfo();
+	        return info.getMacAddress();
+	    }
 	   
-	public String getMacAddress() {
-        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        WifiInfo info = manager.getConnectionInfo();
-        return info.getMacAddress();
-    }
+	   
 	
 	public class buscarParqueosPorPiso extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... voids) {
             String response;
 
-            SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_PARQUEOSLIBRES);
+            SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_PARQUEOSPORPISO);
 
             request.addProperty("idPiso", 1);
 
@@ -251,7 +259,7 @@ public class ParqueoInterfaceActivity extends Activity implements View.OnClickLi
 
             try {
                 httpTransport.debug = true;
-                httpTransport.call(WS_Info.GlobalParameters.SOAP_ACTION_PARQUEOSLIBRES, envelope);
+                httpTransport.call(WS_Info.GlobalParameters.SOAP_ACTION_PARQUEOSPORPISO, envelope);
                 response = httpTransport.responseDump;
 
             }  catch (Exception exception)   {
@@ -264,32 +272,37 @@ public class ParqueoInterfaceActivity extends Activity implements View.OnClickLi
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             ParqueosManual = WS_Info.GlobalParameters.ParsearParqueos(s);
+            ParqueoUno = ParqueosManual.get(0);
+            ParqueoDos = ParqueosManual.get(1);
+            ParqueoTres = ParqueosManual.get(2);
+            ParqueoCuatro = ParqueosManual.get(3);
+          
            
-            for (int i =0;i<ParqueosManual.size();i++)
-    		{
-    			if(Integer.parseInt((ParqueosManual.get(i).IdParqueo)) == 1){
+    			if(ParqueoUno.Estado.trim().equals("Libre")){
     				Parqueo1.setImageResource(R.drawable.available1);
     			}
-    			if(Integer.parseInt((ParqueosManual.get(i).IdParqueo)) == 2){
-    				Parqueo2.setImageResource(R.drawable.available2);	
+    			if(ParqueoDos.Estado.trim().equals("Libre")){
+    				Parqueo2.setImageResource(R.drawable.available2);
     			}
-    			if(Integer.parseInt((ParqueosManual.get(i).IdParqueo)) == 3 ){
+    			if(ParqueoTres.Estado.trim().equals("Libre")){
     				Parqueo3.setImageResource(R.drawable.available3);
     			}
-    			if(Integer.parseInt((ParqueosManual.get(i).IdParqueo)) == 4){
+    			if(ParqueoCuatro.Estado.trim().equals("Libre")){
     				Parqueo4.setImageResource(R.drawable.available4);
     			}
-    		}
+    		
             
         }
     }
+	
 	
 	public class asignarParqueo extends AsyncTask<Boolean, Void, String> {
         @Override
         protected String doInBackground(Boolean... cualquiera) {
             String response = null;
             SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_SETPARQUEO);
-
+            String Parqueo;
+            
             IdEstado = 1;
 
             if (cualquiera[0]){
@@ -330,6 +343,7 @@ public class ParqueoInterfaceActivity extends Activity implements View.OnClickLi
         }
     }
 
+
 	@Override
 	public void onInit(int initStatus) {
 		// TODO Auto-generated method stub
@@ -337,10 +351,9 @@ public class ParqueoInterfaceActivity extends Activity implements View.OnClickLi
             myTTS.setLanguage(new Locale("spa", "ESP"));
         }
         else if (initStatus == TextToSpeech.ERROR){
-            Toast.makeText(this, "Error en el TTS...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
         }
 	}
-	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
