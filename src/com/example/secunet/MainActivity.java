@@ -1,5 +1,13 @@
 package com.example.secunet;
 
+import java.util.ArrayList;
+import java.util.Locale;
+
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpTransportSE;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -18,26 +26,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.PropertyInfo;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
-
-import com.parse.Parse;
-import com.parse.ParseInstallation;
-import com.parse.PushService;
-
-import java.util.ArrayList;
-import java.util.Locale;
 
 public class MainActivity extends Activity  implements View.OnClickListener, TextToSpeech.OnInitListener{
 
@@ -58,7 +52,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
     private int IdPiso;
     private String MacAddress;
     private int IdEstado;
-    
+    AlertDialog.Builder builderWiFi;
     private int MY_DATA_CHECK_CODE = 0;
     private TextToSpeech myTTS;
     Intent intent;
@@ -77,7 +71,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         builder.setMessage("DESEA ESTE PARQUEO?");
 
         intent = new Intent(MainActivity.this, CheckActivity.class);
-        final AlertDialog.Builder builderWiFi = new AlertDialog.Builder(this);
+        builderWiFi = new AlertDialog.Builder(this);
         builderWiFi.setMessage("Debe conectarse a nuestra red Wi-Fi. ¿Conectar?");
         MacAddress = getMacAddress();
 
@@ -93,6 +87,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         SeccionAuto = (LinearLayout) findViewById(R.id.PARQUEO_AUTO);
 
         ParqueoAleatorio = new Parqueo();
+        ParqueoAleatorio.IdParqueo = "~";
         ParqueoManual = new Parqueo();
         ParqueoAuto = new Parqueo();
 
@@ -106,13 +101,13 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
             @Override
             public void onClick(View view) {
 	            if(SeleccionarParqueoManualmente.isChecked()){
-	                SeccionManual.setVisibility(View.VISIBLE);
-	                SeccionAuto.setVisibility(View.GONE);
+//	                SeccionManual.setVisibility(View.VISIBLE);
+//	                SeccionAuto.setVisibility(View.GONE);
 	                MainActivity.this.startActivity(intentInterface);
 	            }
 	            else{
-	                SeccionManual.setVisibility(View.GONE);
-	                SeccionAuto.setVisibility(View.VISIBLE);
+//	                SeccionManual.setVisibility(View.GONE);
+//	                SeccionAuto.setVisibility(View.VISIBLE);
 	            }
             }
         });
@@ -192,7 +187,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         AsignarCualquiera.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-            	if (WS_Info.GlobalParameters.HayParqueoUnico) {
+            	if (ParqueoAleatorio.IdParqueo != "~") {
             		builder.setMessage("Desea el parqueo " + ParqueoAleatorio.IdParqueo + ", " + ParqueoAleatorio.Piso + "?");
                     MacAddress = getMacAddress();
                     builder .setCancelable(false)
@@ -228,6 +223,10 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         });
     }
 
+    public void showSimpleDialog(String Texto){
+    	
+    }
+    
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == MY_DATA_CHECK_CODE) {
             if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
@@ -284,8 +283,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
             String response;
             SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_LOCALES);
 
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
-                    SoapEnvelope.VER11);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
 
             envelope.setOutputSoapObject(request);
@@ -296,7 +294,6 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
                 httpTransport.debug = true;
                 httpTransport.call(WS_Info.GlobalParameters.SOAP_ACTION_LOCALES, envelope);
                 response = httpTransport.responseDump;
-
             }  catch (Exception exception)   {
                 response = envelope.bodyIn.toString();
             }
@@ -355,6 +352,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
             TextView v = new TextView(getApplicationContext());
             if (WS_Info.GlobalParameters.HayLocales) {
 				v.setTextColor(Color.BLACK);
+				v.setTextSize(18);
 	            v.setText(data.get(position).Nombre);
 	            v.setTag(Integer.parseInt(data.get(position).Nivel));
 			} else {
@@ -382,13 +380,11 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         @Override
         public void registerDataSetObserver(DataSetObserver observer) {
             // TODO Auto-generated method stub
-
         }
 
         @Override
         public void unregisterDataSetObserver(DataSetObserver observer) {
             // TODO Auto-generated method stub
-
         }
 
         /**
@@ -404,15 +400,14 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
 
     public class buscarParqueosPorPiso extends AsyncTask<Void, Void, String> {
         @Override
-        protected String doInBackground(Void... voids) {
+        protected String doInBackground(Void... voids){
             String response;
 
             SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_PARQUEOSLIBRES);
 
             request.addProperty("idPiso", IdPiso);
 
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
-                    SoapEnvelope.VER11);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
 
             envelope.setOutputSoapObject(request);
@@ -424,14 +419,14 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
                 httpTransport.call(WS_Info.GlobalParameters.SOAP_ACTION_PARQUEOSLIBRES, envelope);
                 response = httpTransport.responseDump;
 
-            }  catch (Exception exception)   {
-                response = httpTransport.responseDump;
+            }  catch (Exception exception){
+                response = envelope.bodyIn.toString();
             }
             return response;
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s){
             super.onPostExecute(s);
             ParqueosManual = WS_Info.GlobalParameters.ParsearParqueos(s);
             MyAdapterParqueos adapter = new MyAdapterParqueos(ParqueosManual);
@@ -484,8 +479,6 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
             	v.setTextColor(Color.BLACK);
                 v.setText(data.get(position).Piso + " - " + data.get(position).IdParqueo + " - " + data.get(position).Estado);
                 v.setTag(data.get(position));
-			}else {
-				v.setText("No hay parqueos dsponibles...");
 			}
             return v;
         }
@@ -611,7 +604,12 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             ParqueoAuto = WS_Info.GlobalParameters.ParsearParqueoUnico(s);
-            LabelParqueoMasCerca.setText("Parqueo " + ParqueoAuto.IdParqueo + ", Nivel " + ParqueoAuto.Piso + ": " + ParqueoAuto.Estado);
+            if (WS_Info.GlobalParameters.HayParqueoUnico) {
+				LabelParqueoMasCerca.setText("Parqueo " + ParqueoAuto.IdParqueo + ", Nivel " + ParqueoAuto.Piso + ": " + ParqueoAuto.Estado);
+			} else {
+				LabelParqueoMasCerca.setText("No hay parqueos disponibles...");
+			}
+            
         }
     }
 

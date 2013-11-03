@@ -17,6 +17,7 @@ public class WS_Info {
     	public static Boolean HayLocales = false;
     	public static Boolean HayParqueos = false;
     	public static Boolean HayParqueoUnico = false;
+    	public static Boolean HayParqueoUnicoAleatorio = false;
     	
     	public static final String IP = "10.0.0.6";
         public static final String SOAP_ACTION_CHECKPARQUEADO = "http://proyecto.org/VerificarSiEstaParqueado";
@@ -28,6 +29,7 @@ public class WS_Info {
         public static final String SOAP_ACTION_BYMAC = "http://proyecto.org/ParqueoPorMAC";
         public static final String SOAP_ACTION_LIBERARPARQUEO = "http://proyecto.org/LiberarParqueo";
         public static final String SOAP_ACTION_PARQUEARSE = "http://proyecto.org/VerificarParquear";
+        public static final String SOAP_ACTION_PARQUEOSPORPISO = "http://proyecto.org/ParqueosPorPiso";
 
         public static final String OPERATION_NAME_CHECKPARQUEADO = "VerificarSiEstaParqueado";
         public static final String OPERATION_NAME_PARQUEOALEATORIO = "CualquierParqueo";
@@ -38,6 +40,7 @@ public class WS_Info {
         public static final String OPERATION_NAME_BYMAC = "ParqueoPorMAC";
         public static final String OPERATION_NAME_LIBERARPARQUEO = "LiberarParqueo";
         public static final String OPERATION_NAME_PARQUEARSE = "VerificarParquear";
+        public static final String OPERATION_NAME_PARQUEOSPORPISO = "ParqueosPorPiso";
 
         public static final String WSDL_TARGET_NAMESPACE = "http://proyecto.org/";
 
@@ -61,15 +64,15 @@ public class WS_Info {
             ArrayList<Local> Locales = new ArrayList<Local>();
 
             XMLParser parser = new XMLParser();
-                Document doc = parser.getDomElement(XML); // getting DOM element
+            Document doc = parser.getDomElement(XML); // getting DOM element
             NodeList nl = doc.getElementsByTagName(KEY_LOCAL);
-            Locales.add(new Local());
             
             // looping through all item nodes <item>
             
             if (nl.getLength() > 0){
             	HayLocales = true;
         		for(int i = 0; i < nl.getLength(); i++) {
+                    Locales.add(new Local());
 	                Element e = (Element) nl.item(i);
 	                // adding each child node to HashMap key => value
 	                Locales.get(i).Codigo = parser.getValue(e, KEY_CODIGO);
@@ -90,11 +93,11 @@ public class WS_Info {
             Document doc = parser.getDomElement(XML); // getting DOM element
             NodeList nl = doc.getElementsByTagName(KEY_PARQUEO);
 
-            Parqueos.add(new Parqueo());
             // looping through all item nodes <item>
             if (nl.getLength() > 0) {
             	HayParqueos = true;
 				for(int i = 0; i < nl.getLength(); i++) {
+		            Parqueos.add(new Parqueo());
 	                Element e = (Element) nl.item(i);
 	                // adding each child node to HashMap key => value
 	                Parqueos.get(i).IdParqueo = parser.getValue(e, KEY_IDPARQUEO);
@@ -112,6 +115,7 @@ public class WS_Info {
 
         public static Parqueo ParsearParqueoUnico(String XML){
             Parqueo ParqueoCercano = new Parqueo();
+            ParqueoCercano.IdParqueo = "~";
 
             XMLParser parser = new XMLParser();
             Document doc = parser.getDomElement(XML); // getting DOM element
