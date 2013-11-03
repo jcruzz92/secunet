@@ -10,20 +10,13 @@
     tools:context=".CheckActivity" >
 
     <Button
-        android:id="@+id/btRepetir"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btLiberarParqueo"
-        android:layout_centerHorizontal="true"
-        android:text="REPETIR INDICACIONES" />
-
-    <Button
         android:id="@+id/btLiberarParqueo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btRepetir"
         android:layout_alignParentBottom="true"
-        android:text="LIBERAR PARQUEO" />
+        android:text="LIBERAR PARQUEO"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/idTag"
@@ -49,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btRepetir"
         android:layout_alignParentTop="true"
-        android:text="Tu parqueo asignado es:"
+        android:text="Tu Parqueo Asignado es:"
         android:textAllCaps="false"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="28sp" />
@@ -66,17 +59,25 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/lbIndicaciones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/lbMiParqueo"
         android:layout_alignRight="@+id/labelPrk"
         android:layout_below="@+id/lbMiParqueo"
         android:layout_marginTop="63dp"
-        android:text="Cuando llegues a tu ubicación, acerca tu dispositivo al panel indicado para registrar que te has parqueado y listo!"
+        android:text="{}"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="20sp"
         android:textStyle="italic"
         android:typeface="normal" />
+
+    <Button
+        android:id="@+id/btRepetir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lbMiParqueo"
+        android:layout_alignParentBottom="true"
+        android:text="REPETIR INDICACIONES" />
 
 </RelativeLayout> <!-- From: file:/D:/Proyecto/secunet/Proyecto1AndroidProject/Proyecto1Android/src/main/res/layout/activity_check.xml -->

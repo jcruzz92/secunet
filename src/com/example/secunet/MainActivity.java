@@ -29,7 +29,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
