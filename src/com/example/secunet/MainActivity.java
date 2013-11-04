@@ -41,7 +41,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
     private Button AsignarCualquiera;
     private TextView LabelParqueoMasCerca;
     private LinearLayout SeccionManual;
-    private LinearLayout SeccionAuto;
+//    private LinearLayout SeccionAuto;
     private ProgressDialog Cargando;
 
     ArrayList<Parqueo> ParqueosManual;
@@ -80,10 +80,10 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         AsignarParqueo = (Button) findViewById(R.id.btAsignar);
         AsignarCualquiera = (Button)findViewById(R.id.btCualquiera);
         ParqueosManual = new ArrayList<Parqueo>();
-
+ 
         SeleccionarParqueoManualmente = (Button) findViewById(R.id.btManual);
         SeccionManual = (LinearLayout) findViewById(R.id.PARQUEO_MANUAL);
-        SeccionAuto = (LinearLayout) findViewById(R.id.PARQUEO_AUTO);
+//        SeccionAuto = (LinearLayout) findViewById(R.id.PARQUEO_AUTO);
 
         ParqueoAleatorio = new Parqueo();
         ParqueoAleatorio.IdParqueo = "~";
