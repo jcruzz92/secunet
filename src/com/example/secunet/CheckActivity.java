@@ -114,8 +114,8 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             Tag elTag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
             TextView idTag = (TextView) findViewById(R.id.leido);
-            CodigoTag = bytesToHexString(elTag.getId());
-            idTag.setText(bytesToHexString(elTag.getId()));
+            CodigoTag = WS_Info.GlobalParameters.bytesToHexString(elTag.getId());
+            idTag.setText(WS_Info.GlobalParameters.bytesToHexString(elTag.getId()));
             
             if (messages != null) { 
                 // parse to records
@@ -162,23 +162,6 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         }
     }
 
-    private String bytesToHexString(byte[] src) {
-        StringBuilder stringBuilder = new StringBuilder("0x");
-        if (src == null || src.length <= 0) {
-            return null;
-        }
-
-        char[] buffer = new char[2];
-        for (int i = 0; i < src.length; i++) {
-            buffer[0] = Character.forDigit((src[i] >>> 4) & 0x0F, 16);  
-            buffer[1] = Character.forDigit(src[i] & 0x0F, 16);  
-            System.out.println(buffer);
-            stringBuilder.append(buffer);
-        }
-
-        return stringBuilder.toString();
-    }
-    
     public void enableForegroundMode() {
         // foreground mode gives the current active application priority for reading scanned tags
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED); // filter for tags
@@ -339,7 +322,8 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             	MiParqueo.idEstado = 2;
             	LabelPark.setText("Estás Parqueado en:");
             	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
-			}
+            	speakWords("Te has parqueado correctamente!");
+            }
             else{
             	Toast.makeText(getApplicationContext(), "Parqueo incorrecto, verifica tu ubicación...", Toast.LENGTH_SHORT).show();
             }
@@ -382,6 +366,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             	MiParqueo.idEstado = 3;
             	LabelPark.setText("Liberaste el Parqueo:");
             	LabelIndicaciones.setText("Dirígete a la salida más cercaca...");
+            	speakWords("Dirígete a la salida más cercana!");
 			}
             else{
             	Toast.makeText(getApplicationContext(), "Intentas liberar un parqueo que no se te ha asignado...", Toast.LENGTH_SHORT).show();
@@ -424,6 +409,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             	Parqueado = false;
                 startActivity(intent);
                 finish();
+            	speakWords("Gracias por Conduce con cuidado!");
         	}
             else{
             	Toast.makeText(getApplicationContext(), "Esta no es la salida...", Toast.LENGTH_SHORT).show();

@@ -8,16 +8,22 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import com.example.secunet.InicioActivity.entrarParqueo;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -42,6 +48,8 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
     private TextView LabelParqueoMasCerca;
     private LinearLayout SeccionManual;
 //    private LinearLayout SeccionAuto;
+    NfcAdapter nfcAdapter;
+    PendingIntent nfcPendingIntent;
     private ProgressDialog Cargando;
 
     ArrayList<Parqueo> ParqueosManual;
@@ -56,6 +64,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
     private TextToSpeech myTTS;
     Intent intent;
     Intent intentInterface;
+	private String CodigoTag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -67,6 +76,8 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
         startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         builder.setMessage("DESEA ESTE PARQUEO?");
 
         intent = new Intent(MainActivity.this, CheckActivity.class);
@@ -216,7 +227,38 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
     public void showSimpleDialog(String Texto){
     	
     }
-    
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        disableForegroundMode();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        enableForegroundMode();
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
+            Tag elTag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            CodigoTag = WS_Info.GlobalParameters.bytesToHexString(elTag.getId());
+        }    
+    }
+
+    public void enableForegroundMode() {
+        // foreground mode gives the current active application priority for reading scanned tags
+        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED); // filter for tags
+        IntentFilter[] writeTagFilters = new IntentFilter[] {tagDetected};
+        nfcAdapter.enableForegroundDispatch(this, nfcPendingIntent, writeTagFilters, null);
+    }
+
+	public void disableForegroundMode() {
+	    nfcAdapter.disableForegroundDispatch(this);
+	}
+        
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == MY_DATA_CHECK_CODE) {
             if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {

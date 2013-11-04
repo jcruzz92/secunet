@@ -18,8 +18,9 @@ public class WS_Info {
     	public static Boolean HayParqueoUnico = false;
     	public static Boolean HayParqueoUnicoAleatorio = false;
 
-//    	public static final String IP = "10.0.0.20";
-    	public static final String IP = "172.20.10.10";
+    	public static final String IP = "10.0.0.6";
+//    	public static final String IP = "172.20.10.10";
+    	
         public static final String SOAP_ACTION_CHECKPARQUEADO = "http://proyecto.org/VerificarSiEstaParqueado";
         public static final String SOAP_ACTION_PARQUEOALEATORIO = "http://proyecto.org/CualquierParqueo";
         public static final String SOAP_ACTION_PARQUEOSLIBRES = "http://proyecto.org/ParqueosLibres";
@@ -32,6 +33,7 @@ public class WS_Info {
         public static final String SOAP_ACTION_PARQUEOSPORPISO = "http://proyecto.org/ParqueosPorPiso";
         public static final String SOAP_ACTION_DESOCUPARPARQUEO = "http://proyecto.org/DesocuparParqueo";
         public static final String SOAP_ACTION_SALIRPARQUEO = "http://proyecto.org/SalirParqueo";
+        public static final String SOAP_ACTION_ENTRARPARQUEO = "http://proyecto.org/EntrarParqueo";
 
         public static final String OPERATION_NAME_CHECKPARQUEADO = "VerificarSiEstaParqueado";
         public static final String OPERATION_NAME_PARQUEOALEATORIO = "CualquierParqueo";
@@ -45,6 +47,7 @@ public class WS_Info {
         public static final String OPERATION_NAME_PARQUEOSPORPISO = "ParqueosPorPiso";
         public static final String OPERATION_NAME_DESOCUPARPARQUEO = "DesocuparParqueo";
         public static final String OPERATION_NAME_SALIRPARQUEO = "SalirParqueo";
+        public static final String OPERATION_NAME_ENTRARPARQUEO = "EntrarParqueo";
 
         public static final String WSDL_TARGET_NAMESPACE = "http://proyecto.org/";
 
@@ -142,5 +145,23 @@ public class WS_Info {
 
             return ParqueoCercano;
         }
+        
+        public static String bytesToHexString(byte[] src) {
+            StringBuilder stringBuilder = new StringBuilder("0x");
+            if (src == null || src.length <= 0) {
+                return null;
+            }
+
+            char[] buffer = new char[2];
+            for (int i = 0; i < src.length; i++) {
+                buffer[0] = Character.forDigit((src[i] >>> 4) & 0x0F, 16);  
+                buffer[1] = Character.forDigit(src[i] & 0x0F, 16);  
+                System.out.println(buffer);
+                stringBuilder.append(buffer);
+            }
+
+            return stringBuilder.toString();
+        }
+        
     }
 }

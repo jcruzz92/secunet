@@ -17,16 +17,16 @@
         android:layout_alignLeft="@+id/lbIndicaciones"
         android:layout_below="@+id/lbIndicaciones"
         android:layout_marginTop="8dp"
-        android:text="Toca el botón de buscar para iniciar..."
+        android:text="Acerca tu teléfono al panel para iniciar..."
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
-        android:id="@+id/btBuscar"
+        android:id="@+id/btRegistrar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="BUSCAR PARQUEO" />
+        android:text="REGISTRARME" />
 
     <TextView
         android:id="@+id/lbIndicaciones"
