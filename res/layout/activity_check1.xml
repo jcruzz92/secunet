@@ -24,16 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/leido"
         android:layout_centerHorizontal="true"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/leido"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btRepetir"
-        android:layout_alignLeft="@+id/idTag"
-        android:layout_marginBottom="28dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/labelPrk"
@@ -54,7 +46,6 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/labelPrk"
         android:layout_marginTop="8dp"
-        android:text="{Parqueo Asignado}"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -66,7 +57,6 @@
         android:layout_alignRight="@+id/labelPrk"
         android:layout_below="@+id/lbMiParqueo"
         android:layout_marginTop="63dp"
-        android:text="{}"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="20sp"
         android:textStyle="italic"
@@ -79,5 +69,15 @@
         android:layout_alignLeft="@+id/lbMiParqueo"
         android:layout_alignParentBottom="true"
         android:text="REPETIR INDICACIONES" />
+
+    <TextView
+        android:id="@+id/leido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btRepetir"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="11dp"
+        android:text="TextView"
+        android:visibility="visible" />
 
 </RelativeLayout> <!-- From: file:/D:/Proyecto/secunet/Proyecto1AndroidProject/Proyecto1Android/src/main/res/layout/activity_check.xml -->

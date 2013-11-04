@@ -1,26 +1,25 @@
 package com.example.secunet;
 
-import android.R.integer;
-import android.app.ListActivity;
+import java.util.ArrayList;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
+import android.app.ListActivity;
 
 /**
  * Created by Jorge Luis on 7/15/13.
  */
 public class WS_Info {
-
     public static class GlobalParameters extends ListActivity{
     	public static Boolean HayLocales = false;
     	public static Boolean HayParqueos = false;
     	public static Boolean HayParqueoUnico = false;
     	public static Boolean HayParqueoUnicoAleatorio = false;
-    	
-    	public static final String IP = "10.0.0.6";
+
+//    	public static final String IP = "10.0.0.20";
+    	public static final String IP = "172.20.10.10";
         public static final String SOAP_ACTION_CHECKPARQUEADO = "http://proyecto.org/VerificarSiEstaParqueado";
         public static final String SOAP_ACTION_PARQUEOALEATORIO = "http://proyecto.org/CualquierParqueo";
         public static final String SOAP_ACTION_PARQUEOSLIBRES = "http://proyecto.org/ParqueosLibres";
@@ -32,6 +31,7 @@ public class WS_Info {
         public static final String SOAP_ACTION_PARQUEARSE = "http://proyecto.org/VerificarParquear";
         public static final String SOAP_ACTION_PARQUEOSPORPISO = "http://proyecto.org/ParqueosPorPiso";
         public static final String SOAP_ACTION_DESOCUPARPARQUEO = "http://proyecto.org/DesocuparParqueo";
+        public static final String SOAP_ACTION_SALIRPARQUEO = "http://proyecto.org/SalirParqueo";
 
         public static final String OPERATION_NAME_CHECKPARQUEADO = "VerificarSiEstaParqueado";
         public static final String OPERATION_NAME_PARQUEOALEATORIO = "CualquierParqueo";
@@ -44,6 +44,7 @@ public class WS_Info {
         public static final String OPERATION_NAME_PARQUEARSE = "VerificarParquear";
         public static final String OPERATION_NAME_PARQUEOSPORPISO = "ParqueosPorPiso";
         public static final String OPERATION_NAME_DESOCUPARPARQUEO = "DesocuparParqueo";
+        public static final String OPERATION_NAME_SALIRPARQUEO = "SalirParqueo";
 
         public static final String WSDL_TARGET_NAMESPACE = "http://proyecto.org/";
 

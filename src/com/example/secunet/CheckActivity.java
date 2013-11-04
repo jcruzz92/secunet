@@ -46,12 +46,14 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     PendingIntent nfcPendingIntent;
     String CodigoTag;
     Boolean Parqueado = false;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check1);
 
+        intent = new Intent(this, InicioActivity.class);
     	nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         Intent checkTTSIntent = new Intent();
@@ -134,10 +136,15 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
                     }
                 }
             }
-            if (Parqueado) {
+
+            if (MiParqueo.idEstado == 1) {//asignado
+            	new parquearse().execute();
+        	}
+            else if (MiParqueo.idEstado == 2) { //parqueado
             	new desparquear().execute();
-			} else {
-	            new parquearse().execute();
+            }
+            else if (MiParqueo.idEstado == 3) {//desocupado
+            	new salirParqueo().execute();
 			}
         }    
     }
@@ -242,17 +249,17 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             super.onPostExecute(s);
             MiParqueo = WS_Info.GlobalParameters.ParsearParqueoUnico(s);
             
-            if (MiParqueo.idEstado == 1) {
+            if (MiParqueo.idEstado == 1) {//asignado
             	Parqueado = false;
             	LabelPark.setText("Tu Parqueo Asignado es:");
             	LabelIndicaciones.setText("Cuando llegues a tu parqueo, acerca tu dispositivo al panel indicado para registrar que te has parqueado y listo.");
 			}
-            else if (MiParqueo.idEstado == 2) {
+            else if (MiParqueo.idEstado == 2) { //parqueado
             	Parqueado = true;
             	LabelPark.setText("Estás Parqueado en:");
             	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
 			}
-            else if (MiParqueo.idEstado == 3) {
+            else if (MiParqueo.idEstado == 3) {//desocupado
             	Parqueado = false;
             	LabelPark.setText("Liberaste el Parqueo:");
             	LabelIndicaciones.setText("Dirígete a la salida más cercaca...");
@@ -329,6 +336,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             super.onPostExecute(s);
             if (s) {
             	Parqueado = true;
+            	MiParqueo.idEstado = 2;
             	LabelPark.setText("Estás Parqueado en:");
             	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
 			}
@@ -371,11 +379,54 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             super.onPostExecute(s);
             if (s) {
             	Parqueado = false;
+            	MiParqueo.idEstado = 3;
             	LabelPark.setText("Liberaste el Parqueo:");
             	LabelIndicaciones.setText("Dirígete a la salida más cercaca...");
 			}
             else{
             	Toast.makeText(getApplicationContext(), "Intentas liberar un parqueo que no se te ha asignado...", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    
+    public class salirParqueo extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... voids){
+            Boolean response;
+
+            SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_SALIRPARQUEO);
+
+            request.addProperty("idNFC", CodigoTag);
+            request.addProperty("MacAddress", getMacAddress());
+            
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                    SoapEnvelope.VER11);
+            envelope.dotNet = true;
+
+            envelope.setOutputSoapObject(request);
+
+            HttpTransportSE httpTransport = new HttpTransportSE(WS_Info.GlobalParameters.SOAP_ADDRESS);
+
+            try {
+                httpTransport.debug = true;
+                httpTransport.call(WS_Info.GlobalParameters.SOAP_ACTION_SALIRPARQUEO, envelope);
+                response = Boolean.valueOf(envelope.getResponse().toString());
+            }  catch (Exception exception)   {
+                response = false;
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean s){
+            super.onPostExecute(s);
+            if (s) {
+            	Parqueado = false;
+                startActivity(intent);
+                finish();
+        	}
+            else{
+            	Toast.makeText(getApplicationContext(), "Esta no es la salida...", Toast.LENGTH_SHORT).show();
             }
         }
     }

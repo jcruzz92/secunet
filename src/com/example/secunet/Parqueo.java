@@ -10,6 +10,6 @@ public class Parqueo {
     public int idEstado; //Para saber si esta parqueado, asignado, libre, etc.. 
 
     Parqueo(){
-
+    	
     }
 }
