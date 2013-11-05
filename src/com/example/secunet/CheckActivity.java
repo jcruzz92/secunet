@@ -409,7 +409,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             	Parqueado = false;
                 startActivity(intent);
                 finish();
-            	speakWords("Gracias por Conduce con cuidado!");
+            	speakWords("Gracias por visitarnos, conduce con cuidado!");
         	}
             else{
             	Toast.makeText(getApplicationContext(), "Esta no es la salida...", Toast.LENGTH_SHORT).show();

@@ -2,13 +2,16 @@ package com.example.secunet;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Set;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import com.example.secunet.InicioActivity.entrarParqueo;
+import com.parse.Parse;
+import com.parse.ParseInstallation;
+import com.parse.PushService;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,7 +26,7 @@ import android.graphics.Color;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.nfc.NfcAdapter;
-import android.nfc.Tag;
+//import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -64,7 +67,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
     private TextToSpeech myTTS;
     Intent intent;
     Intent intentInterface;
-	private String CodigoTag;
+//	private String CodigoTag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -243,8 +246,8 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
     @Override
     public void onNewIntent(Intent intent) {
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
-            Tag elTag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            CodigoTag = WS_Info.GlobalParameters.bytesToHexString(elTag.getId());
+//            Tag elTag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+//            CodigoTag = WS_Info.GlobalParameters.bytesToHexString(elTag.getId());
         }    
     }
 
@@ -675,6 +678,23 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         }
     }
 
+    public void suscribe(String idParqueo){
+		Parse.initialize(this, "NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI", "iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF"); 
+		PushService.subscribe(this, idParqueo, CheckActivity.class);
+		ParseInstallation.getCurrentInstallation().saveInBackground();
+    }
+
+    public void unsuscribe (){
+		Parse.initialize(this, "NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI", "iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF"); 
+		PushService.setDefaultPushCallback(this, CheckActivity.class);
+		final Set<String> setOfAllSubscriptions = PushService.getSubscriptions(this);
+		final String[] allSubscriptions = setOfAllSubscriptions.toArray(new String[0]); 
+		for(int k=0; k<allSubscriptions.length; k++)
+		{
+			PushService.unsubscribe(MainActivity.this, allSubscriptions[k]);
+		}
+		ParseInstallation.getCurrentInstallation().saveInBackground();
+    }
 }
 
 
