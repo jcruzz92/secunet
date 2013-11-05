@@ -2,6 +2,7 @@ package com.example.secunet;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -10,6 +11,10 @@ import org.ksoap2.transport.HttpTransportSE;
 import org.ndeftools.Message;
 import org.ndeftools.Record;
 import org.ndeftools.externaltype.AndroidApplicationRecord;
+
+import com.parse.Parse;
+import com.parse.ParseInstallation;
+import com.parse.PushService;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -220,7 +225,6 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
                 httpTransport.debug = true;
                 httpTransport.call(WS_Info.GlobalParameters.SOAP_ACTION_BYMAC, envelope);
                 response = httpTransport.responseDump;
-
             }  catch (Exception exception)   {
                 response = envelope.bodyIn.toString();
             }
@@ -231,7 +235,6 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             MiParqueo = WS_Info.GlobalParameters.ParsearParqueoUnico(s);
-            
             if (MiParqueo.idEstado == 1) {//asignado
             	Parqueado = false;
             	LabelPark.setText("Tu Parqueo Asignado es:");
@@ -248,6 +251,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             	LabelIndicaciones.setText("Dirígete a la salida más cercaca...");
 			}
             TextoMiParqueo.setText("Parqueo " + MiParqueo.IdParqueo + ", " + MiParqueo.Piso);
+            suscribe("c" + MiParqueo.IdParqueo);
         }
     }
 
@@ -367,6 +371,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             	LabelPark.setText("Liberaste el Parqueo:");
             	LabelIndicaciones.setText("Dirígete a la salida más cercaca...");
             	speakWords("Dirígete a la salida más cercana!");
+            	unsuscribe();
 			}
             else{
             	Toast.makeText(getApplicationContext(), "Intentas liberar un parqueo que no se te ha asignado...", Toast.LENGTH_SHORT).show();
@@ -409,11 +414,29 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             	Parqueado = false;
                 startActivity(intent);
                 finish();
-            	speakWords("Gracias por visitarnos, conduce con cuidado!");
+//            	speakWords("Gracias por visitarnos, conduce con cuidado!");
         	}
             else{
             	Toast.makeText(getApplicationContext(), "Esta no es la salida...", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    
+    public void suscribe(String idParqueo){
+       	Parse.initialize(this, "NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI", "iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF"); 
+        PushService.subscribe(this, idParqueo, CheckActivity.class);
+        ParseInstallation.getCurrentInstallation().saveInBackground();
+    }
+    
+    public void unsuscribe (){
+		Parse.initialize(this, "NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI", "iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF"); 
+		PushService.setDefaultPushCallback(this, CheckActivity.class);
+		final Set<String> setOfAllSubscriptions = PushService.getSubscriptions(this);
+		final String[] allSubscriptions = setOfAllSubscriptions.toArray(new String[0]); 
+		for(int k=0; k<allSubscriptions.length; k++)
+		{
+			PushService.unsubscribe(this, allSubscriptions[k]);
+		}
+		ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 }

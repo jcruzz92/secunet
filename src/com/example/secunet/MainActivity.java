@@ -2,16 +2,11 @@ package com.example.secunet;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Set;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
-
-import com.parse.Parse;
-import com.parse.ParseInstallation;
-import com.parse.PushService;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -26,7 +21,6 @@ import android.graphics.Color;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.nfc.NfcAdapter;
-//import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -40,6 +34,7 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+//import android.nfc.Tag;
 
 public class MainActivity extends Activity  implements View.OnClickListener, TextToSpeech.OnInitListener{
 
@@ -161,9 +156,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
                                     finish();
                                     String words;
                                     new asignarParqueo().execute(false);
-                                    
-                                        words = "Dirijase al " + ParqueoAuto.Piso + ", parqueo " + ParqueoAuto.IdParqueo.toString() ;
-                                    
+                                    words = "Dirijase al " + ParqueoAuto.Piso + ", parqueo " + ParqueoAuto.IdParqueo.toString() ;
                                     speakWords(words);
                                 }
                             })
@@ -568,9 +561,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
                 request.addProperty("idParqueo", ParqueoAleatorio.IdParqueo);
             }
             else{
-                
-                    request.addProperty("idParqueo", ParqueoAuto.IdParqueo);
-                
+                request.addProperty("idParqueo", ParqueoAuto.IdParqueo);
             }
 
             request.addProperty("macAddress", MacAddress);
@@ -676,24 +667,6 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
             super.onPostExecute(s);
             ParqueoAleatorio = WS_Info.GlobalParameters.ParsearParqueoUnico(s);
         }
-    }
-
-    public void suscribe(String idParqueo){
-		Parse.initialize(this, "NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI", "iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF"); 
-		PushService.subscribe(this, idParqueo, CheckActivity.class);
-		ParseInstallation.getCurrentInstallation().saveInBackground();
-    }
-
-    public void unsuscribe (){
-		Parse.initialize(this, "NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI", "iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF"); 
-		PushService.setDefaultPushCallback(this, CheckActivity.class);
-		final Set<String> setOfAllSubscriptions = PushService.getSubscriptions(this);
-		final String[] allSubscriptions = setOfAllSubscriptions.toArray(new String[0]); 
-		for(int k=0; k<allSubscriptions.length; k++)
-		{
-			PushService.unsubscribe(MainActivity.this, allSubscriptions[k]);
-		}
-		ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 }
 

@@ -25,10 +25,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.parse.Parse;
-import com.parse.ParseInstallation;
-import com.parse.PushService;
-
 public class InicioActivity extends Activity{
 	
     Intent intentMain;
@@ -53,11 +49,11 @@ public class InicioActivity extends Activity{
     	nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 
-        Parse.initialize(this,"NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI","iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF");
-        PushService.setDefaultPushCallback(this, InicioActivity.class);
-        ParseInstallation.getCurrentInstallation().saveInBackground();
-        PushService.subscribe(this, "global", InicioActivity.class);
-        ParseInstallation.getCurrentInstallation().saveInBackground();
+//        Parse.initialize(this,"NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI","iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF");
+//        PushService.setDefaultPushCallback(this, InicioActivity.class);
+//        ParseInstallation.getCurrentInstallation().saveInBackground();
+//        PushService.subscribe(this, "global", InicioActivity.class);
+//        ParseInstallation.getCurrentInstallation().saveInBackground();
         
         wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
 
