@@ -120,7 +120,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
 
             TextView idTag = (TextView) findViewById(R.id.leido);
             CodigoTag = WS_Info.GlobalParameters.bytesToHexString(elTag.getId());
-            idTag.setText(WS_Info.GlobalParameters.bytesToHexString(elTag.getId()));
+            idTag.setText(CodigoTag);
 
             if (messages != null) { 
                 // parse to records
@@ -151,7 +151,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             else if (MiParqueo.idEstado == 3) {//desocupado
             	new salirParqueo().execute();
 			}
-        }    
+        }   
     }
     
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -423,13 +423,13 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     
     public void suscribe(String idParqueo){
        	Parse.initialize(this, "NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI", "iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF"); 
-        PushService.subscribe(this, idParqueo, CheckActivity.class);
+        PushService.subscribe(this, idParqueo, ConfirmarActivity.class);
         ParseInstallation.getCurrentInstallation().saveInBackground();
     }
     
     public void unsuscribe (){
 		Parse.initialize(this, "NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI", "iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF"); 
-		PushService.setDefaultPushCallback(this, CheckActivity.class);
+		PushService.setDefaultPushCallback(this, ConfirmarActivity.class);
 		final Set<String> setOfAllSubscriptions = PushService.getSubscriptions(this);
 		final String[] allSubscriptions = setOfAllSubscriptions.toArray(new String[0]); 
 		for(int k=0; k<allSubscriptions.length; k++)

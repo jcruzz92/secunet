@@ -11,37 +11,12 @@
                 tools:context=".Main"
         >
 
-
-    <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ASIGNAR CUALQUIER PARQUEO"
-            android:id="@+id/btCualquiera"
-            android:layout_gravity="left|center_vertical"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"/>
-
-    <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ASIGNAR PARQUEO SELECCIONADO"
-            android:id="@+id/btAsignar"
-            android:layout_above="@+id/btCualquiera"
-            android:layout_alignParentLeft="true"/>
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/OPCIONES"
         android:layout_marginBottom="8dp">
-
-        <Button
-            android:id="@+id/btManual"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SELECCIONAR MANUALMENTE" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -143,5 +118,69 @@
             android:layout_above="@+id/textView4"
             android:layout_centerHorizontal="true" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/botones"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:background="?android:attr/dividerVertical" />
+
+        <View
+            android:id="@+id/ViewColorPickerHelper"
+            android:layout_width="1dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dip"
+            android:layout_marginTop="4dip"
+            android:background="?android:attr/dividerVertical" />
+
+        <Button
+            android:id="@+id/btCualquiera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/ViewColorPickerHelper"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="CUALQUIERA" />
+
+        <Button
+            android:id="@+id/btAsignar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/ViewColorPickerHelper"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="SIGUIENTE" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_alignTop="@+id/btManual"
+        android:background="?android:attr/dividerVertical" />
+
+    <Button
+        android:id="@+id/btManual"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/botones"
+        android:layout_alignLeft="@+id/botones"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="SELECCIONAR MANUALMENTE" />
 
 </RelativeLayout>
