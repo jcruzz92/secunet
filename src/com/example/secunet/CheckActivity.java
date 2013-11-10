@@ -76,7 +76,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         Repetir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                speakWords("Su parqueo asignado es el " + TextoMiParqueo.getText().toString());
+                speakWords("Su parqueo asignado es el " + TextoMiParqueo.getText().toString() + "...");
             }
         });
 
@@ -121,7 +121,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             TextView idTag = (TextView) findViewById(R.id.leido);
             CodigoTag = WS_Info.GlobalParameters.bytesToHexString(elTag.getId());
             idTag.setText(WS_Info.GlobalParameters.bytesToHexString(elTag.getId()));
-            
+
             if (messages != null) { 
                 // parse to records
                 for (int i = 0; i < messages.length; i++) {
@@ -344,8 +344,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             request.addProperty("MacAddress", getMacAddress());
             request.addProperty("idNFC", CodigoTag);
             
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
-                    SoapEnvelope.VER11);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
 
             envelope.setOutputSoapObject(request);
@@ -369,7 +368,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             	Parqueado = false;
             	MiParqueo.idEstado = 3;
             	LabelPark.setText("Liberaste el Parqueo:");
-            	LabelIndicaciones.setText("Dirígete a la salida más cercaca...");
+            	LabelIndicaciones.setText("Dirígete a la salida más cercana...");
             	speakWords("Dirígete a la salida más cercana!");
             	unsuscribe();
 			}

@@ -18,9 +18,10 @@ public class WS_Info {
     	public static Boolean HayParqueoUnico = false;
     	public static Boolean HayParqueoUnicoAleatorio = false;
 
-    	public static final String IP = "10.0.0.6";
+    	public static final String IP = "192.168.1.36";
+//    	public static final String IP = "10.0.0.6";
 //    	public static final String IP = "172.20.10.10";
-    	
+
         public static final String SOAP_ACTION_CHECKPARQUEADO = "http://proyecto.org/VerificarSiEstaParqueado";
         public static final String SOAP_ACTION_PARQUEOALEATORIO = "http://proyecto.org/CualquierParqueo";
         public static final String SOAP_ACTION_PARQUEOSLIBRES = "http://proyecto.org/ParqueosLibres";
