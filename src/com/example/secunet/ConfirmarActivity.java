@@ -47,7 +47,7 @@ public class ConfirmarActivity extends Activity {
     	builderDialogAlarma.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				ConfirmarActivity.this.startActivity(intentCheck);
-				finish();
+				finish(); 
 			}
 		});
 
@@ -62,6 +62,7 @@ public class ConfirmarActivity extends Activity {
 			public void onClick(DialogInterface dialog, int id) {
 				dialogClave.dismiss();
 				dialogAlarma.show();
+            	new generarAlarma().execute();
 			}
 		});
         
@@ -77,6 +78,7 @@ public class ConfirmarActivity extends Activity {
             public void onClick(DialogInterface dialog, int id) {
             	dialog.dismiss();
             	dialogAlarma.show();
+            	new generarAlarma().execute();
             }
         });
         
@@ -88,6 +90,13 @@ public class ConfirmarActivity extends Activity {
         MacAddress = getMacAddress();
         
         new buscarParqueoAsignado().execute();
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+       // getMenuInflater().inflate(R.menu.check, menu);
+        return true;
     }
     
     public String getMacAddress() {
@@ -146,12 +155,38 @@ public class ConfirmarActivity extends Activity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-       // getMenuInflater().inflate(R.menu.check, menu);
-        return true;
+    public class generarAlarma extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids){
+            String response;
+
+            SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_CREARALERTA);
+
+            request.addProperty("Descripcion", "El parqueo " + MiParqueo.IdParqueo + " ha generado una alarma, atender cuanto antes!");
+            request.addProperty("idParqueo", MiParqueo.IdParqueo);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+
+            envelope.setOutputSoapObject(request);
+
+            HttpTransportSE httpTransport = new HttpTransportSE(WS_Info.GlobalParameters.SOAP_ADDRESS);
+
+            try {
+                httpTransport.debug = true;
+                httpTransport.call(WS_Info.GlobalParameters.SOAP_ACTION_CREARALERTA, envelope);
+                response = httpTransport.responseDump;
+            }  catch (Exception exception)   {
+                response = envelope.bodyIn.toString();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            
+        }
     }
-    
-    
+
 }

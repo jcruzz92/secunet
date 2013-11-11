@@ -18,8 +18,8 @@ public class WS_Info {
     	public static Boolean HayParqueoUnico = false;
     	public static Boolean HayParqueoUnicoAleatorio = false;
 
-    	public static final String IP = "192.168.1.36";
-//    	public static final String IP = "10.0.0.6";
+    	public static final String IP = "192.168.43.180";
+//    	public static final String IP = "10.0.1.15";
 //    	public static final String IP = "172.20.10.10";
 
         public static final String SOAP_ACTION_CHECKPARQUEADO = "http://proyecto.org/VerificarSiEstaParqueado";
@@ -35,7 +35,8 @@ public class WS_Info {
         public static final String SOAP_ACTION_DESOCUPARPARQUEO = "http://proyecto.org/DesocuparParqueo";
         public static final String SOAP_ACTION_SALIRPARQUEO = "http://proyecto.org/SalirParqueo";
         public static final String SOAP_ACTION_ENTRARPARQUEO = "http://proyecto.org/EntrarParqueo";
-
+        public static final String SOAP_ACTION_CREARALERTA = "http://proyecto.org/CrearAlerta";
+        
         public static final String OPERATION_NAME_CHECKPARQUEADO = "VerificarSiEstaParqueado";
         public static final String OPERATION_NAME_PARQUEOALEATORIO = "CualquierParqueo";
         public static final String OPERATION_NAME_PARQUEOSLIBRES = "ParqueosLibres";
@@ -49,6 +50,7 @@ public class WS_Info {
         public static final String OPERATION_NAME_DESOCUPARPARQUEO = "DesocuparParqueo";
         public static final String OPERATION_NAME_SALIRPARQUEO = "SalirParqueo";
         public static final String OPERATION_NAME_ENTRARPARQUEO = "EntrarParqueo";
+        public static final String OPERATION_NAME_CREARALERTA = "CrearAlerta";
 
         public static final String WSDL_TARGET_NAMESPACE = "http://proyecto.org/";
 

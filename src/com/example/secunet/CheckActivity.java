@@ -370,7 +370,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             	LabelPark.setText("Liberaste el Parqueo:");
             	LabelIndicaciones.setText("Dirígete a la salida más cercana...");
             	speakWords("Dirígete a la salida más cercana!");
-            	unsuscribe();
+//            	unsuscribe();
 			}
             else{
             	Toast.makeText(getApplicationContext(), "Intentas liberar un parqueo que no se te ha asignado...", Toast.LENGTH_SHORT).show();
@@ -413,6 +413,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             	Parqueado = false;
                 startActivity(intent);
                 finish();
+                unsuscribe();
 //            	speakWords("Gracias por visitarnos, conduce con cuidado!");
         	}
             else{
