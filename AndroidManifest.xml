@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     
     <!-- Near field communications permissions -->
 	<uses-permission android:name="android.permission.NFC" />
@@ -25,7 +26,7 @@
 	
     <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <application
         android:allowBackup="true"
@@ -34,12 +35,12 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.secunet.MainActivity"
-            android:label="Secunet" 
+            android:label="SELECIÓN DE DESTINO" 
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.example.secunet.ConfirmarActivity"
-            android:label="Secunet" 
+            android:label="ESTADO DEL PARQUEO" 
             android:screenOrientation="portrait">
         </activity>
         <activity
@@ -48,13 +49,18 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name="com.example.secunet.RegistrarActivity"
+            android:label="REGISTRO DE USUARIOS" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name="com.example.secunet.CheckActivity"
-            android:label="Secunet" 
+            android:label="MONITOREO DEL PARQUEO" 
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.example.secunet.InicioActivity"
-            android:label="Secunet" 
+            android:label="SECUNET" 
             android:screenOrientation="portrait">
             
             <intent-filter>
@@ -65,7 +71,7 @@
         </activity>
          <activity
             android:name="com.example.secunet.ParqueoInterfaceActivity"
-            android:label="Secunet" 
+            android:label="SELECCIÓN MANUAL" 
             android:screenOrientation="portrait">
         </activity>
     

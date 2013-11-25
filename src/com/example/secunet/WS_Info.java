@@ -7,6 +7,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import android.app.ListActivity;
+import android.content.Context;
+import android.telephony.TelephonyManager;
 
 /**
  * Created by Jorge Luis on 7/15/13.
@@ -18,8 +20,8 @@ public class WS_Info {
     	public static Boolean HayParqueoUnico = false;
     	public static Boolean HayParqueoUnicoAleatorio = false;
 
-    	public static final String IP = "192.168.43.180";
-//    	public static final String IP = "10.0.1.15";
+//    	public static final String IP = "192.168.100.15";
+    	public static final String IP = "10.0.0.2";
 //    	public static final String IP = "172.20.10.10";
 
         public static final String SOAP_ACTION_CHECKPARQUEADO = "http://proyecto.org/VerificarSiEstaParqueado";
@@ -36,6 +38,9 @@ public class WS_Info {
         public static final String SOAP_ACTION_SALIRPARQUEO = "http://proyecto.org/SalirParqueo";
         public static final String SOAP_ACTION_ENTRARPARQUEO = "http://proyecto.org/EntrarParqueo";
         public static final String SOAP_ACTION_CREARALERTA = "http://proyecto.org/CrearAlerta";
+        public static final String SOAP_ACTION_VERIFICARDISPOSITIVOREGISTRADO = "http://proyecto.org/VerificarDispositivoRegistrado";
+        public static final String SOAP_ACTION_REGISTRARNUEVOUSUARIO = "http://proyecto.org/RegistrarNuevoUsuario";
+        public static final String SOAP_ACTION_REGISTRARNUEVODISPOSITIVO = "http://proyecto.org/RegistrarNuevoDispositivoAUsuario";
         
         public static final String OPERATION_NAME_CHECKPARQUEADO = "VerificarSiEstaParqueado";
         public static final String OPERATION_NAME_PARQUEOALEATORIO = "CualquierParqueo";
@@ -51,6 +56,9 @@ public class WS_Info {
         public static final String OPERATION_NAME_SALIRPARQUEO = "SalirParqueo";
         public static final String OPERATION_NAME_ENTRARPARQUEO = "EntrarParqueo";
         public static final String OPERATION_NAME_CREARALERTA = "CrearAlerta";
+        public static final String OPERATION_NAME_VERIFICARDISPOSITIVOREGISTRADO = "VerificarDispositivoRegistrado";
+        public static final String OPERATION_NAME_REGISTRARNUEVOUSUARIO = "RegistrarNuevoUsuario";
+        public static final String OPERATION_NAME_REGISTRARNUEVODISPOSITIVO = "RegistrarNuevoDispositivoAUsuario";
 
         public static final String WSDL_TARGET_NAMESPACE = "http://proyecto.org/";
 
@@ -70,7 +78,7 @@ public class WS_Info {
         static final String KEY_IDESTADOPARQUEO = "idEstado";
 //        static final String KEY_LADOPARQUEO = "Lado";
 //        static final String KEY_PESOPARQUEO = "Peso";
-
+        
         public static ArrayList<Local> ParsearLocales(String XML){
             ArrayList<Local> Locales = new ArrayList<Local>();
 

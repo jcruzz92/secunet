@@ -24,6 +24,7 @@ import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,13 +50,14 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
     NfcAdapter nfcAdapter;
     PendingIntent nfcPendingIntent;
     private ProgressDialog Cargando;
+    TelephonyManager telephonyManager;
+	String IdTelefono; 
 
     ArrayList<Parqueo> ParqueosManual;
     Parqueo ParqueoAleatorio;
     Parqueo ParqueoManual;
     Parqueo ParqueoAuto;
     private int IdPiso;
-    private String MacAddress;
     private int IdEstado;
     AlertDialog.Builder builderWiFi;
     private int MY_DATA_CHECK_CODE = 0;
@@ -79,9 +81,8 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         builder.setMessage("DESEA ESTE PARQUEO?");
 
         intent = new Intent(MainActivity.this, CheckActivity.class);
-        builderWiFi = new AlertDialog.Builder(this);
-        builderWiFi.setMessage("Debe conectarse a nuestra red Wi-Fi. ¿Conectar?");
-        MacAddress = getMacAddress();
+        telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        IdTelefono = telephonyManager.getDeviceId();
 
         LabelParqueoMasCerca = (TextView) findViewById(R.id.lbAutoParqueo);
         ListadoLocales = (Spinner) findViewById(R.id.spLocales);
@@ -148,7 +149,6 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
             public void onClick(View view) {
             	if (WS_Info.GlobalParameters.HayParqueos) {
             		builder.setMessage("Desea este parqueo?");
-                    MacAddress = getMacAddress();
                     builder .setCancelable(false)
                             .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                                 public void onClick(DialogInterface dialog, int id){
@@ -186,7 +186,6 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
             public void onClick(View view) {
             	if (ParqueoAleatorio.IdParqueo != "~") {
             		builder.setMessage("Desea el parqueo " + ParqueoAleatorio.IdParqueo + ", " + ParqueoAleatorio.Piso + "?");
-                    MacAddress = getMacAddress();
                     builder .setCancelable(false)
                             .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                                 public void onClick(DialogInterface dialog, int id){
@@ -564,7 +563,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
                 request.addProperty("idParqueo", ParqueoAuto.IdParqueo);
             }
 
-            request.addProperty("macAddress", MacAddress);
+            request.addProperty("macAddress", IdTelefono);
             request.addProperty( "idEstado", IdEstado);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(

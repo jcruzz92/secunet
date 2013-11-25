@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="destino"
-            android:id="@+id/textView2"
+            android:id="@+id/estado_inicial"
             android:textAlignment="inherit"
             android:layout_alignParentTop="true"
             android:layout_alignLeft="@+id/SelectorLocales"

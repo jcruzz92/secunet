@@ -14,12 +14,12 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.widget.TextView;
 
 public class ConfirmarActivity extends Activity {
     private Parqueo MiParqueo;
-    private String MacAddress;
     private TextView LabelPark;
     private TextView LabelIndicaciones;
     private TextView TextoMiParqueo;
@@ -31,6 +31,8 @@ public class ConfirmarActivity extends Activity {
     AlertDialog.Builder builderDialogAlarma;
     AlertDialog dialogAlarma;
     Intent intentCheck;
+    TelephonyManager telephonyManager;
+	String IdTelefono; 
     
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -41,6 +43,8 @@ public class ConfirmarActivity extends Activity {
         LabelIndicaciones = (TextView) findViewById(R.id.lbIndicaciones);
         TextoMiParqueo = (TextView) findViewById(R.id.lbMiParqueo);
         intentCheck = new Intent(this, CheckActivity.class);
+        telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        IdTelefono = telephonyManager.getDeviceId();
         
         builderDialogAlarma = new AlertDialog.Builder(this);
         builderDialogAlarma.setMessage("Se ha notificado al departamento de seguridad");
@@ -87,7 +91,6 @@ public class ConfirmarActivity extends Activity {
         dialog = builderDialog.create();
         
         MiParqueo = new Parqueo();
-        MacAddress = getMacAddress();
         
         new buscarParqueoAsignado().execute();
     }
@@ -99,11 +102,11 @@ public class ConfirmarActivity extends Activity {
         return true;
     }
     
-    public String getMacAddress() {
-        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        WifiInfo info = manager.getConnectionInfo();
-        return info.getMacAddress();
-    }
+//    public String getMacAddress() {
+//        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+//        WifiInfo info = manager.getConnectionInfo();
+//        return info.getMacAddress();
+//    }
     
     public class buscarParqueoAsignado extends AsyncTask<Void, Void, String> {
         @Override
@@ -112,7 +115,7 @@ public class ConfirmarActivity extends Activity {
 
             SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_BYMAC);
 
-            request.addProperty("MacAddress", MacAddress);
+            request.addProperty("MacAddress", IdTelefono);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;

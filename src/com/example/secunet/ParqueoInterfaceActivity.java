@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.speech.tts.TextToSpeech;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,12 +47,13 @@ public Parqueo ParqueoUno;
 public Parqueo ParqueoDos;
 public Parqueo ParqueoTres;
 public Parqueo ParqueoCuatro;
-private String MacAddress;
 Parqueo park;
 int numero;
 private int IdEstado;
 private TextToSpeech myTTS;
 private int MY_DATA_CHECK_CODE = 0;
+TelephonyManager telephonyManager;
+String IdTelefono; 
 
 ArrayList<Parqueo> ParqueosManual;
 
@@ -73,8 +75,9 @@ ArrayList<Parqueo> ParqueosManual;
 		ParqueosManual = new ArrayList<Parqueo>();
 		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		intent = new Intent(ParqueoInterfaceActivity.this, CheckActivity.class);
-		MacAddress = getMacAddress();
 		 ParqueoManual = new Parqueo();
+	        telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+	        IdTelefono = telephonyManager.getDeviceId();
 		//txtImage = (TextView)findViewById(R.id.txtImage);
 		//txtImage.setText(Parqueo1.getTag().toString());
 		new buscarParqueosPorPiso().execute();
@@ -88,7 +91,6 @@ ArrayList<Parqueo> ParqueosManual;
 				ParqueoManual = ParqueoUno;
 				((ImageButton) v).setImageResource(R.drawable.occupied1);
 				builder.setMessage("Desea este parqueo?");
-                MacAddress = getMacAddress();
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int id){
@@ -122,7 +124,6 @@ ArrayList<Parqueo> ParqueosManual;
 				// TODO Auto-generated method stub
 				((ImageButton) v).setImageResource(R.drawable.occupied2);
 				builder.setMessage("Desea este parqueo?");
-                MacAddress = getMacAddress();
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int id){
@@ -154,7 +155,6 @@ ArrayList<Parqueo> ParqueosManual;
 				ParqueoManual = ParqueoTres;
 				((ImageButton) v).setImageResource(R.drawable.occupied3);
 				builder.setMessage("Desea este parqueo?");
-                MacAddress = getMacAddress();
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int id){
@@ -186,7 +186,6 @@ ArrayList<Parqueo> ParqueosManual;
 				// TODO Auto-generated method stub
 				((ImageButton) v).setImageResource(R.drawable.occupied4);
 				builder.setMessage("Desea este parqueo?");
-                MacAddress = getMacAddress();
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int id){
@@ -232,14 +231,12 @@ ArrayList<Parqueo> ParqueosManual;
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	   public String getMacAddress() {
-	        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-	        WifiInfo info = manager.getConnectionInfo();
-	        return info.getMacAddress();
-	    }
-	   
-	   
-	
+//	   public String getMacAddress() {
+//	        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+//	        WifiInfo info = manager.getConnectionInfo();
+//	        return info.getMacAddress();
+//	    }
+	   	
 	public class buscarParqueosPorPiso extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... voids) {
@@ -277,24 +274,20 @@ ArrayList<Parqueo> ParqueosManual;
             ParqueoTres = ParqueosManual.get(2);
             ParqueoCuatro = ParqueosManual.get(3);
           
-           
-    			if(ParqueoUno.Estado.trim().equals("Libre")){
-    				Parqueo1.setImageResource(R.drawable.available1);
-    			}
-    			if(ParqueoDos.Estado.trim().equals("Libre")){
-    				Parqueo2.setImageResource(R.drawable.available2);
-    			}
-    			if(ParqueoTres.Estado.trim().equals("Libre")){
-    				Parqueo3.setImageResource(R.drawable.available3);
-    			}
-    			if(ParqueoCuatro.Estado.trim().equals("Libre")){
-    				Parqueo4.setImageResource(R.drawable.available4);
-    			}
-    		
-            
+			if(ParqueoUno.Estado.trim().equals("Libre")){
+				Parqueo1.setImageResource(R.drawable.available1);
+			}
+			if(ParqueoDos.Estado.trim().equals("Libre")){
+				Parqueo2.setImageResource(R.drawable.available2);
+			}
+			if(ParqueoTres.Estado.trim().equals("Libre")){
+				Parqueo3.setImageResource(R.drawable.available3);
+			}
+			if(ParqueoCuatro.Estado.trim().equals("Libre")){
+				Parqueo4.setImageResource(R.drawable.available4);
+			}
         }
     }
-	
 	
 	public class asignarParqueo extends AsyncTask<Boolean, Void, String> {
         @Override
@@ -310,10 +303,9 @@ ArrayList<Parqueo> ParqueosManual;
             }
             else{
                     request.addProperty("idParqueo", ParqueoManual.IdParqueo);
-                
             }
 
-            request.addProperty("macAddress", MacAddress);
+            request.addProperty("macAddress", IdTelefono);
             request.addProperty( "idEstado", IdEstado);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(

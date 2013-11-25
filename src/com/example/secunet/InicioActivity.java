@@ -19,71 +19,93 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class InicioActivity extends Activity{
-	
+
     Intent intentMain;
+    Intent intentRegistro;
+    Intent intentAgregarACuenta;
     Intent intentCheck;
     WifiManager wifiManager;
     Button Registrar;
     ProgressDialog Cargando;
-    AlertDialog dialog;
     NfcAdapter nfcAdapter;
     PendingIntent nfcPendingIntent;
     String CodigoTag;
-    AlertDialog.Builder builderDialog;
+    TelephonyManager telephonyManager;
+	String IdTelefono; 
+	Boolean PuedeIngresar;
+	AlertDialog.Builder builderDialogRegistro;
+	AlertDialog.Builder builderDialogInicio;
+    AlertDialog dialogInicio;
+    AlertDialog dialogRegistro;
+    TextView EstadoInicial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio1);
         
+        PuedeIngresar = false;
         Registrar = (Button) findViewById(R.id.btRegistrar);
         intentMain = new Intent(this, MainActivity.class);
         intentCheck = new Intent(this, CheckActivity.class);
+        intentRegistro = new Intent(this, RegistrarActivity.class);
     	nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-
-//        Parse.initialize(this,"NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI","iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF");
-//        PushService.setDefaultPushCallback(this, InicioActivity.class);
-//        ParseInstallation.getCurrentInstallation().saveInBackground();
-//        PushService.subscribe(this, "global", InicioActivity.class);
-//        ParseInstallation.getCurrentInstallation().saveInBackground();
+        telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        IdTelefono = telephonyManager.getDeviceId();
+        EstadoInicial = (TextView) findViewById(R.id.estado_inicial);
         
-        wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-
-        builderDialog = new AlertDialog.Builder(this);
-        builderDialog.setMessage("Acerca tu teléfono al panel para iniciar...").setTitle("Hola!");
-        builderDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builderDialogRegistro = new AlertDialog.Builder(this);
+        builderDialogRegistro.setMessage("Este dispositivo no está vinculado a una cuenta.").setTitle("Registro Necesario");
+        builderDialogRegistro.setPositiveButton("Vincular", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialogRegistro.dismiss();
+                InicioActivity.this.startActivity(intentRegistro);
+			}
+		});
+        builderDialogRegistro.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialogRegistro.dismiss();
+			}		
+		});
+        dialogRegistro = builderDialogRegistro.create();
+        
+        builderDialogInicio = new AlertDialog.Builder(this);
+        builderDialogInicio.setMessage("Acerca tu teléfono al panel para iniciar...").setTitle("Hola!");
+        builderDialogInicio.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-            	dialog.dismiss();
+            	dialogInicio.dismiss();
             }
         });
-        dialog = builderDialog.create();
+        dialogInicio = builderDialogInicio.create();
         
         Registrar.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v){
-        		builderDialog.setMessage("Formulario Registro... (Pendiente)").setTitle("Registro");
-        		builderDialog.setPositiveButton("Salir", new DialogInterface.OnClickListener() {
-        			public void onClick(DialogInterface dialog, int id) {
-        				dialog.dismiss();
-        			}
-        		});
-
-                dialog = builderDialog.create();
-        		dialog.show();
+                InicioActivity.this.startActivity(intentRegistro);
         	}
         });
         
         Cargando = ProgressDialog.show(InicioActivity.this, "Cargando", "Espere por favor...");
 
         new checkParqueado().execute();
+    }
+    
+    public void mostrarDialogRegistro(){
+    	dialogRegistro.show();
+    }
+    
+    public void mostrarDialogInicio(){
+        dialogInicio.show();
     }
     
     @Override
@@ -110,7 +132,7 @@ public class InicioActivity extends Activity{
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
             Tag elTag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             CodigoTag = WS_Info.GlobalParameters.bytesToHexString(elTag.getId());
-            if (true) {//TODO: validar que se pueda entrar al parqueo..
+            if (PuedeIngresar) {
                 new entrarParqueo().execute();
 			}
         }    
@@ -127,12 +149,6 @@ public class InicioActivity extends Activity{
 	    nfcAdapter.disableForegroundDispatch(this);
 	}
     
-    public String getMacAddress() {
-        wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        WifiInfo info = wifiManager.getConnectionInfo();
-        return info.getMacAddress();
-    }
-
     public class checkParqueado extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... voids){
@@ -140,7 +156,7 @@ public class InicioActivity extends Activity{
 
             SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_CHECKPARQUEADO);
 
-            request.addProperty("MacAddress", getMacAddress());
+            request.addProperty("MacAddress", IdTelefono);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                     SoapEnvelope.VER11);
@@ -169,8 +185,49 @@ public class InicioActivity extends Activity{
                 finish();
             }
             else{
-                dialog.show();
+            	new verificarDispositivoRegistrado().execute();
             }
+        }
+    }
+    
+    public class verificarDispositivoRegistrado extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... voids){
+            Boolean response;
+
+            SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_VERIFICARDISPOSITIVOREGISTRADO);
+
+            request.addProperty("Imei", IdTelefono);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                    SoapEnvelope.VER11);
+            envelope.dotNet = true;
+
+            envelope.setOutputSoapObject(request);
+
+            HttpTransportSE httpTransport = new HttpTransportSE(WS_Info.GlobalParameters.SOAP_ADDRESS);
+
+            try {
+                httpTransport.call(WS_Info.GlobalParameters.SOAP_ACTION_VERIFICARDISPOSITIVOREGISTRADO, envelope);
+                response = Boolean.valueOf(envelope.getResponse().toString());
+            }  catch (Exception exception){
+                response = false;
+            }
+
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean dispositivo_existe){
+            super.onPostExecute(dispositivo_existe);
+            if(dispositivo_existe){
+            	PuedeIngresar = true;
+            	mostrarDialogInicio();
+            	EstadoInicial.setText("Acerca tu dispositivo al panel para acceder...");
+            }else {
+            	mostrarDialogRegistro();
+            	EstadoInicial.setText("Debes ser un usuario registrado para acceder...");
+			}
         }
     }
     

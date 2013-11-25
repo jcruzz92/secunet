@@ -30,6 +30,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.speech.tts.TextToSpeech;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -42,7 +43,6 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     private TextView TextoMiParqueo;
     private TextView LabelPark;
     private TextView LabelIndicaciones;
-    private String MacAddress;
     private Parqueo MiParqueo;
     private Button Repetir;
     private Button Liberar;
@@ -52,6 +52,8 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     String CodigoTag;
     Boolean Parqueado = false;
     Intent intent;
+    TelephonyManager telephonyManager;
+	String IdTelefono; 
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -71,7 +73,8 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         Liberar = (Button) findViewById(R.id.btLiberarParqueo);
         intentParqueoLibre = new Intent(CheckActivity.this, ParqueoLibreActivity.class);
         MiParqueo = new Parqueo();
-        MacAddress = getMacAddress();
+        telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        IdTelefono = telephonyManager.getDeviceId();
         
         Repetir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,11 +185,11 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
     }
 
-    public String getMacAddress() {
-        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        WifiInfo info = manager.getConnectionInfo();
-        return info.getMacAddress();
-    }
+//    public String getMacAddress() {
+//        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+//        WifiInfo info = manager.getConnectionInfo();
+//        return info.getMacAddress();
+//    }
 
     @Override
     public void onClick(View view) {
@@ -210,8 +213,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
 
             SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_BYMAC);
 
-            MacAddress = getMacAddress();
-            request.addProperty("MacAddress", MacAddress);
+            request.addProperty("MacAddress", IdTelefono);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                     SoapEnvelope.VER11);
@@ -298,7 +300,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
 
             request.addProperty("idParqueo", MiParqueo.IdParqueo);
             request.addProperty("idTag", CodigoTag);
-            request.addProperty("MacAddress", getMacAddress());
+            request.addProperty("MacAddress", IdTelefono);
             
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                     SoapEnvelope.VER11);
@@ -341,7 +343,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             
             SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_DESOCUPARPARQUEO);
             
-            request.addProperty("MacAddress", getMacAddress());
+            request.addProperty("MacAddress", IdTelefono);
             request.addProperty("idNFC", CodigoTag);
             
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -386,7 +388,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_SALIRPARQUEO);
 
             request.addProperty("idNFC", CodigoTag);
-            request.addProperty("MacAddress", getMacAddress());
+            request.addProperty("MacAddress", IdTelefono);
             
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                     SoapEnvelope.VER11);
