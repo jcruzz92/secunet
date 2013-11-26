@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class InicioActivity extends Activity{
     AlertDialog dialogInicio;
     AlertDialog dialogRegistro;
     TextView EstadoInicial;
+    RelativeLayout Botones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -63,6 +65,9 @@ public class InicioActivity extends Activity{
         telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         IdTelefono = telephonyManager.getDeviceId();
         EstadoInicial = (TextView) findViewById(R.id.estado_inicial);
+        Botones = (RelativeLayout)findViewById(R.id.botones);
+        Botones.setVisibility(View.INVISIBLE);
+        
         
         builderDialogRegistro = new AlertDialog.Builder(this);
         builderDialogRegistro.setMessage("Este dispositivo no está vinculado a una cuenta.").setTitle("Registro Necesario");
@@ -227,6 +232,7 @@ public class InicioActivity extends Activity{
             }else {
             	mostrarDialogRegistro();
             	EstadoInicial.setText("Debes ser un usuario registrado para acceder...");
+            	Botones.setVisibility(View.VISIBLE);
 			}
         }
     }

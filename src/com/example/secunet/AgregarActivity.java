@@ -5,12 +5,17 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import com.example.secunet.RegistrarActivity.registrarUsuario;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,18 +26,35 @@ public class AgregarActivity extends Activity {
 	TextView Password;
 	TelephonyManager telephonyManager;
 	String IdTelefono; 
+	Button Iniciar;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_agregar);
-        Username = (TextView)findViewById(R.id.username);
-        Password = (TextView)findViewById(R.id.password);
+		Iniciar = (Button) findViewById(R.id.iniciar);
+        Username = (TextView)findViewById(R.id.username_);
+        Password = (TextView)findViewById(R.id.password_);
         intentInicio = new Intent(this, InicioActivity.class);
 
         telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         IdTelefono = telephonyManager.getDeviceId();
+        
+        Iniciar.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v){
+        		String Nombre = Username.getText().toString(),
+        				Clave = Password.getText().toString();
+                if (Nombre.length() == 0) {
+					Toast.makeText(getApplicationContext(), "Ingresa tu nombre de usuario", Toast.LENGTH_SHORT).show();
+				}else if (Clave.length() == 0) {
+					Toast.makeText(getApplicationContext(), "Ingresa t contraseña", Toast.LENGTH_SHORT).show();
+				}else {
+					new registrarDispositivo().execute();
+				}
+        	}
+        });
 	}
 
     public class registrarDispositivo extends AsyncTask<Void, Void, Boolean> {
@@ -42,7 +64,7 @@ public class AgregarActivity extends Activity {
 
             SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_REGISTRARNUEVODISPOSITIVO);
 
-            request.addProperty("Username", Username.getText().toString());
+            request.addProperty("Usuario", Username.getText().toString());
             request.addProperty("Clave", Password.getText().toString());
             request.addProperty("Imei", IdTelefono);
 

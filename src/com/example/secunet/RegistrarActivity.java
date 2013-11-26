@@ -91,7 +91,7 @@ public class RegistrarActivity extends Activity {
         IniciarSesion.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v){
-        		Toast.makeText(getApplicationContext(), "Abrir form Iniciar Sesión", Toast.LENGTH_SHORT).show();
+        		RegistrarActivity.this.startActivity(intentVincular);
         	}
         });
 	}

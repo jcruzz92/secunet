@@ -7,8 +7,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import android.app.ListActivity;
-import android.content.Context;
-import android.telephony.TelephonyManager;
 
 /**
  * Created by Jorge Luis on 7/15/13.
