@@ -28,6 +28,7 @@ import android.widget.Toast;
 public class RegistrarActivity extends Activity {
 
     Intent intentInicio;
+    Intent intentVincular;
 	TextView Username;
 	TextView Password;
 	TextView Password2;
@@ -49,6 +50,7 @@ public class RegistrarActivity extends Activity {
         Correo = (TextView)findViewById(R.id.correo);
         AceptaTerminos = (CheckBox) findViewById(R.id.acepta_terminos);
         intentInicio = new Intent(this, InicioActivity.class);
+        intentVincular = new Intent(this, AgregarActivity.class);
         
         telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         IdTelefono = telephonyManager.getDeviceId();

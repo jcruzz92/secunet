@@ -39,6 +39,11 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name="com.example.secunet.AgregarActivity"
+            android:label="VINCULAR DISPOSITIVO" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name="com.example.secunet.ConfirmarActivity"
             android:label="ESTADO DEL PARQUEO" 
             android:screenOrientation="portrait">

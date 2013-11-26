@@ -22,6 +22,7 @@ public class WS_Info {
 
 //    	public static final String IP = "192.168.100.15";
     	public static final String IP = "10.0.0.2";
+//    	public static final String IP = "10.0.1.30";
 //    	public static final String IP = "172.20.10.10";
 
         public static final String SOAP_ACTION_CHECKPARQUEADO = "http://proyecto.org/VerificarSiEstaParqueado";
