@@ -295,7 +295,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
             myTTS.setLanguage(new Locale("spa", "ESP"));
         }
         else if (initStatus == TextToSpeech.ERROR){
-            Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error al cargar comandos de voz", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -504,7 +504,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
             TextView v = new TextView(getApplicationContext());
             if (WS_Info.GlobalParameters.HayParqueos) {
             	v.setTextColor(Color.BLACK);
-                v.setText(data.get(position).Piso + " - " + data.get(position).IdParqueo + " - " + data.get(position).Estado);
+                v.setText(data.get(position).Piso + " - " + data.get(position).IdParqueo);
                 v.setTag(data.get(position));
 			}
             return v;
@@ -627,7 +627,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
             super.onPostExecute(s);
             ParqueoAuto = WS_Info.GlobalParameters.ParsearParqueoUnico(s);
             if (WS_Info.GlobalParameters.HayParqueoUnico) {
-				LabelParqueoMasCerca.setText("Parqueo " + ParqueoAuto.IdParqueo + ", Nivel " + ParqueoAuto.Piso + ": " + ParqueoAuto.Estado);
+				LabelParqueoMasCerca.setText("Parqueo " + ParqueoAuto.IdParqueo + ", " + ParqueoAuto.Piso);
 			} else {
 				LabelParqueoMasCerca.setText("No hay parqueos disponibles...");
 			}

@@ -142,15 +142,21 @@ public class ConfirmarActivity extends Activity {
             	Parqueado = false;
             	LabelPark.setText("Tu Parqueo Asignado es:");
             	LabelIndicaciones.setText("Cuando llegues a tu parqueo, acerca tu dispositivo al panel indicado para registrar que te has parqueado y listo.");
-			}
-            else if (MiParqueo.idEstado == 2) { //parqueado
+			}else if (MiParqueo.idEstado == 2) { //parqueado
             	Parqueado = true;
             	LabelPark.setText("Estás Parqueado en:");
             	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
-			}
-            else if (MiParqueo.idEstado == 3) {//desocupado
+			}else if (MiParqueo.idEstado == 3) {//liberado pero sigue asignado a ti
             	Parqueado = false;
             	LabelPark.setText("Liberaste el Parqueo:");
+            	LabelIndicaciones.setText("Dirígete a la salida más cercaca...");
+			}else if (MiParqueo.idEstado == 5) {//ocupado sin confirmar usuario
+            	Parqueado = false;
+            	LabelPark.setText("Tu parqueo se ha ocupado sin autorización");
+            	LabelIndicaciones.setText("Se ha notificado al departamento de seguridad...");
+			}else if (MiParqueo.idEstado == 6) {//liberado sin autoriacion
+            	Parqueado = false;
+            	LabelPark.setText("Se ha desocupado tu parqueo sin autorización, se ha notificado al departamento de seguridad...");
             	LabelIndicaciones.setText("Dirígete a la salida más cercaca...");
 			}
             TextoMiParqueo.setText("Parqueo " + MiParqueo.IdParqueo + ", " + MiParqueo.Piso);

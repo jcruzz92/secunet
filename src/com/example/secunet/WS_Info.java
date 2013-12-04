@@ -18,9 +18,10 @@ public class WS_Info {
     	public static Boolean HayParqueoUnico = false;
     	public static Boolean HayParqueoUnicoAleatorio = false;
 
-//    	public static final String IP = "192.168.100.15";
-    	public static final String IP = "10.0.0.2";
-//    	public static final String IP = "10.0.1.30";
+    	public static final String IP = "secunetws.azurewebsites.net";
+//    	public static final String IP = "192.168.1.139";
+//    	public static final String IP = "10.0.0.12";
+//    	public static final String IP = "10.0.1.34";
 //    	public static final String IP = "172.20.10.10";
 
         public static final String SOAP_ACTION_CHECKPARQUEADO = "http://proyecto.org/VerificarSiEstaParqueado";
@@ -61,8 +62,8 @@ public class WS_Info {
 
         public static final String WSDL_TARGET_NAMESPACE = "http://proyecto.org/";
 
-        //public static final String SOAP_ADDRESS = "http://192.168.43.155/ProyectoWebService/WebServiceProyecto.asmx";
-        public static final String SOAP_ADDRESS = "http://"+ IP +"/ProyectoWebService/WebServiceProyecto.asmx";
+//        public static final String SOAP_ADDRESS = "http://" + IP + "/ProyectoWebService/WebServiceProyecto.asmx";
+        public static final String SOAP_ADDRESS = "http://"+ IP +"/WebServiceProyecto.asmx";
 
         static final String KEY_LOCAL = "Local"; // parent node
         static final String KEY_NOMRBEPISO = "NombrePiso";
