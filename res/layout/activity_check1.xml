@@ -34,7 +34,6 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/botones"
         android:layout_alignParentTop="true"
-        android:text="Tu Parqueo Asignado es:"
         android:textAllCaps="false"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="28sp" />
@@ -97,7 +96,14 @@
         android:layout_above="@+id/botones"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="12dp"
-        android:text="TextView"
         android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/leido"
+        android:layout_alignRight="@+id/lbIndicaciones"
+        android:src="@drawable/parking" />
 
 </RelativeLayout> <!-- From: file:/D:/Proyecto/secunet/Proyecto1AndroidProject/Proyecto1Android/src/main/res/layout/activity_check.xml -->

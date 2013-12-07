@@ -7,6 +7,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,8 +25,10 @@ public class ConfirmarActivity extends Activity {
     private TextView LabelIndicaciones;
     private TextView TextoMiParqueo;
     Boolean Parqueado = false;
-    AlertDialog.Builder builderDialog;
-    AlertDialog dialog;
+    AlertDialog.Builder builderDialogEstado2;
+    AlertDialog.Builder builderDialogEstado1;
+    AlertDialog dialogEstado2;
+    AlertDialog dialogEstado1;
     AlertDialog.Builder builderDialogClave;
     AlertDialog dialogClave;
     AlertDialog.Builder builderDialogAlarma;
@@ -70,15 +73,32 @@ public class ConfirmarActivity extends Activity {
 			}
 		});
         
-        builderDialog = new AlertDialog.Builder(this);
-        builderDialog.setMessage("Se ha desocupado tu parqueo sin aviso. ¿Has sido tú?").setTitle("Importante!");
-        builderDialog.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+    	builderDialogEstado1 = new AlertDialog.Builder(this);
+    	builderDialogEstado1.setMessage("Se ha ocupado tu parqueo sin autorización. ¿Has sido tú?").setTitle("Importante!");
+    	builderDialogEstado1.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            	dialog.dismiss();
+            	//TODO: Pedir clave.
+        		dialogClave.show();
+            }
+        });
+    	builderDialogEstado1.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            	dialog.dismiss();
+            	dialogAlarma.show();
+            	new generarAlarma().execute();
+            }
+        });
+    	
+    	builderDialogEstado2 = new AlertDialog.Builder(this);
+    	builderDialogEstado2.setMessage("Se ha desocupado tu parqueo sin aviso. ¿Has sido tú?").setTitle("Importante!");
+    	builderDialogEstado2.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
             	dialog.dismiss();
         		dialogClave.show();
             }
         });
-        builderDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+    	builderDialogEstado2.setNegativeButton("No", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
             	dialog.dismiss();
             	dialogAlarma.show();
@@ -88,7 +108,8 @@ public class ConfirmarActivity extends Activity {
         
     	dialogAlarma = builderDialogAlarma.create();
 		dialogClave = builderDialogClave.create();
-        dialog = builderDialog.create();
+		dialogEstado1 = builderDialogEstado1.create();
+		dialogEstado2 = builderDialogEstado2.create();
         
         MiParqueo = new Parqueo();
         
@@ -101,12 +122,6 @@ public class ConfirmarActivity extends Activity {
        // getMenuInflater().inflate(R.menu.check, menu);
         return true;
     }
-    
-//    public String getMacAddress() {
-//        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-//        WifiInfo info = manager.getConnectionInfo();
-//        return info.getMacAddress();
-//    }
     
     public class buscarParqueoAsignado extends AsyncTask<Void, Void, String> {
         @Override
@@ -138,14 +153,16 @@ public class ConfirmarActivity extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             MiParqueo = WS_Info.GlobalParameters.ParsearParqueoUnico(s);
-            if (MiParqueo.idEstado == 1) {//asignado
+            if (MiParqueo.idEstado == 1) { //asignado
             	Parqueado = false;
             	LabelPark.setText("Tu Parqueo Asignado es:");
-            	LabelIndicaciones.setText("Cuando llegues a tu parqueo, acerca tu dispositivo al panel indicado para registrar que te has parqueado y listo.");
-			}else if (MiParqueo.idEstado == 2) { //parqueado
+            	LabelIndicaciones.setText("Cuando llegues a tu parqueo, acerca tu dispositivo al panel indicado para confirmar que te has parqueado.");
+            	dialogEstado1.show(); //se ocupo sin avisar
+            }else if (MiParqueo.idEstado == 2) { //parqueado
             	Parqueado = true;
             	LabelPark.setText("Estás Parqueado en:");
             	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
+                dialogEstado2.show(); //se libero sin avisar
 			}else if (MiParqueo.idEstado == 3) {//liberado pero sigue asignado a ti
             	Parqueado = false;
             	LabelPark.setText("Liberaste el Parqueo:");
@@ -160,7 +177,6 @@ public class ConfirmarActivity extends Activity {
             	LabelIndicaciones.setText("Dirígete a la salida más cercaca...");
 			}
             TextoMiParqueo.setText("Parqueo " + MiParqueo.IdParqueo + ", " + MiParqueo.Piso);
-            dialog.show();
         }
     }
 
@@ -171,8 +187,13 @@ public class ConfirmarActivity extends Activity {
 
             SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_CREARALERTA);
 
-            request.addProperty("Descripcion", "El parqueo " + MiParqueo.IdParqueo + " ha generado una alarma, atender cuanto antes!");
-            request.addProperty("idParqueo", MiParqueo.IdParqueo);
+            if (MiParqueo.idEstado == 1) {
+            	request.addProperty("Descripcion", "Se ha ocupado el parqueo " + MiParqueo.IdParqueo + " sin autorización, atender cuanto antes.");
+                request.addProperty("idParqueo", MiParqueo.IdParqueo);
+			}else if (MiParqueo.idEstado == 2) {
+				request.addProperty("Descripcion", "Se ha liberado el parqueo " + MiParqueo.IdParqueo + " sin autorización, atender cuanto antes.");
+	            request.addProperty("idParqueo", MiParqueo.IdParqueo);	
+			}
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
@@ -194,8 +215,47 @@ public class ConfirmarActivity extends Activity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            
+            new actualizarParqueo().execute();
         }
     }
 
+    public class actualizarParqueo extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids){
+            String response;
+
+            SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_CAMBIARESTADOPARQUEO);
+
+            if (MiParqueo.idEstado == 1) {
+                request.addProperty("idParqueo", MiParqueo.IdParqueo);
+            	request.addProperty("idEstado", "5");
+			}else if (MiParqueo.idEstado == 2) {
+	            request.addProperty("idParqueo", MiParqueo.IdParqueo);	
+				request.addProperty("idEstado", "6");
+			}
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+
+            envelope.setOutputSoapObject(request);
+
+            HttpTransportSE httpTransport = new HttpTransportSE(WS_Info.GlobalParameters.SOAP_ADDRESS);
+
+            try {
+                httpTransport.debug = true;
+                httpTransport.call(WS_Info.GlobalParameters.SOAP_ACTION_CAMBIARESTADOPARQUEO, envelope);
+                response = httpTransport.responseDump;
+            }  catch (Exception exception)   {
+                response = envelope.bodyIn.toString();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+			ConfirmarActivity.this.startActivity(intentCheck);
+			finish(); 
+        }
+    }
 }

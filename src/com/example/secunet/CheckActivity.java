@@ -34,6 +34,7 @@ import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     Intent intent;
     TelephonyManager telephonyManager;
 	String IdTelefono; 
+//	ImageView imageWarning, imageError, imageOk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -75,6 +77,13 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         MiParqueo = new Parqueo();
         telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         IdTelefono = telephonyManager.getDeviceId();
+//        imageWarning = (ImageView)findViewById(R.id.imageWARNING);
+//        imageOk = (ImageView)findViewById(R.id.imageOK);
+//        imageError = (ImageView)findViewById(R.id.imageERROR);
+//        
+//        imageError.setVisibility(View.INVISIBLE);
+//        imageOk.setVisibility(View.INVISIBLE);
+//        imageWarning.setVisibility(View.INVISIBLE);
         
         Repetir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,12 +194,6 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
     }
 
-//    public String getMacAddress() {
-//        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-//        WifiInfo info = manager.getConnectionInfo();
-//        return info.getMacAddress();
-//    }
-
     @Override
     public void onClick(View view) {
 
@@ -239,18 +242,24 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             MiParqueo = WS_Info.GlobalParameters.ParsearParqueoUnico(s);
             if (MiParqueo.idEstado == 1) {//asignado
             	Parqueado = false;
-            	LabelPark.setText("Tu Parqueo Asignado es:");
+            	LabelPark.setText("Parqueo Asignado:");
             	LabelIndicaciones.setText("Cuando llegues a tu parqueo, acerca tu dispositivo al panel indicado para registrar que te has parqueado y listo.");
-			}
-            else if (MiParqueo.idEstado == 2) { //parqueado
+			}else if (MiParqueo.idEstado == 2) { //parqueado
             	Parqueado = true;
-            	LabelPark.setText("Estás Parqueado en:");
+            	LabelPark.setText("Parqueado en:");
             	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
-			}
-            else if (MiParqueo.idEstado == 3) {//desocupado
+			}else if (MiParqueo.idEstado == 3) {//desocupado
             	Parqueado = false;
-            	LabelPark.setText("Liberaste el Parqueo:");
-            	LabelIndicaciones.setText("Dirígete a la salida más cercaca...");
+            	LabelPark.setText("Parqueo Liberado:");
+            	LabelIndicaciones.setText("Liberado correctamente, dirígete a la salida más cercaca...");
+            }else if (MiParqueo.idEstado == 5) {
+            	Parqueado = false;
+            	LabelPark.setText("Parqueo Ocupado sin Autorización:");
+            	LabelIndicaciones.setText("El departamento de seguridad ha sido notificado...");
+			}else if (MiParqueo.idEstado == 6) {
+            	Parqueado = false;
+            	LabelPark.setText("Parqueo Liberado sin Autorización:");
+            	LabelIndicaciones.setText("El departamento de seguridad ha sido notificado...");
 			}
             TextoMiParqueo.setText("Parqueo " + MiParqueo.IdParqueo + ", " + MiParqueo.Piso);
             suscribe("c" + MiParqueo.IdParqueo);
