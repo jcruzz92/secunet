@@ -12,17 +12,11 @@ import org.ndeftools.Message;
 import org.ndeftools.Record;
 import org.ndeftools.externaltype.AndroidApplicationRecord;
 
-import com.parse.Parse;
-import com.parse.ParseInstallation;
-import com.parse.PushService;
-
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -38,11 +32,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.Parse;
+import com.parse.ParseInstallation;
+import com.parse.PushService;
+
 public class CheckActivity extends Activity implements  View.OnClickListener, TextToSpeech.OnInitListener{
     private int MY_DATA_CHECK_CODE = 0;
     private TextToSpeech myTTS;
     private TextView TextoMiParqueo;
     private TextView LabelPark;
+	ImageView ImagenEstado;
     private TextView LabelIndicaciones;
     private Parqueo MiParqueo;
     private Button Repetir;
@@ -55,7 +54,6 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     Intent intent;
     TelephonyManager telephonyManager;
 	String IdTelefono; 
-//	ImageView imageWarning, imageError, imageOk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -77,13 +75,8 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         MiParqueo = new Parqueo();
         telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         IdTelefono = telephonyManager.getDeviceId();
-//        imageWarning = (ImageView)findViewById(R.id.imageWARNING);
-//        imageOk = (ImageView)findViewById(R.id.imageOK);
-//        imageError = (ImageView)findViewById(R.id.imageERROR);
-//        
-//        imageError.setVisibility(View.INVISIBLE);
-//        imageOk.setVisibility(View.INVISIBLE);
-//        imageWarning.setVisibility(View.INVISIBLE);
+        
+        ImagenEstado = (ImageView)findViewById(R.id.imageEstado);
         
         Repetir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,22 +237,32 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             	Parqueado = false;
             	LabelPark.setText("Parqueo Asignado:");
             	LabelIndicaciones.setText("Cuando llegues a tu parqueo, acerca tu dispositivo al panel indicado para registrar que te has parqueado y listo.");
-			}else if (MiParqueo.idEstado == 2) { //parqueado
+            	
+            	ImagenEstado.setImageResource(R.drawable.notification_done);
+            }else if (MiParqueo.idEstado == 2) { //parqueado
             	Parqueado = true;
             	LabelPark.setText("Parqueado en:");
             	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
-			}else if (MiParqueo.idEstado == 3) {//desocupado
+
+            	ImagenEstado.setImageResource(R.drawable.notification_done);
+            }else if (MiParqueo.idEstado == 3) {//desocupado
             	Parqueado = false;
             	LabelPark.setText("Parqueo Liberado:");
             	LabelIndicaciones.setText("Liberado correctamente, dirígete a la salida más cercaca...");
+
+            	ImagenEstado.setImageResource(R.drawable.notification_done);            
             }else if (MiParqueo.idEstado == 5) {
             	Parqueado = false;
             	LabelPark.setText("Parqueo Ocupado sin Autorización:");
             	LabelIndicaciones.setText("El departamento de seguridad ha sido notificado...");
+
+            	ImagenEstado.setImageResource(R.drawable.notification_remove);
 			}else if (MiParqueo.idEstado == 6) {
             	Parqueado = false;
             	LabelPark.setText("Parqueo Liberado sin Autorización:");
             	LabelIndicaciones.setText("El departamento de seguridad ha sido notificado...");
+            	
+            	ImagenEstado.setImageResource(R.drawable.notification_remove);
 			}
             TextoMiParqueo.setText("Parqueo " + MiParqueo.IdParqueo + ", " + MiParqueo.Piso);
             suscribe("c" + MiParqueo.IdParqueo);

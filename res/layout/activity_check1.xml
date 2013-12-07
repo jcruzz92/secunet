@@ -25,7 +25,7 @@
         android:layout_above="@+id/leido"
         android:layout_centerHorizontal="true"
         android:text="TextView"
-        android:visibility="gone" />
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/labelPrk"
@@ -48,20 +48,6 @@
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/lbIndicaciones"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lbMiParqueo"
-        android:layout_alignRight="@+id/labelPrk"
-        android:layout_below="@+id/lbMiParqueo"
-        android:layout_marginTop="63dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="20sp"
-        android:textStyle="italic"
-        android:typeface="normal" />
-    
-    
     <RelativeLayout
         android:id="@+id/botones"
         android:layout_width="match_parent"
@@ -77,7 +63,7 @@
             android:background="?android:attr/dividerVertical" />
 
         <Button
-        android:id="@+id/btRepetir"
+            android:id="@+id/btRepetir"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
@@ -85,8 +71,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:background="?android:attr/selectableItemBackground"
-        android:text="Repetir Indicaciones" />
-
+            android:text="Repetir Indicaciones" />
     </RelativeLayout>
 
     <TextView
@@ -99,11 +84,23 @@
         android:visibility="visible" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/imageEstado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/leido"
-        android:layout_alignRight="@+id/lbIndicaciones"
-        android:src="@drawable/parking" />
+        android:layout_above="@+id/idTag"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/notification_done" />
+
+    <TextView
+        android:id="@+id/lbIndicaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lbMiParqueo"
+        android:layout_below="@+id/lbMiParqueo"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginTop="16dp"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        android:typeface="normal" />
 
 </RelativeLayout> <!-- From: file:/D:/Proyecto/secunet/Proyecto1AndroidProject/Proyecto1Android/src/main/res/layout/activity_check.xml -->
