@@ -25,6 +25,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.View;
@@ -60,6 +61,7 @@ public class InicioActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState){
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio1);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         
         PuedeIngresar = false;
         Registrar = (Button) findViewById(R.id.btRegistrar);
@@ -73,7 +75,6 @@ public class InicioActivity extends Activity{
         EstadoInicial = (TextView) findViewById(R.id.estado_inicial);
         Botones = (RelativeLayout)findViewById(R.id.botones);
         Botones.setVisibility(View.INVISIBLE);
-        
         
         builderDialogRegistro = new AlertDialog.Builder(this);
         builderDialogRegistro.setMessage("Este dispositivo no está vinculado a una cuenta.").setTitle("Registro Necesario");

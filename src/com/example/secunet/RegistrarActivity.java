@@ -43,6 +43,7 @@ public class RegistrarActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
         Username = (TextView)findViewById(R.id.username);
         Password = (TextView)findViewById(R.id.password);

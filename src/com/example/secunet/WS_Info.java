@@ -42,6 +42,7 @@ public class WS_Info {
         public static final String SOAP_ACTION_REGISTRARNUEVOUSUARIO = "http://proyecto.org/RegistrarNuevoUsuario";
         public static final String SOAP_ACTION_REGISTRARNUEVODISPOSITIVO = "http://proyecto.org/RegistrarNuevoDispositivoAUsuario";
         public static final String SOAP_ACTION_CAMBIARESTADOPARQUEO = "http://proyecto.org/CambiarEstadoParqueo";
+        public static final String SOAP_ACTION_VERIFICARUSUARIOCLAVE = "http://proyecto.org/VerificarUsuarioClave";
         
         public static final String OPERATION_NAME_CHECKPARQUEADO = "VerificarSiEstaParqueado";
         public static final String OPERATION_NAME_PARQUEOALEATORIO = "CualquierParqueo";
@@ -61,6 +62,7 @@ public class WS_Info {
         public static final String OPERATION_NAME_REGISTRARNUEVOUSUARIO = "RegistrarNuevoUsuario";
         public static final String OPERATION_NAME_REGISTRARNUEVODISPOSITIVO = "RegistrarNuevoDispositivoAUsuario";
         public static final String OPERATION_NAME_CAMBIARESTADOPARQUEO = "CambiarEstadoParqueo";
+        public static final String OPERATION_NAME_VERIFICARUSUARIOCLAVE = "VerificarUsuarioClave";
 
         public static final String WSDL_TARGET_NAMESPACE = "http://proyecto.org/";
 

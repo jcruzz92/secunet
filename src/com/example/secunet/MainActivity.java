@@ -71,6 +71,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
     	
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         
         Intent checkTTSIntent = new Intent();
         checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
@@ -152,12 +153,12 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
                     builder .setCancelable(false)
                             .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                                 public void onClick(DialogInterface dialog, int id){
-                                    MainActivity.this.startActivity(intent);
-                                    finish();
                                     String words;
                                     new asignarParqueo().execute(false);
                                     words = "Dirijase al " + ParqueoAuto.Piso + ", parqueo " + ParqueoAuto.IdParqueo.toString() ;
                                     speakWords(words);
+                                    MainActivity.this.startActivity(intent);
+                                    finish();finish();
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {

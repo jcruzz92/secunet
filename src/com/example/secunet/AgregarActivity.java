@@ -33,6 +33,8 @@ public class AgregarActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_agregar);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+		
 		Iniciar = (Button) findViewById(R.id.iniciar);
         Username = (TextView)findViewById(R.id.username_);
         Password = (TextView)findViewById(R.id.password_);

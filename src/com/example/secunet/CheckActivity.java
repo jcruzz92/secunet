@@ -22,6 +22,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Parcelable;
 import android.speech.tts.TextToSpeech;
 import android.telephony.TelephonyManager;
@@ -29,6 +30,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,11 +57,14 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     Intent intentConfirmar;
     TelephonyManager telephonyManager;
 	String IdTelefono; 
+	CountDownTimer TimerRefresh;
+	RelativeLayout Botones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check1);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
         intentInicio = new Intent(this, InicioActivity.class);
         intentConfirmar = new Intent(this, ConfirmarActivity.class);
@@ -71,6 +76,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         TextoMiParqueo = (TextView) findViewById(R.id.lbMiParqueo);
         LabelPark = (TextView) findViewById(R.id.labelPrk);
         LabelIndicaciones = (TextView) findViewById(R.id.lbIndicaciones);
+        Botones = (RelativeLayout)findViewById(R.id.botones);
         Repetir = (Button) findViewById(R.id.btRepetir);
         Liberar = (Button) findViewById(R.id.btLiberarParqueo);
         intentParqueoLibre = new Intent(CheckActivity.this, ParqueoLibreActivity.class);
@@ -79,7 +85,8 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         IdTelefono = telephonyManager.getDeviceId();
         
         ImagenEstado = (ImageView)findViewById(R.id.imageEstado);
-        
+
+    	ocultarTodo();
         Repetir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +103,17 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
 			}
 		});
 
-//        Liberar.setVisibility(View.GONE);
+        TimerRefresh = new CountDownTimer(5000, 1000) {
+    		public void onTick(long millisUntilFinished) {
+    		    
+    		}
+    		public void onFinish() {
+    	        new buscarParqueoAsignado().execute();
+                TimerRefresh.start();
+    		}
+    	};
+
+    	TimerRefresh.start();
         new buscarParqueoAsignado().execute();
     }
 
@@ -235,33 +252,31 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             MiParqueo = WS_Info.GlobalParameters.ParsearParqueoUnico(s);
-            if (MiParqueo.idEstado == 1) {//asignado
-//            	Toast.makeText(getApplicationContext(), MiParqueo.Notificacion.toString(), Toast.LENGTH_SHORT).show();
-            	if (MiParqueo.Notificacion) {
-            		///TODO: EPLOTA NOTIFICACION
-            		startActivity(intentConfirmar);
-                    finish();
-				}else 
-				{
-	            	Parqueado = false;
-	            	LabelPark.setText("Parqueo Asignado:");
-	            	LabelIndicaciones.setText("Cuando llegues a tu parqueo, acerca tu dispositivo al panel indicado para registrar que te has parqueado y listo.");
-	            	
-	            	ImagenEstado.setImageResource(R.drawable.notification_done);
-				}
-            }else if (MiParqueo.idEstado == 2) { //parqueado
-            	if (MiParqueo.Notificacion) {
-            		startActivity(intentConfirmar);
-                    finish();
-				}else 
-            	{
-	            	Parqueado = true;
-	            	LabelPark.setText("Parqueado en:");
-	            	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
+            if (MiParqueo.Notificacion) {
+        		startActivity(intentConfirmar);
+        		finish();
+        		TimerRefresh.cancel();
+			}
+//            else if(MiParqueo.idEstado == 0) {//asignado
+//
+//                Toast.makeText(getApplicationContext(), "Problema parseando el mensaje", Toast.LENGTH_SHORT).show();
+//        		startActivity(intentInicio);
+//        		finish();
+//        		TimerRefresh.cancel();
+//            }
+			else if(MiParqueo.idEstado == 1) {//asignado
+            	Parqueado = false;
+            	LabelPark.setText("Parqueo Asignado:");
+            	LabelIndicaciones.setText("Cuando llegues a tu parqueo, acerca tu dispositivo al panel indicado para registrar que te has parqueado y listo.");
+            	
+            	ImagenEstado.setImageResource(R.drawable.notification_done);
+            }else if (MiParqueo.idEstado == 2){ //parqueado
+            	Parqueado = true;
+            	LabelPark.setText("Parqueado en:");
+            	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
 
-	            	ImagenEstado.setImageResource(R.drawable.notification_done);
-				}
-            }else if (MiParqueo.idEstado == 3) {//desocupado
+            	ImagenEstado.setImageResource(R.drawable.notification_done);
+				}else if (MiParqueo.idEstado == 3) {//desocupado
             	Parqueado = false;
             	LabelPark.setText("Parqueo Liberado:");
             	LabelIndicaciones.setText("Liberado correctamente, dirígete a la salida más cercaca...");
@@ -280,11 +295,27 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             	
             	ImagenEstado.setImageResource(R.drawable.notification_remove);
 			}
+            
             TextoMiParqueo.setText("Parqueo " + MiParqueo.IdParqueo + ", " + MiParqueo.Piso);
             suscribe("c" + MiParqueo.IdParqueo);
+            mostrarTodo();
         }
     }
 
+    public void ocultarTodo(){
+    	LabelPark.setVisibility(View.INVISIBLE);
+    	LabelIndicaciones.setVisibility(View.INVISIBLE);
+    	ImagenEstado.setVisibility(View.INVISIBLE);
+    	Botones.setVisibility(View.INVISIBLE);
+    }
+    
+    public void mostrarTodo(){
+    	LabelPark.setVisibility(View.VISIBLE);
+    	LabelIndicaciones.setVisibility(View.VISIBLE);
+    	ImagenEstado.setVisibility(View.VISIBLE);
+    	Botones.setVisibility(View.VISIBLE);
+    }
+    
     public class liberarParqueoAsignado extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... voids){

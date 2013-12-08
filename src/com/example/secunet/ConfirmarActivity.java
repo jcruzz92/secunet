@@ -33,11 +33,13 @@ public class ConfirmarActivity extends Activity {
     Intent intentCheck;
     TelephonyManager telephonyManager;
 	String IdTelefono; 
+	Boolean HayAlerta;
     
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmar);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
         LabelPark = (TextView) findViewById(R.id.labelPrk);
         LabelIndicaciones = (TextView) findViewById(R.id.lbIndicaciones);
@@ -45,23 +47,24 @@ public class ConfirmarActivity extends Activity {
         intentCheck = new Intent(this, CheckActivity.class);
         telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         IdTelefono = telephonyManager.getDeviceId();
+        HayAlerta = false;
         
         builderDialogAlarma = new AlertDialog.Builder(this);
         builderDialogAlarma.setMessage("Se ha notificado al departamento de seguridad");
     	builderDialogAlarma.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				ConfirmarActivity.this.startActivity(intentCheck);
-				finish(); 
+				finish();
 			}
 		});
 
     	builderDialogClave = new AlertDialog.Builder(this);
         builderDialogClave.setMessage("Ingresa tus credenciales").setTitle("Inicio de sesión");
+        builderDialogClave.setCancelable(false);
     	builderDialogClave.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				dialogClave.dismiss();
-				ConfirmarActivity.this.startActivity(intentCheck);
-				finish();
+				new actualizarParqueo().execute();
 			}
 		});
     	builderDialogClave.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
@@ -74,6 +77,7 @@ public class ConfirmarActivity extends Activity {
         
     	builderDialogEstado1 = new AlertDialog.Builder(this);
     	builderDialogEstado1.setMessage("Se ha ocupado tu parqueo sin autorización. ¿Has sido tú?").setTitle("Importante!");
+    	builderDialogEstado1.setCancelable(false);
     	builderDialogEstado1.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
             	dialog.dismiss();
@@ -91,6 +95,7 @@ public class ConfirmarActivity extends Activity {
     	
     	builderDialogEstado2 = new AlertDialog.Builder(this);
     	builderDialogEstado2.setMessage("Se ha desocupado tu parqueo sin aviso. ¿Has sido tú?").setTitle("Importante!");
+    	builderDialogEstado2.setCancelable(false);
     	builderDialogEstado2.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
             	dialog.dismiss();
@@ -215,6 +220,7 @@ public class ConfirmarActivity extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             new actualizarParqueo().execute();
+            HayAlerta = true;
         }
     }
 
@@ -225,12 +231,19 @@ public class ConfirmarActivity extends Activity {
 
             SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_CAMBIARESTADOPARQUEO);
 
-            if (MiParqueo.idEstado == 1) {
-                request.addProperty("idParqueo", MiParqueo.IdParqueo);
-            	request.addProperty("idEstado", "5");
-			}else if (MiParqueo.idEstado == 2) {
-	            request.addProperty("idParqueo", MiParqueo.IdParqueo);	
-				request.addProperty("idEstado", "6");
+            request.addProperty("idParqueo", MiParqueo.IdParqueo);
+            if (HayAlerta) {
+            	if (MiParqueo.idEstado == 1) {
+                	request.addProperty("idEstado", "5");
+    			}else if (MiParqueo.idEstado == 2) {
+    				request.addProperty("idEstado", "6");
+    			}
+			}else {
+				if (MiParqueo.idEstado == 1) {
+                	request.addProperty("idEstado", "2");
+    			}else if (MiParqueo.idEstado == 2) {
+    				request.addProperty("idEstado", "3");
+    			}
 			}
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -253,6 +266,7 @@ public class ConfirmarActivity extends Activity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            HayAlerta = false;
 			ConfirmarActivity.this.startActivity(intentCheck);
 			finish(); 
         }

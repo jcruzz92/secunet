@@ -62,6 +62,8 @@ ArrayList<Parqueo> ParqueosManual;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_parqueoslibresinterface);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+		
 		ArrayList<String> Parqueos = new ArrayList<String>();
 		Intent checkTTSIntent = new Intent();
         checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
