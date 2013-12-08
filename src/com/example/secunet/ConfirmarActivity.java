@@ -60,6 +60,8 @@ public class ConfirmarActivity extends Activity {
     	builderDialogClave.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				dialogClave.dismiss();
+				ConfirmarActivity.this.startActivity(intentCheck);
+				finish();
 			}
 		});
     	builderDialogClave.setNegativeButton("Salir", new DialogInterface.OnClickListener() {

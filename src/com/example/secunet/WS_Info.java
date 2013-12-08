@@ -78,8 +78,7 @@ public class WS_Info {
         static final String KEY_ESTADOPARQUEO = "Estado";
         static final String KEY_PISOPARQUEO = "Piso";
         static final String KEY_IDESTADOPARQUEO = "idEstado";
-//        static final String KEY_LADOPARQUEO = "Lado";
-//        static final String KEY_PESOPARQUEO = "Peso";
+        static final String KEY_NOTIFICACIONPARQUEO = "Notificacion";
         
         public static ArrayList<Local> ParsearLocales(String XML){
             ArrayList<Local> Locales = new ArrayList<Local>();
@@ -125,7 +124,7 @@ public class WS_Info {
 	                Parqueos.get(i).Estado = parser.getValue(e, KEY_ESTADOPARQUEO);
 	                Parqueos.get(i).Piso = parser.getValue(e, KEY_PISOPARQUEO);
 	                Parqueos.get(i).idEstado = Integer.parseInt(parser.getValue(e, KEY_IDESTADOPARQUEO));
-	                //Parqueos.get(i).Peso = parser.getValue(e, KEY_PESOPARQUEO);
+	                Parqueos.get(i).Notificacion = Boolean.parseBoolean(parser.getValue(e, KEY_NOTIFICACIONPARQUEO));
 				}
 			}
             else{
@@ -149,7 +148,8 @@ public class WS_Info {
 	            ParqueoCercano.Estado = parser.getValue(e, KEY_ESTADOPARQUEO);
 	            ParqueoCercano.Piso = parser.getValue(e, KEY_PISOPARQUEO);
 	            ParqueoCercano.idEstado = Integer.parseInt(parser.getValue(e, KEY_IDESTADOPARQUEO));
-			}else {
+	            ParqueoCercano.Notificacion = Boolean.parseBoolean(parser.getValue(e, KEY_NOTIFICACIONPARQUEO));
+            }else {
 				HayParqueoUnico = false;
 			}
             

@@ -1,9 +1,15 @@
 package com.example.secunet;
 
+import java.util.Set;
+
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
+
+import com.parse.Parse;
+import com.parse.ParseInstallation;
+import com.parse.PushService;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -102,6 +108,7 @@ public class InicioActivity extends Activity{
         
         Cargando = ProgressDialog.show(InicioActivity.this, "Cargando", "Espere por favor...");
 
+        unsuscribe();
         new checkParqueado().execute();
     }
     
@@ -275,5 +282,17 @@ public class InicioActivity extends Activity{
             	Toast.makeText(getApplicationContext(), "Esta no es la entrada...", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void unsuscribe (){
+		Parse.initialize(this, "NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI", "iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF"); 
+		PushService.setDefaultPushCallback(this, ConfirmarActivity.class);
+		final Set<String> setOfAllSubscriptions = PushService.getSubscriptions(this);
+		final String[] allSubscriptions = setOfAllSubscriptions.toArray(new String[0]); 
+		for(int k=0; k<allSubscriptions.length; k++)
+		{
+			PushService.unsubscribe(this, allSubscriptions[k]);
+		}
+		ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 }

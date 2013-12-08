@@ -51,7 +51,8 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     PendingIntent nfcPendingIntent;
     String CodigoTag;
     Boolean Parqueado = false;
-    Intent intent;
+    Intent intentInicio;
+    Intent intentConfirmar;
     TelephonyManager telephonyManager;
 	String IdTelefono; 
 
@@ -60,7 +61,8 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check1);
 
-        intent = new Intent(this, InicioActivity.class);
+        intentInicio = new Intent(this, InicioActivity.class);
+        intentConfirmar = new Intent(this, ConfirmarActivity.class);
     	nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         Intent checkTTSIntent = new Intent();
@@ -234,17 +236,31 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             super.onPostExecute(s);
             MiParqueo = WS_Info.GlobalParameters.ParsearParqueoUnico(s);
             if (MiParqueo.idEstado == 1) {//asignado
-            	Parqueado = false;
-            	LabelPark.setText("Parqueo Asignado:");
-            	LabelIndicaciones.setText("Cuando llegues a tu parqueo, acerca tu dispositivo al panel indicado para registrar que te has parqueado y listo.");
-            	
-            	ImagenEstado.setImageResource(R.drawable.notification_done);
+//            	Toast.makeText(getApplicationContext(), MiParqueo.Notificacion.toString(), Toast.LENGTH_SHORT).show();
+            	if (MiParqueo.Notificacion) {
+            		///TODO: EPLOTA NOTIFICACION
+            		startActivity(intentConfirmar);
+                    finish();
+				}else 
+				{
+	            	Parqueado = false;
+	            	LabelPark.setText("Parqueo Asignado:");
+	            	LabelIndicaciones.setText("Cuando llegues a tu parqueo, acerca tu dispositivo al panel indicado para registrar que te has parqueado y listo.");
+	            	
+	            	ImagenEstado.setImageResource(R.drawable.notification_done);
+				}
             }else if (MiParqueo.idEstado == 2) { //parqueado
-            	Parqueado = true;
-            	LabelPark.setText("Parqueado en:");
-            	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
+            	if (MiParqueo.Notificacion) {
+            		startActivity(intentConfirmar);
+                    finish();
+				}else 
+            	{
+	            	Parqueado = true;
+	            	LabelPark.setText("Parqueado en:");
+	            	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
 
-            	ImagenEstado.setImageResource(R.drawable.notification_done);
+	            	ImagenEstado.setImageResource(R.drawable.notification_done);
+				}
             }else if (MiParqueo.idEstado == 3) {//desocupado
             	Parqueado = false;
             	LabelPark.setText("Parqueo Liberado:");
@@ -278,8 +294,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
 
             request.addProperty("idParqueo", MiParqueo.IdParqueo);
 
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
-                    SoapEnvelope.VER11);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
 
             envelope.setOutputSoapObject(request);
@@ -292,7 +307,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
                 response = httpTransport.responseDump;
 
             }  catch (Exception exception)   {
-                response = "";
+            	response = "";
             }
             return response;
         }
@@ -314,8 +329,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             request.addProperty("idTag", CodigoTag);
             request.addProperty("MacAddress", IdTelefono);
             
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
-                    SoapEnvelope.VER11);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
 
             envelope.setOutputSoapObject(request);
@@ -425,7 +439,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             super.onPostExecute(s);
             if (s) {
             	Parqueado = false;
-                startActivity(intent);
+        		CheckActivity.this.startActivity(intentInicio);
                 finish();
                 unsuscribe();
 //            	speakWords("Gracias por visitarnos, conduce con cuidado!");

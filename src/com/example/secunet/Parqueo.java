@@ -7,7 +7,8 @@ public class Parqueo {
     public String Piso;
     public String IdParqueo;
     public String Estado;
-    public int idEstado; //Para saber si esta parqueado, asignado, libre, etc.. 
+    public int idEstado; //Para saber si esta parqueado, asignado, libre, etc..
+    public Boolean Notificacion;
 
     Parqueo(){
     	
