@@ -88,10 +88,9 @@ ArrayList<Parqueo> ParqueosManual;
 		Parqueo1.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				// TODO Auto-generated method stub
 				ParqueoManual = ParqueoUno;
-				((ImageButton) v).setImageResource(R.drawable.occupied1);
 				builder.setMessage("Desea este parqueo?");
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
@@ -102,6 +101,7 @@ ArrayList<Parqueo> ParqueosManual;
                                 String words;
                                 words = "Dirijase al " + ParqueoUno.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
                                 speakWords(words);
+                                ((ImageButton) v).setImageResource(R.drawable.occupied1);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -119,10 +119,9 @@ ArrayList<Parqueo> ParqueosManual;
 			
 			@Override
 			
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				ParqueoManual = ParqueoDos;
 				// TODO Auto-generated method stub
-				((ImageButton) v).setImageResource(R.drawable.occupied2);
 				builder.setMessage("Desea este parqueo?");
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
@@ -133,6 +132,7 @@ ArrayList<Parqueo> ParqueosManual;
                                 new asignarParqueo().execute(false);
                                 words = "Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
                                 speakWords(words);
+                                ((ImageButton) v).setImageResource(R.drawable.occupied2);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -148,10 +148,10 @@ ArrayList<Parqueo> ParqueosManual;
 		Parqueo3.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				// TODO Auto-generated method stub
 				ParqueoManual = ParqueoTres;
-				((ImageButton) v).setImageResource(R.drawable.occupied3);
+				
 				builder.setMessage("Desea este parqueo?");
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
@@ -162,6 +162,7 @@ ArrayList<Parqueo> ParqueosManual;
                                 new asignarParqueo().execute(false);
                                 words = "Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
                                 speakWords(words);
+                                ((ImageButton) v).setImageResource(R.drawable.occupied3);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -177,10 +178,9 @@ ArrayList<Parqueo> ParqueosManual;
 		Parqueo4.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				ParqueoManual = ParqueoCuatro;
 				// TODO Auto-generated method stub
-				((ImageButton) v).setImageResource(R.drawable.occupied4);
 				builder.setMessage("Desea este parqueo?");
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
@@ -191,6 +191,7 @@ ArrayList<Parqueo> ParqueosManual;
                                 new asignarParqueo().execute(false);
                                 words = "Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
                                 speakWords(words);
+                                ((ImageButton) v).setImageResource(R.drawable.occupied4);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -263,16 +264,16 @@ ArrayList<Parqueo> ParqueosManual;
             ParqueoTres = ParqueosManual.get(2);
             ParqueoCuatro = ParqueosManual.get(3);
           
-			if(ParqueoUno.Estado.trim().equals("Libre")){
+			if(ParqueoUno.Estado.trim().equals("Disponible para selección")){
 				Parqueo1.setImageResource(R.drawable.available1);
 			}
-			if(ParqueoDos.Estado.trim().equals("Libre")){
+			if(ParqueoDos.Estado.trim().equals("Disponible para selección")){
 				Parqueo2.setImageResource(R.drawable.available2);
 			}
-			if(ParqueoTres.Estado.trim().equals("Libre")){
+			if(ParqueoTres.Estado.trim().equals("Disponible para selección")){
 				Parqueo3.setImageResource(R.drawable.available3);
 			}
-			if(ParqueoCuatro.Estado.trim().equals("Libre")){
+			if(ParqueoCuatro.Estado.trim().equals("Disponible para selección")){
 				Parqueo4.setImageResource(R.drawable.available4);
 			}
         }
