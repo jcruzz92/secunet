@@ -5,25 +5,23 @@
     android:versionName="1.0" >
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.VIBRATE" />    
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    
+
     <!-- Near field communications permissions -->
-	<uses-permission android:name="android.permission.NFC" />
-	<uses-feature android:name="android.hardware.nfc" android:required="true" />
-    
-	<instrumentation
-	    android:name="android.test.InstrumentationTestRunner"
-	    android:targetPackage="com.example.secunet" />
-	
-	<instrumentation
-	    android:name=".MyRunner"
-	    android:targetPackage="com.example.secunet" />
-	
+<uses-permission android:name="android.permission.NFC" />
+<uses-feature android:name="android.hardware.nfc" android:required="true" />
+
+<instrumentation
+   android:name="android.test.InstrumentationTestRunner"
+   android:targetPackage="com.example.secunet" />
+<instrumentation
+   android:name=".MyRunner"
+   android:targetPackage="com.example.secunet" />
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="19" />
@@ -35,52 +33,52 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.secunet.MainActivity"
-            android:label="SELECIÓN DE DESTINO" 
+            android:label="SELECIÓN DE DESTINO"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.example.secunet.AgregarActivity"
-            android:label="VINCULAR DISPOSITIVO" 
+            android:label="VINCULAR DISPOSITIVO"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.example.secunet.ConfirmarActivity"
-            android:label="ESTADO DEL PARQUEO" 
+            android:label="ESTADO DEL PARQUEO"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.example.secunet.ParqueoLibreActivity"
-            android:label="Secunet" 
+            android:label="Secunet"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.example.secunet.RegistrarActivity"
-            android:label="REGISTRO DE USUARIOS" 
+            android:label="REGISTRO DE USUARIOS"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.example.secunet.CheckActivity"
-            android:label="MONITOREO DEL PARQUEO" 
+            android:label="MONITOREO DEL PARQUEO"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.example.secunet.InicioActivity"
-            android:label="SECUNET" 
+            android:label="SECUNET"
             android:screenOrientation="portrait">
-            
+
         </activity>
          <activity
             android:name="com.example.secunet.ParqueoInterfaceActivity"
-            android:label="SELECCIÓN MANUAL" 
+            android:label="SELECCIÓN MANUAL"
             android:screenOrientation="portrait">
-            
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    
+
     <service android:name="com.parse.PushService" />
 <receiver android:name="com.parse.ParseBroadcastReceiver">
   <intent-filter>
@@ -88,7 +86,7 @@
     <action android:name="android.intent.action.USER_PRESENT" />
   </intent-filter>
 </receiver>
-    
+
     </application>
 
 </manifest>
