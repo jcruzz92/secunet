@@ -5,11 +5,18 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import com.parse.Parse;
+import com.parse.ParseInstallation;
+import com.parse.PushService;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -17,6 +24,8 @@ import android.view.Menu;
 import android.widget.TextView;
 
 public class ConfirmarActivity extends Activity {
+    NfcAdapter nfcAdapter;
+    PendingIntent nfcPendingIntent;
     private Parqueo MiParqueo;
     private TextView LabelPark;
     private TextView LabelIndicaciones;
@@ -40,7 +49,10 @@ public class ConfirmarActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmar);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-
+        
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+       
         LabelPark = (TextView) findViewById(R.id.labelPrk);
         LabelIndicaciones = (TextView) findViewById(R.id.lbIndicaciones);
         TextoMiParqueo = (TextView) findViewById(R.id.lbMiParqueo);
@@ -127,6 +139,25 @@ public class ConfirmarActivity extends Activity {
         return true;
     }
     
+    @Override
+    public void onNewIntent(Intent intent) {
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
+//            Tag elTag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+//            CodigoTag = WS_Info.GlobalParameters.bytesToHexString(elTag.getId());
+        }    
+    }
+
+    public void enableForegroundMode() {
+        // foreground mode gives the current active application priority for reading scanned tags
+        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED); // filter for tags
+        IntentFilter[] writeTagFilters = new IntentFilter[] {tagDetected};
+        nfcAdapter.enableForegroundDispatch(this, nfcPendingIntent, writeTagFilters, null);
+    }
+
+	public void disableForegroundMode() {
+	    nfcAdapter.disableForegroundDispatch(this);
+	}
+    
     public class buscarParqueoAsignado extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... voids){
@@ -157,28 +188,33 @@ public class ConfirmarActivity extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             MiParqueo = WS_Info.GlobalParameters.ParsearParqueoUnico(s);
-            if (MiParqueo.idEstado == 1) { //asignado
-            	Parqueado = false;
-            	LabelPark.setText("Tu Parqueo Asignado es:");
-            	LabelIndicaciones.setText("Cuando llegues a tu parqueo, acerca tu dispositivo al panel indicado para confirmar que te has parqueado.");
-            	dialogEstado1.show(); //se ocupo sin avisar
-            }else if (MiParqueo.idEstado == 2) { //parqueado
-            	Parqueado = true;
-            	LabelPark.setText("Estás Parqueado en:");
-            	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
-                dialogEstado2.show(); //se libero sin avisar
-			}else if (MiParqueo.idEstado == 3) {//liberado pero sigue asignado a ti
-            	Parqueado = false;
-            	LabelPark.setText("Liberaste el Parqueo:");
-            	LabelIndicaciones.setText("Dirígete a la salida más cercaca...");
-			}else if (MiParqueo.idEstado == 5) {//ocupado sin confirmar usuario
-            	Parqueado = false;
-            	LabelPark.setText("Tu parqueo se ha ocupado sin autorización");
-            	LabelIndicaciones.setText("Se ha notificado al departamento de seguridad...");
-			}else if (MiParqueo.idEstado == 6) {//liberado sin autoriacion
-            	Parqueado = false;
-            	LabelPark.setText("Se ha desocupado tu parqueo sin autorización, se ha notificado al departamento de seguridad...");
-            	LabelIndicaciones.setText("Dirígete a la salida más cercaca...");
+            if (MiParqueo.Notificacion) {
+                if (MiParqueo.idEstado == 1) { //asignado
+                	Parqueado = false;
+                	LabelPark.setText("Tu Parqueo Asignado es:");
+                	LabelIndicaciones.setText("Cuando llegues a tu parqueo, acerca tu dispositivo al panel indicado para confirmar que te has parqueado.");
+                	dialogEstado1.show(); //se ocupo sin avisar
+                }else if (MiParqueo.idEstado == 2) { //parqueado
+                	Parqueado = true;
+                	LabelPark.setText("Estás Parqueado en:");
+                	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
+                    dialogEstado2.show(); //se libero sin avisar
+    			}else if (MiParqueo.idEstado == 3) {//liberado pero sigue asignado a ti
+                	Parqueado = false;
+                	LabelPark.setText("Liberaste el Parqueo:");
+                	LabelIndicaciones.setText("Dirígete a la salida más cercaca...");
+    			}else if (MiParqueo.idEstado == 5) {//ocupado sin confirmar usuario
+                	Parqueado = false;
+                	LabelPark.setText("Tu parqueo se ha ocupado sin autorización");
+                	LabelIndicaciones.setText("Se ha notificado al departamento de seguridad...");
+    			}else if (MiParqueo.idEstado == 6) {//liberado sin autoriacion
+                	Parqueado = false;
+                	LabelPark.setText("Se ha desocupado tu parqueo sin autorización, se ha notificado al departamento de seguridad...");
+                	LabelIndicaciones.setText("Dirígete a la salida más cercaca...");
+    			}
+			}else {
+				ConfirmarActivity.this.startActivity(intentCheck);
+				finish(); 
 			}
             TextoMiParqueo.setText("Parqueo " + MiParqueo.IdParqueo + ", " + MiParqueo.Piso);
         }
@@ -270,5 +306,13 @@ public class ConfirmarActivity extends Activity {
 			ConfirmarActivity.this.startActivity(intentCheck);
 			finish(); 
         }
+    }
+    
+    public void suscribe(String idParqueo){
+    	if (!idParqueo.equals("c-1")) {
+           	Parse.initialize(this, "NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI", "iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF"); 
+            PushService.subscribe(this, idParqueo, ConfirmarActivity.class);
+            ParseInstallation.getCurrentInstallation().saveInBackground();
+		}
     }
 }

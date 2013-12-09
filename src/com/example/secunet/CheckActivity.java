@@ -12,6 +12,7 @@ import org.ndeftools.Message;
 import org.ndeftools.Record;
 import org.ndeftools.externaltype.AndroidApplicationRecord;
 
+import android.R.integer;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -192,6 +193,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     }
 
     public void enableForegroundMode() {
+		TimerRefresh.start();
         // foreground mode gives the current active application priority for reading scanned tags
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED); // filter for tags
         IntentFilter[] writeTagFilters = new IntentFilter[] {tagDetected};
@@ -199,6 +201,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     }
 
 	public void disableForegroundMode() {
+		TimerRefresh.cancel();
 	    nfcAdapter.disableForegroundDispatch(this);
 	}
     
@@ -252,18 +255,17 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             MiParqueo = WS_Info.GlobalParameters.ParsearParqueoUnico(s);
+            suscribe("c" + MiParqueo.IdParqueo);
             if (MiParqueo.Notificacion) {
         		startActivity(intentConfirmar);
         		finish();
         		TimerRefresh.cancel();
 			}
-//            else if(MiParqueo.idEstado == 0) {//asignado
-//
-//                Toast.makeText(getApplicationContext(), "Problema parseando el mensaje", Toast.LENGTH_SHORT).show();
-//        		startActivity(intentInicio);
-//        		finish();
-//        		TimerRefresh.cancel();
-//            }
+            else if(MiParqueo.idEstado == 0) {//libre
+        		TimerRefresh.cancel();
+				startActivity(intentInicio);
+        		finish();
+            }
 			else if(MiParqueo.idEstado == 1) {//asignado
             	Parqueado = false;
             	LabelPark.setText("Parqueo Asignado:");
@@ -276,7 +278,7 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
 
             	ImagenEstado.setImageResource(R.drawable.notification_done);
-				}else if (MiParqueo.idEstado == 3) {//desocupado
+			}else if (MiParqueo.idEstado == 3) {//desocupado
             	Parqueado = false;
             	LabelPark.setText("Parqueo Liberado:");
             	LabelIndicaciones.setText("Liberado correctamente, dirígete a la salida más cercaca...");
@@ -297,7 +299,6 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
 			}
             
             TextoMiParqueo.setText("Parqueo " + MiParqueo.IdParqueo + ", " + MiParqueo.Piso);
-            suscribe("c" + MiParqueo.IdParqueo);
             mostrarTodo();
         }
     }
@@ -349,10 +350,10 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         }
     }
 
-    public class parquearse extends AsyncTask<Void, Void, Boolean> {
+    public class parquearse extends AsyncTask<Void, Void, Integer> {
         @Override
-        protected Boolean doInBackground(Void... voids){
-            Boolean response;
+        protected Integer doInBackground(Void... voids){
+            Integer response;
 
             SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_PARQUEARSE);
 
@@ -370,25 +371,26 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             try {
                 httpTransport.debug = true;
                 httpTransport.call(WS_Info.GlobalParameters.SOAP_ACTION_PARQUEARSE, envelope);
-                response = Boolean.valueOf(envelope.getResponse().toString());
+                response = Integer.parseInt(envelope.getResponse().toString());
             }  catch (Exception exception)   {
-                response = false;
+                response = 1;
             }
             return response;
         }
 
         @Override
-        protected void onPostExecute(Boolean s){
+        protected void onPostExecute(Integer s){
             super.onPostExecute(s);
-            if (s) {
+            if (s == 1) {
             	Parqueado = true;
             	MiParqueo.idEstado = 2;
             	LabelPark.setText("Estás Parqueado en:");
             	LabelIndicaciones.setText("Antes de retirarte, acerca tu dispositivo nuevamente al panel indicado. Con esto liberarás el parqueo y otros podrán usarlo.");
             	speakWords("Te has parqueado correctamente!");
-            }
-            else{
+            }else if(s == 2){
             	Toast.makeText(getApplicationContext(), "Parqueo incorrecto, verifica tu ubicación...", Toast.LENGTH_SHORT).show();
+            }else if(s == 3){
+            	Toast.makeText(getApplicationContext(), "Asegurate de estar correctamente parqueado...", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -437,10 +439,10 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
         }
     }
     
-    public class salirParqueo extends AsyncTask<Void, Void, Boolean> {
+    public class salirParqueo extends AsyncTask<Void, Void, Integer> {
         @Override
-        protected Boolean doInBackground(Void... voids){
-            Boolean response;
+        protected Integer doInBackground(Void... voids){
+        	Integer response;
 
             SoapObject request = new SoapObject(WS_Info.GlobalParameters.WSDL_TARGET_NAMESPACE, WS_Info.GlobalParameters.OPERATION_NAME_SALIRPARQUEO);
 
@@ -458,23 +460,26 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
             try {
                 httpTransport.debug = true;
                 httpTransport.call(WS_Info.GlobalParameters.SOAP_ACTION_SALIRPARQUEO, envelope);
-                response = Boolean.valueOf(envelope.getResponse().toString());
+                response = Integer.parseInt(envelope.getResponse().toString());
             }  catch (Exception exception)   {
-                response = false;
+                response = -1;
             }
             return response;
         }
 
         @Override
-        protected void onPostExecute(Boolean s){
+        protected void onPostExecute(Integer s){
             super.onPostExecute(s);
-            if (s) {
+            if (s == 1) {
+                unsuscribe();
+        		TimerRefresh.cancel();
             	Parqueado = false;
         		CheckActivity.this.startActivity(intentInicio);
                 finish();
-                unsuscribe();
 //            	speakWords("Gracias por visitarnos, conduce con cuidado!");
-        	}
+        	}else if (s == 2) {
+        		Toast.makeText(getApplicationContext(), "No puedes dejar la plaza estando parqueado...", Toast.LENGTH_SHORT).show();
+            }
             else{
             	Toast.makeText(getApplicationContext(), "Esta no es la salida...", Toast.LENGTH_SHORT).show();
             }
@@ -482,9 +487,11 @@ public class CheckActivity extends Activity implements  View.OnClickListener, Te
     }
     
     public void suscribe(String idParqueo){
-       	Parse.initialize(this, "NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI", "iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF"); 
-        PushService.subscribe(this, idParqueo, ConfirmarActivity.class);
-        ParseInstallation.getCurrentInstallation().saveInBackground();
+    	if (!idParqueo.equals("c-1")) {
+           	Parse.initialize(this, "NJE50gi9UOxCggYxSO2gVFyMkNVQy0w14mZNdcFI", "iMZgZ2mzfCJMw8wlyuhqNy89gDFkf6KVtqmyaCgF"); 
+            PushService.subscribe(this, idParqueo, ConfirmarActivity.class);
+            ParseInstallation.getCurrentInstallation().saveInBackground();
+		}
     }
     
     public void unsuscribe (){

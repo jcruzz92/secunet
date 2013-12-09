@@ -79,7 +79,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
     	nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        builder.setMessage("DESEA ESTE PARQUEO?");
+        builder.setMessage("Desea este parqueo?");
 
         intent = new Intent(MainActivity.this, CheckActivity.class);
         telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
@@ -136,7 +136,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l){
             	if (WS_Info.GlobalParameters.HayParqueos) {
 					ParqueoManual = (Parqueo)view.getTag();
-				}                
+				}
             }
 
             @Override
@@ -158,7 +158,7 @@ public class MainActivity extends Activity  implements View.OnClickListener, Tex
                                     words = "Dirijase al " + ParqueoAuto.Piso + ", parqueo " + ParqueoAuto.IdParqueo.toString() ;
                                     speakWords(words);
                                     MainActivity.this.startActivity(intent);
-                                    finish();finish();
+                                    finish();
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {

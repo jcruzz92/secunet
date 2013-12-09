@@ -54,6 +54,7 @@ private TextToSpeech myTTS;
 private int MY_DATA_CHECK_CODE = 0;
 TelephonyManager telephonyManager;
 String IdTelefono; 
+//Intent prueba;
 
 ArrayList<Parqueo> ParqueosManual;
 
@@ -77,13 +78,12 @@ ArrayList<Parqueo> ParqueosManual;
 		ParqueosManual = new ArrayList<Parqueo>();
 		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		intent = new Intent(ParqueoInterfaceActivity.this, CheckActivity.class);
-		 ParqueoManual = new Parqueo();
-	        telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-	        IdTelefono = telephonyManager.getDeviceId();
+    	
+    	ParqueoManual = new Parqueo();
+        telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        IdTelefono = telephonyManager.getDeviceId();
 		//txtImage = (TextView)findViewById(R.id.txtImage);
 		//txtImage.setText(Parqueo1.getTag().toString());
-		new buscarParqueosPorPiso().execute();
-		
 		
 		Parqueo1.setOnClickListener(new OnClickListener() {
 			
@@ -96,13 +96,11 @@ ArrayList<Parqueo> ParqueosManual;
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int id){
-                                ParqueoInterfaceActivity.this.startActivity(intent);
-                                finish();
-                                String words;
                                 new asignarParqueo().execute(false);
-                                
-                                    words = "Dirijase al " + ParqueoUno.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
-                                
+//                            	ParqueoInterfaceActivity.this.startActivity(intent);
+//                                finish();
+                                String words;
+                                words = "Dirijase al " + ParqueoUno.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
                                 speakWords(words);
                             }
                         })
@@ -129,13 +127,11 @@ ArrayList<Parqueo> ParqueosManual;
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int id){
-                                ParqueoInterfaceActivity.this.startActivity(intent);
-                                finish();
+//                                startActivity(intent);
+//                                finish();
                                 String words;
                                 new asignarParqueo().execute(false);
-                                
-                                    words = "Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
-                                
+                                words = "Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
                                 speakWords(words);
                             }
                         })
@@ -160,13 +156,11 @@ ArrayList<Parqueo> ParqueosManual;
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int id){
-                                ParqueoInterfaceActivity.this.startActivity(intent);
-                                finish();
+//                                ParqueoInterfaceActivity.this.startActivity(intent);
+//                                finish();
                                 String words;
                                 new asignarParqueo().execute(false);
-                                
-                                    words = "Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
-                                
+                                words = "Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
                                 speakWords(words);
                             }
                         })
@@ -191,13 +185,11 @@ ArrayList<Parqueo> ParqueosManual;
                 builder .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int id){
-                                ParqueoInterfaceActivity.this.startActivity(intent);
-                                finish();
+//                                ParqueoInterfaceActivity.this.startActivity(intent);
+//                                finish();
                                 String words;
                                 new asignarParqueo().execute(false);
-                                
-                                    words = "Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
-                                
+                                words = "Dirijase al " + ParqueoManual.Piso + ", parqueo " + ParqueoManual.IdParqueo.toString() ;
                                 speakWords(words);
                             }
                         })
@@ -210,7 +202,8 @@ ArrayList<Parqueo> ParqueosManual;
                 alertdialog.show();
 			}
 		});
-		
+
+		new buscarParqueosPorPiso().execute();
 	}
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == MY_DATA_CHECK_CODE) {
@@ -233,12 +226,7 @@ ArrayList<Parqueo> ParqueosManual;
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-//	   public String getMacAddress() {
-//	        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-//	        WifiInfo info = manager.getConnectionInfo();
-//	        return info.getMacAddress();
-//	    }
-	   	
+	
 	public class buscarParqueosPorPiso extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... voids) {
@@ -260,7 +248,6 @@ ArrayList<Parqueo> ParqueosManual;
                 httpTransport.debug = true;
                 httpTransport.call(WS_Info.GlobalParameters.SOAP_ACTION_PARQUEOSPORPISO, envelope);
                 response = httpTransport.responseDump;
-
             }  catch (Exception exception)   {
                 response = httpTransport.responseDump;
             }
@@ -333,7 +320,8 @@ ArrayList<Parqueo> ParqueosManual;
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             new buscarParqueosPorPiso().execute();
-
+            ParqueoInterfaceActivity.this.startActivity(intent);
+            finish();
         }
     }
 
