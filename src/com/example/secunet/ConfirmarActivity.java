@@ -40,6 +40,7 @@ public class ConfirmarActivity extends Activity {
     AlertDialog.Builder builderDialogAlarma;
     AlertDialog dialogAlarma;
     Intent intentCheck;
+    Intent intentSignIn;
     TelephonyManager telephonyManager;
 	String IdTelefono; 
 	Boolean HayAlerta;
@@ -57,6 +58,7 @@ public class ConfirmarActivity extends Activity {
         LabelIndicaciones = (TextView) findViewById(R.id.lbIndicaciones);
         TextoMiParqueo = (TextView) findViewById(R.id.lbMiParqueo);
         intentCheck = new Intent(this, CheckActivity.class);
+        intentSignIn = new Intent(this, SignInActivity.class);
         telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         IdTelefono = telephonyManager.getDeviceId();
         HayAlerta = false;
@@ -70,22 +72,22 @@ public class ConfirmarActivity extends Activity {
 			}
 		});
 
-    	builderDialogClave = new AlertDialog.Builder(this);
-        builderDialogClave.setMessage("Ingresa tus credenciales").setTitle("Inicio de sesión");
-        builderDialogClave.setCancelable(false);
-    	builderDialogClave.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				dialogClave.dismiss();
-				new actualizarParqueo().execute();
-			}
-		});
-    	builderDialogClave.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				dialogClave.dismiss();
-				dialogAlarma.show();
-            	new generarAlarma().execute();
-			}
-		});
+//    	builderDialogClave = new AlertDialog.Builder(this);
+//        builderDialogClave.setMessage("Ingresa tus credenciales").setTitle("Inicio de sesión");
+//        builderDialogClave.setCancelable(false);
+//    	builderDialogClave.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
+//			public void onClick(DialogInterface dialog, int id) {
+//				dialogClave.dismiss();
+//				new actualizarParqueo().execute();
+//			}
+//		});
+//    	builderDialogClave.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
+//			public void onClick(DialogInterface dialog, int id) {
+//				dialogClave.dismiss();
+//				dialogAlarma.show();
+//            	new generarAlarma().execute();
+//			}
+//		});
         
     	builderDialogEstado1 = new AlertDialog.Builder(this);
     	builderDialogEstado1.setMessage("Se ha ocupado tu parqueo sin autorización. ¿Has sido tú?").setTitle("Importante!");
@@ -93,8 +95,8 @@ public class ConfirmarActivity extends Activity {
     	builderDialogEstado1.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
             	dialog.dismiss();
-            	//TODO: Pedir clave.
-        		dialogClave.show();
+            	startActivity(intentSignIn);
+//        		dialogClave.show();
             }
         });
     	builderDialogEstado1.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -111,7 +113,8 @@ public class ConfirmarActivity extends Activity {
     	builderDialogEstado2.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
             	dialog.dismiss();
-        		dialogClave.show();
+            	startActivity(intentSignIn);
+//        		dialogClave.show();
             }
         });
     	builderDialogEstado2.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -123,7 +126,7 @@ public class ConfirmarActivity extends Activity {
         });
         
     	dialogAlarma = builderDialogAlarma.create();
-		dialogClave = builderDialogClave.create();
+//		dialogClave = builderDialogClave.create();
 		dialogEstado1 = builderDialogEstado1.create();
 		dialogEstado2 = builderDialogEstado2.create();
         

@@ -23,10 +23,10 @@ public class AgregarActivity extends Activity {
 
     Intent intentInicio;
 	TextView Username;
-	TextView Password;
-	TelephonyManager telephonyManager;
-	String IdTelefono; 
+	TextView Password; 
 	Button Iniciar;
+	TelephonyManager telephonyManager;
+	String IdTelefono;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

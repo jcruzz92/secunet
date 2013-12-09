@@ -62,7 +62,7 @@ ArrayList<Parqueo> ParqueosManual;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_parqueoslibresinterface);
+		setContentView(R.layout.absolute);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 		
 		ArrayList<String> Parqueos = new ArrayList<String>();

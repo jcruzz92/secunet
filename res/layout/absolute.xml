@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/parkinglot" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="38dp"
+        android:layout_y="323dp" >
+
+        <ImageButton
+            android:id="@+id/spot4"
+            android:layout_width="66dp"
+            android:layout_height="100dp"
+            android:src="@drawable/occupied4" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="105dp"
+        android:layout_y="322dp" >
+
+        <ImageButton
+            android:id="@+id/spot3"
+            android:layout_width="66dp"
+            android:layout_height="100dp"
+            android:src="@drawable/occupied3" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="170dp"
+        android:layout_y="322dp" >
+
+        <ImageButton
+            android:id="@+id/spot2"
+            android:layout_width="66dp"
+            android:layout_height="100dp"
+            android:src="@drawable/occupied2" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="237dp"
+        android:layout_y="320dp" >
+
+        <ImageButton
+            android:id="@+id/spot1"
+            android:layout_width="66dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/occupied1" />
+    </RelativeLayout>
+
+</AbsoluteLayout>

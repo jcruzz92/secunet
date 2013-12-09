@@ -20,6 +20,8 @@
 
         <EditText
             android:id="@+id/username_"
+            android:lines = "1"
+    		android:singleLine="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/textView1"
@@ -35,11 +37,12 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/username_"
             android:layout_below="@+id/username_"
-            android:layout_marginTop="8dp"
             android:text="CONTRASEÑA:" />
 
         <EditText
             android:id="@+id/password_"
+            android:lines = "1"
+    		android:singleLine="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/textView2"
